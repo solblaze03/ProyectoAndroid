@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">BitTecnia</string>
+    <string name="InicioSesion">Iniciar Sesión</string>
+    <string name="Nameuser">Nombre de usuario</string>
+    <string name="promptuser">Introduce tu nombre de usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="OlvPassword">Olvidaste la contraseña</string>
+    <string name="inPass">Introduce tu contraseña</string>
+    <string name="inicioAut">Inicio Automatico</string>
+    <string name="oIniciar">O iniciar sesión con</string>
+    <string name="google">Continuar con Google</string>
+    <string name="crear">Crear una cuenta</string>
+</resources>

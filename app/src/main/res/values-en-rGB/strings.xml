@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PracticarLogin</string>
+    <string name="InicioSesion">Login</string>
+    <string name="Nameuser">User name</string>
+    <string name="promptuser">Enter your username</string>
+    <string name="password">Password</string>
+    <string name="OlvPassword">you forgot your password</string>
+    <string name="inPass">Enter your password</string>
+    <string name="inicioAut">Auto start</string>
+    <string name="oIniciar">Or log in with</string>
+    <string name="google">Continue with Google</string>
+    <string name="crear">Create an account</string>
+</resources>
