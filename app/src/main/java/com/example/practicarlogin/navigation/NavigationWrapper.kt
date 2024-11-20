@@ -6,9 +6,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.practicarlogin.Login
 import com.example.practicarlogin.VM.LoginViewModel
-import com.example.practicarlogin.pantallaInicial
-
-
+import com.example.practicarlogin.*
+import com.example.practicarlogin.PantallasNavegaciones.buildPC
 
 
 @Composable
@@ -20,7 +19,13 @@ fun NavigationWrapper(){
             Login(loginViewModel) {navController.navigate(pantallaInicial)}
         }
         composable<pantallaInicial>{
-            pantallaInicial()
+            pantallaInicial(loginViewModel)
+        }
+        composable<build>{
+            buildPC() {navController.navigate(productos)}
+        }
+        composable<productos>{
+            productos()
         }
     }
 }

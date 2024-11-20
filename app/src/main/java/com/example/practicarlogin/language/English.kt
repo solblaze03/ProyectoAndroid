@@ -11,7 +11,17 @@ data class English(
     override val inicioAut: String,
     override val oIniciar: String,
     override val google: String,
-    override val crear: String
+    override val crear: String,
+    override val home: String,
+    override val build: String,
+    override val perfil: String,
+    override val tituloBuild: String,
+    override val procesador: String,
+    override val placabase: String,
+    override val Almacenamiento: String,
+    override val tarjeta: String,
+    override val caja: String,
+    override val fuente: String
 ) : languages
 
 val StringsEnglish = English(
@@ -25,4 +35,15 @@ val StringsEnglish = English(
     inicioAut = "Auto start",
     oIniciar = "Or log in with",
     google = "Continue with Google",
-    crear = "Create an account")
+    crear = "Create an account",
+    home = "Home",
+    build = "Build",
+    perfil = "Profile",
+    tituloBuild = "Choose your computer components",
+    procesador = "Processor",
+    placabase = "Motherboard",
+    Almacenamiento = "Storage",
+    tarjeta = "Graphic card",
+    caja = "Computer case",
+    fuente = "Power supply"
+)

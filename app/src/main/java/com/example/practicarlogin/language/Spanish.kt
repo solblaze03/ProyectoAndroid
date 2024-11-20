@@ -11,7 +11,17 @@ data class Spanish(
     override val inicioAut: String,
     override val oIniciar: String,
     override val google: String,
-    override val crear: String
+    override val crear: String,
+    override val home: String,
+    override val build: String,
+    override val perfil: String,
+    override val tituloBuild: String,
+    override val procesador: String,
+    override val placabase: String,
+    override val Almacenamiento: String,
+    override val tarjeta: String,
+    override val caja: String,
+    override val fuente: String
 ) : languages
 
 val StringsSpanish = Spanish(
@@ -25,4 +35,15 @@ val StringsSpanish = Spanish(
     inicioAut = "Inicio automático",
     oIniciar = "O iniciar sesión con",
     google = "Continuar con Google",
-    crear = "Crear una cuenta")
+    crear = "Crear una cuenta",
+    home = "Inicio",
+    build = "Ensamblar",
+    perfil = "Perfil",
+    tituloBuild = "Elige los componentes de tu ordenador",
+    procesador = "Procesador",
+    placabase = "Placa base",
+    Almacenamiento = "Almacenamiento",
+    tarjeta = "Tarjeta gráfica",
+    caja = "Caja del ordenador",
+    fuente = "Fuente de alimentación"
+)

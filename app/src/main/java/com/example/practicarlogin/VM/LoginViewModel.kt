@@ -27,9 +27,7 @@ class LoginViewModel : ViewModel(){
     fun verificar(username: String, password: String, context: Context, function: () -> Unit){
         if(_user.value == nameuser && _password.value == userpassword){
             function()
-
         }else{
-
             Toast.makeText(context,"Usuario o contraseña incorrecta",Toast.LENGTH_SHORT).show()
         }
     }

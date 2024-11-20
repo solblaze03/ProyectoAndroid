@@ -45,7 +45,7 @@ import com.example.practicarlogin.language.languages
 import com.example.practicarlogin.prefs.prefs
 
 
-private lateinit var languageSelect: languages
+lateinit var languageSelect: languages
 private val spanish = StringsSpanish
 private val english = StringsEnglish
 private val valenciano = StringsValenciano
@@ -175,8 +175,6 @@ fun cargarTextfieldUser(user : String, cambioTextField : (String) -> Unit) {
             )
         },
         placeholder = {
-
-
             Text(
                 languageSelect.promptUser,
                 fontFamily = Fuentes.mulishRegular,
