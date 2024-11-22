@@ -6,9 +6,3 @@ import kotlinx.serialization.Serializable
 object Login
 @Serializable
 object pantallaInicial
-
-@Serializable
-object build
-
-@Serializable
-object productos

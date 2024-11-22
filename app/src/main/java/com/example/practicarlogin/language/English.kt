@@ -21,7 +21,14 @@ data class English(
     override val Almacenamiento: String,
     override val tarjeta: String,
     override val caja: String,
-    override val fuente: String
+    override val fuente: String,
+    override val marca: String,
+    override val nucleos: String,
+    override val zocalo: String,
+    override val hilos: String,
+    override val vermas: String,
+    override val agregar: String,
+    override val buscar: String
 ) : languages
 
 val StringsEnglish = English(
@@ -45,5 +52,12 @@ val StringsEnglish = English(
     Almacenamiento = "Storage",
     tarjeta = "Graphic card",
     caja = "Computer case",
-    fuente = "Power supply"
+    fuente = "Power supply",
+    marca = "Brand",
+    nucleos = "Cores",
+    zocalo = "Socket",
+    hilos = "Threads",
+    vermas = "See more",
+    agregar = "Add",
+    buscar = "Search component"
 )

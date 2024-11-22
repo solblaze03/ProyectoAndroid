@@ -36,8 +36,10 @@ import com.example.practicarlogin.PantallasNavegaciones.home
 import com.example.practicarlogin.PantallasNavegaciones.profile
 import com.example.practicarlogin.VM.LoginViewModel
 import com.example.practicarlogin.navigation.NavigationActions
+import com.example.practicarlogin.navigation.ScreenBuild
 import com.example.practicarlogin.navigation.myAppLevelDestination
 import com.example.practicarlogin.navigation.myappRoute
+import com.example.practicarlogin.navigation.navWrapperBuild
 import com.example.practicarlogin.navigation.topLevel
 
 
@@ -76,12 +78,16 @@ fun MyAppContent(
                 }
 
                 composable(myappRoute.build) {
-                    buildPC { navController.navigate(productos()) }
+                    navWrapperBuild()
                 }
                 composable(myappRoute.account) {
                     profile()
                 }
             }
+
+
+
+
             cargarUI(
                 selectedDestination = selectedDestination,
                 navigateTopLevelDestination = navigateTopLevelDestination

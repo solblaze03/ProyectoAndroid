@@ -21,10 +21,18 @@ data class Spanish(
     override val Almacenamiento: String,
     override val tarjeta: String,
     override val caja: String,
-    override val fuente: String
+    override val fuente: String,
+    override val marca: String,
+    override val nucleos: String,
+    override val zocalo: String,
+    override val hilos: String,
+    override val vermas: String,
+    override val agregar: String,
+    override val buscar: String
 ) : languages
 
 val StringsSpanish = Spanish(
+    //login
     appName = "PracticarLogin",
     inicioSesion = "Iniciar Sesión",
     nameUser = "Nombre de usuario",
@@ -36,14 +44,24 @@ val StringsSpanish = Spanish(
     oIniciar = "O iniciar sesión con",
     google = "Continuar con Google",
     crear = "Crear una cuenta",
+    //bottom navigation
     home = "Inicio",
     build = "Ensamblar",
     perfil = "Perfil",
+    //bottom build
     tituloBuild = "Elige los componentes de tu ordenador",
     procesador = "Procesador",
     placabase = "Placa base",
     Almacenamiento = "Almacenamiento",
     tarjeta = "Tarjeta gráfica",
     caja = "Caja del ordenador",
-    fuente = "Fuente de alimentación"
+    fuente = "Fuente de alimentación",
+    //pantalla cards
+    marca = "Marca",
+    nucleos = "Núcleo",
+    zocalo = "Zócalo",
+    hilos = "Hilos",
+    vermas = "Ver más",
+    agregar = "Agregar",
+    buscar = "Buscar"
 )

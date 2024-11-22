@@ -1,7 +1,7 @@
 package com.example.practicarlogin.language
 
 interface languages {
-
+    //login
     val appName: String
     val inicioSesion: String
     val nameUser: String
@@ -12,6 +12,7 @@ interface languages {
     val inicioAut: String
     val oIniciar: String
     val google: String
+
     val crear: String
     val home: String
     val build: String
@@ -23,4 +24,11 @@ interface languages {
     val tarjeta: String
     val caja : String
     val fuente: String
+    val marca : String
+    val nucleos : String
+    val zocalo : String
+    val hilos: String
+    val vermas: String
+    val agregar : String
+    val buscar: String
 }

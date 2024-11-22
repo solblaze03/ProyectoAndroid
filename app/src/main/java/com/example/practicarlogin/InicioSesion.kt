@@ -43,6 +43,7 @@ import com.example.practicarlogin.language.StringsSpanish
 import com.example.practicarlogin.language.StringsValenciano
 import com.example.practicarlogin.language.languages
 import com.example.practicarlogin.prefs.prefs
+import kotlin.math.sin
 
 
 lateinit var languageSelect: languages
@@ -166,6 +167,7 @@ fun cargarTextfieldUser(user : String, cambioTextField : (String) -> Unit) {
         onValueChange = {e -> cambioTextField(e)},
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(20.dp),
+        singleLine = true,
         leadingIcon = {
             Icon(
                 painter = painterResource(R.drawable.user),
@@ -209,6 +211,7 @@ fun cargarTextPassword(password : String, cambioTextField: (String) -> Unit) {
         onValueChange = { e -> cambioTextField(e) },
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(20.dp),
+        singleLine = true,
         leadingIcon = {
             Icon(
                 painter = painterResource(R.drawable.password),
@@ -234,6 +237,7 @@ fun checkBox() {
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
+
         Checkbox(
             checked = true,
             onCheckedChange = {},

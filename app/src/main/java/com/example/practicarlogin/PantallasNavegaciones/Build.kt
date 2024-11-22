@@ -1,6 +1,7 @@
 package com.example.practicarlogin.PantallasNavegaciones
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -32,11 +33,8 @@ import com.example.practicarlogin.language.languages
 
 
 @Composable
-fun buildPC(function: () -> Unit) {
-
+fun buildPC(navigate: (Int) -> Unit) {
     val idioma: languages = LenguajeSeleccionado().idioma()
-
-
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -55,43 +53,43 @@ fun buildPC(function: () -> Unit) {
                     idioma.procesador,
                     lock = false,
                     painterResource(R.drawable.proccesor)
-                )
+                ) { navigate(0) }
                 Spacer(modifier = Modifier.padding(10.dp))
                 cargarInformacion(
                     idioma.placabase,
                     lock = true,
                     painterResource(R.drawable.motherboard)
-                )
+                ){ navigate(1) }
                 Spacer(modifier = Modifier.padding(10.dp))
-                cargarInformacion("RAM", lock = true, painterResource(R.drawable.ram))
+                cargarInformacion("RAM", lock = true, painterResource(R.drawable.ram)){ navigate(2) }
                 Spacer(modifier = Modifier.padding(10.dp))
                 cargarInformacion(
                     idioma.Almacenamiento,
                     lock = true,
                     painterResource(R.drawable.ssd_)
-                )
+                ) {navigate(3)}
                 Spacer(modifier = Modifier.padding(10.dp))
-                cargarInformacion(idioma.tarjeta, lock = true, painterResource(R.drawable.graphic))
+                cargarInformacion(idioma.tarjeta, lock = true, painterResource(R.drawable.graphic)){ navigate(4) }
                 Spacer(modifier = Modifier.padding(10.dp))
                 cargarInformacion(
                     idioma.caja,
                     lock = true,
                     painterResource(R.drawable.resource_case)
-                )
+                ){navigate(5)}
                 Spacer(modifier = Modifier.padding(10.dp))
-                cargarInformacion(idioma.fuente, lock = true, painterResource(R.drawable.power))
+                cargarInformacion(idioma.fuente, lock = true, painterResource(R.drawable.power)){ navigate(6) }
             }
         }
     }
 }
 
 @Composable
-fun cargarInformacion(titulo: String, lock: Boolean, image: Painter) {
+fun cargarInformacion(titulo: String, lock: Boolean, image: Painter, navigate: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .background(Color.White)
+            .background(Color.White).clickable { if(!lock){ navigate() } }
     ) {
         Row(
             modifier = Modifier.fillMaxSize(),

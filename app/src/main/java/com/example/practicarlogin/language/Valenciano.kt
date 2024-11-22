@@ -21,7 +21,14 @@ data class Valenciano(
     override val Almacenamiento: String,
     override val tarjeta: String,
     override val caja: String,
-    override val fuente: String
+    override val fuente: String,
+    override val marca: String,
+    override val nucleos: String,
+    override val zocalo: String,
+    override val hilos: String,
+    override val vermas: String,
+    override val agregar: String,
+    override val buscar: String
 ) : languages
 
 val StringsValenciano = Valenciano(
@@ -45,5 +52,12 @@ val StringsValenciano = Valenciano(
     Almacenamiento = "Emmagatzematge",
     tarjeta = "Targeta Gràfica",
     caja = "Caixa de l'ordinador",
-    fuente = "Font d'alimentació"
+    fuente = "Font d'alimentació",
+    marca = "Marca",
+    nucleos = "Nuclis",
+    zocalo = "Sòcol",
+    hilos = "Fils",
+    vermas = "Veure més",
+    agregar = "Agregar",
+    buscar = "Buscar Component"
 )

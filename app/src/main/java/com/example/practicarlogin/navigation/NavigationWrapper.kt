@@ -8,11 +8,11 @@ import com.example.practicarlogin.Login
 import com.example.practicarlogin.VM.LoginViewModel
 import com.example.practicarlogin.*
 import com.example.practicarlogin.PantallasNavegaciones.buildPC
-
+val loginViewModel : LoginViewModel = LoginViewModel()
 
 @Composable
 fun NavigationWrapper(){
-    val loginViewModel : LoginViewModel = LoginViewModel()
+
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Login){
         composable<Login>{
@@ -21,11 +21,6 @@ fun NavigationWrapper(){
         composable<pantallaInicial>{
             pantallaInicial(loginViewModel)
         }
-        composable<build>{
-            buildPC() {navController.navigate(productos)}
-        }
-        composable<productos>{
-            productos()
-        }
+
     }
 }
