@@ -2,6 +2,7 @@ package com.example.practicarlogin
 
 import android.app.Activity
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,6 +21,7 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -43,6 +45,7 @@ import com.example.practicarlogin.language.StringsSpanish
 import com.example.practicarlogin.language.StringsValenciano
 import com.example.practicarlogin.language.languages
 import com.example.practicarlogin.prefs.prefs
+import com.example.practicarlogin.ui.theme.backgroundLight
 import kotlin.math.sin
 
 
@@ -52,22 +55,23 @@ private val english = StringsEnglish
 private val valenciano = StringsValenciano
 
 
-
 @Composable
 fun Login(viewModel: LoginViewModel, function: () -> Unit) {
 
     val context = LocalContext.current
-    val user : String by viewModel.user.observeAsState(initial = "")
-    val password : String by viewModel.password.observeAsState(initial = "")
+    val user: String by viewModel.user.observeAsState(initial = "")
+    val password: String by viewModel.password.observeAsState(initial = "")
 
 
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(color = MaterialTheme.colorScheme.background)
             .padding(start = 20.dp, end = 20.dp, top = 60.dp),
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+        horizontalAlignment = Alignment.CenterHorizontally,
+
+        ) {
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -82,13 +86,13 @@ fun Login(viewModel: LoginViewModel, function: () -> Unit) {
             cambioIdioma()
             cargarImagenLogo()
             Spacer(modifier = Modifier.padding(16.dp))
-            cargarTextfieldUser(user) {viewModel.inicioSesion( it , password) }
+            cargarTextfieldUser(user) { viewModel.inicioSesion(it, password) }
             Spacer(modifier = Modifier.padding(16.dp))
-            cargarTextPassword(password) {viewModel.inicioSesion(user, it)}
+            cargarTextPassword(password) { viewModel.inicioSesion(user, it) }
             Spacer(modifier = Modifier.padding(1.dp))
             checkBox()
             Spacer(modifier = Modifier.padding(10.dp))
-            Boton({ viewModel.verificar(user, password, context) {function()} })
+            Boton({ viewModel.verificar(user, password, context) { function() } })
             Spacer(modifier = Modifier.padding(10.dp))
             oIniciar()
             Spacer(modifier = Modifier.padding(10.dp))
@@ -119,14 +123,16 @@ fun cambioIdioma() {
             "Valenciano",
             color = color,
             modifier = Modifier.clickable { prefs.prefs.guardarIdioma(2); (context as Activity).recreate() })
-        Text(" / ")
+        Text(" / ",
+            color = MaterialTheme.colorScheme.inverseSurface)
         Text(
             "Español",
             color = color,
             modifier = Modifier.clickable { prefs.prefs.guardarIdioma(0);(context as Activity).recreate() })
-        Text(" / ")
+        Text(" / ",
+            color = MaterialTheme.colorScheme.inverseSurface)
         Text(
-            "Ingles ",
+            "Inglés ",
             color = color,
             modifier = Modifier.clickable { prefs.prefs.guardarIdioma(1);(context as Activity).recreate() })
     }
@@ -149,22 +155,24 @@ fun cargarImagenLogo() {
         languageSelect.inicioSesion,
         fontSize = 34.sp,
         fontFamily = Fuentes.mulishBold,
+        color = MaterialTheme.colorScheme.inverseSurface
     )
 }
 
 @Composable
-fun cargarTextfieldUser(user : String, cambioTextField : (String) -> Unit) {
+fun cargarTextfieldUser(user: String, cambioTextField: (String) -> Unit) {
     Text(
         text = languageSelect.nameUser,
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = 5.dp),
         textAlign = TextAlign.Left,
-        fontFamily = Fuentes.mulishSemiBold
+        fontFamily = Fuentes.mulishSemiBold,
+        color = MaterialTheme.colorScheme.inverseSurface
     )
     OutlinedTextField(
         value = user,
-        onValueChange = {e -> cambioTextField(e)},
+        onValueChange = { e -> cambioTextField(e) },
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(20.dp),
         singleLine = true,
@@ -188,7 +196,7 @@ fun cargarTextfieldUser(user : String, cambioTextField : (String) -> Unit) {
 }
 
 @Composable
-fun cargarTextPassword(password : String, cambioTextField: (String) -> Unit) {
+fun cargarTextPassword(password: String, cambioTextField: (String) -> Unit) {
 
 
     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
@@ -196,13 +204,14 @@ fun cargarTextPassword(password : String, cambioTextField: (String) -> Unit) {
             text = languageSelect.password,
             modifier = Modifier
                 .padding(start = 5.dp),
+            color = MaterialTheme.colorScheme.inverseSurface
         )
         Text(
             text = languageSelect.olvPassword,
             modifier = Modifier.padding(end = 8.dp),
-            fontSize = 12.sp,
+            fontSize = 13.5.sp,
             fontFamily = Fuentes.mulishSemiBold,
-            color = Color.Blue,
+            color = colorResource(R.color.blue),
         )
     }
 
@@ -256,13 +265,18 @@ fun checkBox() {
 @Composable
 fun Boton(Verificar: () -> Unit) {
     Button(
-        onClick = {Verificar()},
+        onClick = { Verificar() },
         shape = RoundedCornerShape(30.dp),
         modifier = Modifier
             .fillMaxWidth()
             .height(60.dp),
         colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.blue))
-    ) { Text(text = languageSelect.inicioSesion, fontFamily = Fuentes.mulishSemiBold) }
+    ) {
+        Text(
+            text = languageSelect.inicioSesion, fontFamily = Fuentes.mulishSemiBold,
+            color = Color.White
+        )
+    }
 }
 
 @Composable
@@ -272,7 +286,8 @@ fun oIniciar() {
         Text(
             text = languageSelect.oIniciar,
             modifier = Modifier.padding(start = 10.dp, end = 10.dp),
-            fontFamily = Fuentes.mulishSemiBold
+            fontFamily = Fuentes.mulishSemiBold,
+            color = MaterialTheme.colorScheme.inverseSurface
         )
         HorizontalDivider(modifier = Modifier.weight(1f))
     }

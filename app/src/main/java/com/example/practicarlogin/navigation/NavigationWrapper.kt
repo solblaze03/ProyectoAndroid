@@ -21,6 +21,9 @@ fun NavigationWrapper(){
         composable<pantallaInicial>{
             pantallaInicial(loginViewModel)
         }
+        composable<ScreenBuild.detalleComponente> {
+
+        }
 
     }
 }

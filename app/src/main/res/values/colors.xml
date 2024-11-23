@@ -10,4 +10,6 @@
     <color name="blue">#016B76</color>
     <color name="gray">#D0D0D0</color>
     <color name="fondo">#1f1f1f</color>
+    <color name="naranja">#FF5722</color>
+    <color name="azulIntel">#0066cc</color>
 </resources>

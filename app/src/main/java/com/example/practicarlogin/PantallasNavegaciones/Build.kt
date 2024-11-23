@@ -14,12 +14,18 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardColors
+import androidx.compose.material3.CardElevation
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.colorResource
@@ -38,16 +44,17 @@ fun buildPC(navigate: (Int) -> Unit) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .padding(top = 20.dp, start = 20.dp, end = 20.dp)
+            .padding().background(color = MaterialTheme.colorScheme.background)
     ) {
         item {
 
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(30.dp)
+                    .padding(start = 30.dp, end = 30.dp, top = 50.dp)
             ) {
-                Text(idioma.tituloBuild, fontFamily = Fuentes.mulishExtraBold)
+
+                Text(idioma.tituloBuild, fontFamily = Fuentes.mulishExtraBold, color = MaterialTheme.colorScheme.inverseSurface)
                 Spacer(modifier = Modifier.padding(10.dp))
                 cargarInformacion(
                     idioma.procesador,
@@ -85,11 +92,16 @@ fun buildPC(navigate: (Int) -> Unit) {
 
 @Composable
 fun cargarInformacion(titulo: String, lock: Boolean, image: Painter, navigate: () -> Unit) {
-    Card(
+    OutlinedCard(
         modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
-            .background(Color.White).clickable { if(!lock){ navigate() } }
+            .fillMaxWidth().clip(shape = RoundedCornerShape(12.dp))
+            .wrapContentHeight().clickable { if(!lock){ navigate() } },
+        colors = CardColors(
+            containerColor = MaterialTheme.colorScheme.onSecondary,
+            contentColor = Color.Transparent,
+            disabledContainerColor = Color.Transparent,
+            disabledContentColor = Color.Transparent
+        )
     ) {
         Row(
             modifier = Modifier.fillMaxSize(),
@@ -120,6 +132,7 @@ fun cargarInformacion(titulo: String, lock: Boolean, image: Painter, navigate: (
                     .fillMaxWidth()
                     .weight(3f),
                 textAlign = TextAlign.Center,
+                color = MaterialTheme.colorScheme.inverseSurface,
                 fontFamily = Fuentes.mulishSemiBold
             )
             Icon(

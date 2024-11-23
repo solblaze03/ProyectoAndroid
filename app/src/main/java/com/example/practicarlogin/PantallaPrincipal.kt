@@ -8,18 +8,28 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemColors
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -41,7 +51,10 @@ import com.example.practicarlogin.navigation.myAppLevelDestination
 import com.example.practicarlogin.navigation.myappRoute
 import com.example.practicarlogin.navigation.navWrapperBuild
 import com.example.practicarlogin.navigation.topLevel
-
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 @Composable
 fun pantallaInicial(loginViewModel: LoginViewModel) {
@@ -61,6 +74,16 @@ fun pantallaInicial(loginViewModel: LoginViewModel) {
     )
 }
 
+
+class NavigationViewModel : ViewModel() {
+    private val _isBottomNavigationVisible = MutableStateFlow(true)
+    val isBottomNavigationVisible: StateFlow<Boolean> get() = _isBottomNavigationVisible
+
+    fun setBottomNavigationVisible(visible: Boolean) {
+        _isBottomNavigationVisible.value = visible
+    }
+}
+
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 
 @Composable
@@ -70,10 +93,33 @@ fun MyAppContent(
     selectedDestination: String,
     navigateTopLevelDestination: (myAppLevelDestination) -> Unit
 ) {
+
+    val listState = rememberLazyListState()
+    val coroutineScope = rememberCoroutineScope()
+    var previousIndex by remember { mutableStateOf(0) }
+    val navViewModel: NavigationViewModel = viewModel()
+
+    LaunchedEffect(remember { derivedStateOf { listState.firstVisibleItemIndex } }) {
+        val currentIndex = listState.firstVisibleItemIndex
+        if (currentIndex > previousIndex) {
+            navViewModel.setBottomNavigationVisible(false)
+        } else if (currentIndex < previousIndex) {
+            navViewModel.setBottomNavigationVisible(true)
+        }
+        previousIndex = currentIndex
+    }
+
+
     Row(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
-            NavHost(modifier = Modifier.weight(1f).height(30.dp),navController = navController, startDestination = myappRoute.build) {
-                composable(myappRoute.home){
+            NavHost(
+                modifier = Modifier
+                    .weight(1f)
+                    .height(30.dp),
+                navController = navController,
+                startDestination = myappRoute.build
+            ) {
+                composable(myappRoute.home) {
                     home()
                 }
 
@@ -86,12 +132,13 @@ fun MyAppContent(
             }
 
 
-
-
-            cargarUI(
-                selectedDestination = selectedDestination,
-                navigateTopLevelDestination = navigateTopLevelDestination
-            )
+            val bottomNavVisibility by navViewModel.isBottomNavigationVisible.collectAsState()
+            if (bottomNavVisibility) {
+                cargarUI(
+                    selectedDestination = selectedDestination,
+                    navigateTopLevelDestination = navigateTopLevelDestination
+                )
+            }
         }
     }
 }
@@ -101,9 +148,13 @@ fun cargarUI(
     selectedDestination: String,
     navigateTopLevelDestination: (myAppLevelDestination) -> Unit,
 ) {
-    NavigationBar(modifier = Modifier.fillMaxWidth(), containerColor = Color.White) {
+    HorizontalDivider(modifier = Modifier.fillMaxWidth(),
+        color = MaterialTheme.colorScheme.inverseSurface)
+    NavigationBar(modifier = Modifier.fillMaxWidth(), containerColor = MaterialTheme.colorScheme.background) {
         topLevel.forEach { destination ->
+
             NavigationBarItem(
+
                 selected = selectedDestination == destination.route,
                 colors = NavigationBarItemColors(
                     selectedIconColor = Color.Transparent,
@@ -117,47 +168,63 @@ fun cargarUI(
                 onClick = { navigateTopLevelDestination(destination) },
 
                 icon = {
-                        Icon(
-                            imageVector = if(selectedDestination == destination.route){
-                                imagenSeleccionada(destination.iconTextId)
-                            }else{
-                               imagen(destination.iconTextId)
-                            }          ,
-                            contentDescription = destination.iconTextId,
-                            tint = if(selectedDestination == destination.route){colorResource(R.color.blue)}else{
-                                Color.Black
-                            },
-                            modifier = Modifier.size(30.dp)
-                        )
+                    Icon(
+                        imageVector = if (selectedDestination == destination.route) {
+                            imagenSeleccionada(destination.iconTextId)
+                        } else {
+                            imagen(destination.iconTextId)
+                        },
+                        contentDescription = destination.iconTextId,
+                        tint = if (selectedDestination == destination.route) {
+                            colorResource(R.color.blue)
+                        } else {
+                            MaterialTheme.colorScheme.inverseSurface
+                        },
+                        modifier = Modifier.size(30.dp)
+                    )
                 },
-                label = {Text(destination.iconTextId, color = if(selectedDestination == destination.route){colorResource(R.color.blue)}else{
-                    Color.Black
-                })}
+                label = {
+                    Text(
+                        destination.iconTextId,
+                        color = if (selectedDestination == destination.route) {
+                            colorResource(R.color.blue)
+                        } else {
+                            MaterialTheme.colorScheme.inverseSurface
+                        }
+                    )
+                }
             )
+
         }
     }
 
 }
 
 @Composable
-fun imagen(imagen : String) : ImageVector{
-    var imagenSelec : ImageVector = Icons.Default.Add
-    Log.i("imagen","$imagen")
-    when (imagen){
-        "Home","Inici","Inicio" -> imagenSelec = ImageVector.vectorResource(R.drawable.homeout)
-        "Build","Acoblar","Ensamblar" -> imagenSelec = ImageVector.vectorResource(R.drawable.buildout)
-        "Profile","Perfil" -> imagenSelec= Icons.Default.AccountCircle
+fun imagen(imagen: String): ImageVector {
+    var imagenSelec: ImageVector = Icons.Default.Add
+    Log.i("imagen", "$imagen")
+    when (imagen) {
+        "Home", "Inici", "Inicio" -> imagenSelec =
+            ImageVector.vectorResource(R.drawable.homeout)
+
+        "Build", "Acoblar", "Ensamblar" -> imagenSelec =
+            ImageVector.vectorResource(R.drawable.buildout)
+
+        "Profile", "Perfil" -> imagenSelec = Icons.Default.AccountCircle
     }
     return imagenSelec
 }
 
 @Composable
-fun imagenSeleccionada(imagen: String) : ImageVector{
-    var imagenSelec : ImageVector = Icons.Default.Add
-    when (imagen){
-        "Home","Inici","Inicio" -> imagenSelec = ImageVector.vectorResource(R.drawable.homein)
-        "Build","Acoblar","Ensamblar" -> imagenSelec = ImageVector.vectorResource(R.drawable.buildin)
-        "Profile","Perfil" -> imagenSelec= Icons.Default.AccountCircle
+fun imagenSeleccionada(imagen: String): ImageVector {
+    var imagenSelec: ImageVector = Icons.Default.Add
+    when (imagen) {
+        "Home", "Inici", "Inicio" -> imagenSelec = ImageVector.vectorResource(R.drawable.homein)
+        "Build", "Acoblar", "Ensamblar" -> imagenSelec =
+            ImageVector.vectorResource(R.drawable.buildin)
+
+        "Profile", "Perfil" -> imagenSelec = Icons.Default.AccountCircle
     }
     return imagenSelec
 }

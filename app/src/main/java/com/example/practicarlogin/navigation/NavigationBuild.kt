@@ -6,7 +6,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.example.practicarlogin.PantallasNavegaciones.buildPC
-import com.example.practicarlogin.productos
+import com.example.practicarlogin.pantallasBuild.detalleProducto
+import com.example.practicarlogin.pantallasBuild.productos
 
 @Composable
 fun navWrapperBuild(){
@@ -17,7 +18,14 @@ fun navWrapperBuild(){
         }
         composable<ScreenBuild.procesador> {e ->
             val valor  = e.toRoute<ScreenBuild.procesador>()
-            productos(valor.component)
+            productos(valor.component) {e -> navController.navigate(ScreenBuild.detalleComponente(e))}
         }
+        composable<ScreenBuild.detalleComponente> {e->
+            val componente = e.toRoute<ScreenBuild.detalleComponente>()
+            detalleProducto(componente.componente) { navController.navigate(ScreenBuild.build) {
+                popUpTo<ScreenBuild.build>()
+            } }
+        }
+
     }
 }
