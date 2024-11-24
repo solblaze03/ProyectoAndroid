@@ -41,6 +41,7 @@ import coil3.request.ImageRequest
 import coil3.request.crossfade
 import coil3.request.placeholder
 import com.example.practicarlogin.R
+import com.example.practicarlogin.VM.ComponentViewModel
 import com.example.practicarlogin.fuentes.Fuentes
 import com.example.practicarlogin.language.LenguajeSeleccionado
 import com.example.practicarlogin.piezas.CPU
@@ -51,11 +52,14 @@ val idiomaSeleccionado = LenguajeSeleccionado().idioma()
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun detalleProducto(producto: String, function: () -> Unit) {
+fun detalleProducto(producto: String, viewModel: ComponentViewModel, function: () -> Unit) {
     val component = Gson().fromJson(producto, CPU::class.java)
+
+
+
     Scaffold (
         content = { cargarUI(component) },
-        floatingActionButton = { fab(component.marca) },
+        floatingActionButton = { fab(component,viewModel){ function() } },
         floatingActionButtonPosition = FabPosition.End
     )
 
@@ -211,9 +215,10 @@ fun cargarUI(component: CPU) {
     }
 }
 
-@Composable fun fab(marca : String){
-    val color = if(marca.equals("AMD")){R.color.naranja}else{R.color.azulIntel}
-    FloatingActionButton(onClick = {}, containerColor =  colorResource(color)) {
+@Composable fun fab(cpu: CPU, viewModel: ComponentViewModel, regresar: () -> Unit){
+    viewModel.guardarCPU(cpu)
+    val color = if(cpu.marca.equals("AMD")){R.color.naranja}else{R.color.azulIntel}
+    FloatingActionButton(onClick = {regresar()}, containerColor =  colorResource(color)) {
         Icon(imageVector = Icons.Default.Add, contentDescription = "Añadir")
     }
 }

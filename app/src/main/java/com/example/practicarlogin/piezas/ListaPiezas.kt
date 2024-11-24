@@ -261,5 +261,121 @@ class ListaPiezas {
             )
         )
 
+        val boards = listOf(
+            Board(
+                nombre = "ASUS Prime X370-Pro",
+                marca = "ASUS",
+                socket = "AM4",
+                tipoMemoria = "DDR4",
+                chipset = "X370",
+                cantidadUSB = "6",
+                slotsRam = 4,
+                factorForma = "ATX",
+                puertosSata = 6,
+                puertosM2 = 2,
+                permiteAPU = true,
+                urlImagen = "https://dlcdnimgs.asus.com/websites/global/products/s7csF4UqmJykbmtW/images/kv/main_kv.jpg"
+            ),
+            Board(
+                nombre = "Gigabyte GA-AB350-Gaming 3",
+                marca = "Gigabyte",
+                socket = "AM4",
+                tipoMemoria = "DDR4",
+                chipset = "B350",
+                cantidadUSB = "8",
+                slotsRam = 4,
+                factorForma = "ATX",
+                puertosSata = 6,
+                puertosM2 = 1,
+                permiteAPU = true,
+                urlImagen = "https://static.gigabyte.com/StaticFile/Image/Global/323899f1daacee9614d98d972634de10/Product/16801/Png"
+            ),
+            Board(
+                nombre = "MSI X470 Gaming Plus",
+                marca = "MSI",
+                socket = "AM4",
+                tipoMemoria = "DDR4",
+                chipset = "X470",
+                cantidadUSB = "10",
+                slotsRam = 4,
+                factorForma = "ATX",
+                puertosSata = 6,
+                puertosM2 = 2,
+                permiteAPU = true,
+                urlImagen = "https://asset.msi.com/global/picture/features/MB/Gaming/X470/msi-x470-gaming-plus-cooling01.jpg"
+            ),
+            Board(
+                nombre = "ASRock B450M Steel Legend",
+                marca = "ASRock",
+                socket = "AM4",
+                tipoMemoria = "DDR4",
+                chipset = "B450",
+                cantidadUSB = "8",
+                slotsRam = 4,
+                factorForma = "Micro-ATX",
+                puertosSata = 4,
+                puertosM2 = 2,
+                permiteAPU = true,
+                urlImagen = "https://www.asrock.com/mb/features/POLYRGBLED-B450M%20Steel%20Legend_mobile.fr.jpg"
+            ),
+            Board(
+                nombre = "Biostar Racing X570GT8",
+                marca = "Biostar",
+                socket = "AM4",
+                tipoMemoria = "DDR4",
+                chipset = "X570",
+                cantidadUSB = "10",
+                slotsRam = 4,
+                factorForma = "Mini-ITX",
+                puertosSata = 4,
+                puertosM2 = 1,
+                permiteAPU = true,
+                urlImagen = "https://pics.computerbase.de/8/7/7/1/0/1-1080.eea20f53.jpg"
+            ),
+            Board(
+                nombre = "ASUS ROG Strix Z370-E Gaming",
+                marca = "ASUS",
+                socket = "LGA 1151",
+                tipoMemoria = "DDR4",
+                chipset = "Z370",
+                cantidadUSB = "8",
+                slotsRam = 4,
+                factorForma = "ATX",
+                puertosSata = 6,
+                puertosM2 = 2,
+                permiteAPU = false,
+                urlImagen = "https://pics.computerbase.de/8/7/7/1/0/1-1080.eea20f53.jpg"
+            ),
+            Board(
+                nombre = "Gigabyte B360M DS3H",
+                marca = "Gigabyte",
+                socket = "LGA 1151",
+                tipoMemoria = "DDR4",
+                chipset = "B360",
+                cantidadUSB = "6",
+                slotsRam = 4,
+                factorForma = "ATX",
+                puertosSata = 6,
+                puertosM2 = 1,
+                permiteAPU = false,
+                urlImagen = "https://static.gigabyte.com/StaticFile/Image/Global/e02469ef0d3c79510e1bd96a5815c368/Product/19418/Png"
+            ),
+            Board(
+                nombre = "MSI H370 Gaming Pro Carbon",
+                marca = "MSI",
+                socket = "LGA 1151",
+                tipoMemoria = "DDR4",
+                chipset = "H370",
+                cantidadUSB = "8",
+                slotsRam = 4,
+                factorForma = "Micro-ATX",
+                puertosSata = 4,
+                puertosM2 = 2,
+                permiteAPU = false,
+                urlImagen = "https://asset.msi.com/global/picture/features/MB/Gaming/H370/h370_gaming_pro_carbon_cooling_3840.jpg"
+            )
+        )
+
+
     }
 }

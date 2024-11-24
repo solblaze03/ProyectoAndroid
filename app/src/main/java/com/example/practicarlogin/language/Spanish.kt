@@ -58,7 +58,7 @@ val StringsSpanish = Spanish(
     fuente = "Fuente de alimentación",
     //pantalla cards
     marca = "Marca",
-    nucleos = "Núcleo",
+    nucleos = "Núcleos",
     zocalo = "Zócalo",
     hilos = "Hilos",
     vermas = "Ver más",

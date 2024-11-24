@@ -1,5 +1,6 @@
 package com.example.practicarlogin.navigation
 
+import com.example.practicarlogin.VM.ComponentViewModel
 import com.example.practicarlogin.piezas.CPU
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
