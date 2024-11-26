@@ -196,7 +196,8 @@ class ListaPiezas {
                 "Radeon Vega 8",
                 65.0,
                 "5nm",
-                "https://www.bhphotovideo.com/images/images1000x1000/amd_100_100000592box_ryzen_7_7700_eight_core_1741654.jpg"),
+                "https://www.bhphotovideo.com/images/images1000x1000/amd_100_100000592box_ryzen_7_7700_eight_core_1741654.jpg"
+            ),
             CPU(
                 "Intel Core i3-12100",
                 "Intel",
@@ -210,7 +211,8 @@ class ListaPiezas {
                 "10nm",
                 "https://m.media-amazon.com/images/S/aplus-media-library-service-media/1ed1574e-4d09-49bc-b219-1b264010a839.__CR0,0,970,600_PT0_SX970_V1___.jpg"
             ),
-            CPU("Ryzen 3 5300G",
+            CPU(
+                "Ryzen 3 5300G",
                 "AMD",
                 "AM4",
                 4, 8,
@@ -219,7 +221,8 @@ class ListaPiezas {
                 "Radeon Vega 6",
                 65.0,
                 "7nm",
-                "https://www.tiendaclic.com.ar/81325721-thickbox_default/procesador-amd-ryzen-3-5300-g-4-0-ghz-am-4-4-nucleos.jpg"),
+                "https://www.tiendaclic.com.ar/81325721-thickbox_default/procesador-amd-ryzen-3-5300-g-4-0-ghz-am-4-4-nucleos.jpg"
+            ),
             CPU(
                 "Intel Core i3-10105",
                 "Intel",
@@ -274,7 +277,8 @@ class ListaPiezas {
                 puertosSata = 6,
                 puertosM2 = 2,
                 permiteAPU = true,
-                urlImagen = "https://dlcdnimgs.asus.com/websites/global/products/s7csF4UqmJykbmtW/images/kv/main_kv.jpg"
+                urlImagen = "https://dlcdnimgs.asus.com/websites/global/products/s7csF4UqmJykbmtW/images/kv/main_kv.jpg",
+                precio = 129.99
             ),
             Board(
                 nombre = "Gigabyte GA-AB350-Gaming 3",
@@ -288,7 +292,8 @@ class ListaPiezas {
                 puertosSata = 6,
                 puertosM2 = 1,
                 permiteAPU = true,
-                urlImagen = "https://static.gigabyte.com/StaticFile/Image/Global/323899f1daacee9614d98d972634de10/Product/16801/Png"
+                urlImagen = "https://static.gigabyte.com/StaticFile/Image/Global/323899f1daacee9614d98d972634de10/Product/16801/Png",
+                precio = 109.99
             ),
             Board(
                 nombre = "MSI X470 Gaming Plus",
@@ -302,7 +307,8 @@ class ListaPiezas {
                 puertosSata = 6,
                 puertosM2 = 2,
                 permiteAPU = true,
-                urlImagen = "https://asset.msi.com/global/picture/features/MB/Gaming/X470/msi-x470-gaming-plus-cooling01.jpg"
+                urlImagen = "https://asset.msi.com/global/picture/features/MB/Gaming/X470/msi-x470-gaming-plus-cooling01.jpg",
+                precio = 149.99
             ),
             Board(
                 nombre = "ASRock B450M Steel Legend",
@@ -316,7 +322,8 @@ class ListaPiezas {
                 puertosSata = 4,
                 puertosM2 = 2,
                 permiteAPU = true,
-                urlImagen = "https://www.asrock.com/mb/features/POLYRGBLED-B450M%20Steel%20Legend_mobile.fr.jpg"
+                urlImagen = "https://www.asrock.com/mb/features/POLYRGBLED-B450M%20Steel%20Legend_mobile.fr.jpg",
+                precio = 94.99
             ),
             Board(
                 nombre = "Biostar Racing X570GT8",
@@ -330,7 +337,8 @@ class ListaPiezas {
                 puertosSata = 4,
                 puertosM2 = 1,
                 permiteAPU = true,
-                urlImagen = "https://pics.computerbase.de/8/7/7/1/0/1-1080.eea20f53.jpg"
+                urlImagen = "https://pics.computerbase.de/8/7/7/1/0/1-1080.eea20f53.jpg",
+                precio = 179.99
             ),
             Board(
                 nombre = "ASUS ROG Strix Z370-E Gaming",
@@ -344,7 +352,8 @@ class ListaPiezas {
                 puertosSata = 6,
                 puertosM2 = 2,
                 permiteAPU = false,
-                urlImagen = "https://pics.computerbase.de/8/7/7/1/0/1-1080.eea20f53.jpg"
+                urlImagen = "https://pics.computerbase.de/8/7/7/1/0/1-1080.eea20f53.jpg",
+                precio = 199.99
             ),
             Board(
                 nombre = "Gigabyte B360M DS3H",
@@ -358,7 +367,8 @@ class ListaPiezas {
                 puertosSata = 6,
                 puertosM2 = 1,
                 permiteAPU = false,
-                urlImagen = "https://static.gigabyte.com/StaticFile/Image/Global/e02469ef0d3c79510e1bd96a5815c368/Product/19418/Png"
+                urlImagen = "https://static.gigabyte.com/StaticFile/Image/Global/e02469ef0d3c79510e1bd96a5815c368/Product/19418/Png",
+                precio = 89.99
             ),
             Board(
                 nombre = "MSI H370 Gaming Pro Carbon",
@@ -372,9 +382,78 @@ class ListaPiezas {
                 puertosSata = 4,
                 puertosM2 = 2,
                 permiteAPU = false,
-                urlImagen = "https://asset.msi.com/global/picture/features/MB/Gaming/H370/h370_gaming_pro_carbon_cooling_3840.jpg"
+                urlImagen = "https://asset.msi.com/global/picture/features/MB/Gaming/H370/h370_gaming_pro_carbon_cooling_3840.jpg",
+                precio = 139.99
+            )
+        )//RAM
+
+        val rams = listOf(
+            RAM(
+                nombre = "Corsair Vengeance LPX",
+                tipoMemoria = "DDR4",
+                cantidad = 16,
+                velocidad = 3200,
+                imagen = "https://example.com/corsair_vengeance_lpx.jpg",
+                precio = 79.99
+            ),
+            RAM(
+                nombre = "G.Skill Trident Z RGB",
+                tipoMemoria = "DDR4",
+                cantidad = 32,
+                velocidad = 3600,
+                imagen = "https://example.com/gskill_trident_z_rgb.jpg",
+                precio = 159.99
+            ),
+            RAM(
+                nombre = "Kingston HyperX Fury",
+                tipoMemoria = "DDR4",
+                cantidad = 16,
+                velocidad = 2666,
+                imagen = "https://example.com/kingston_hyperx_fury.jpg",
+                precio = 69.99
+            ),
+            RAM(
+                nombre = "Crucial Ballistix Sport LT",
+                tipoMemoria = "DDR4",
+                cantidad = 8,
+                velocidad = 2400,
+                imagen = "https://example.com/crucial_ballistix_sport_lt.jpg",
+                precio = 39.99
+            ),
+            RAM(
+                nombre = "Patriot Viper Steel",
+                tipoMemoria = "DDR4",
+                cantidad = 16,
+                velocidad = 3200,
+                imagen = "https://example.com/patriot_viper_steel.jpg",
+                precio = 74.99
+            ),
+            RAM(
+                nombre = "Corsair Dominator Platinum RGB",
+                tipoMemoria = "DDR4",
+                cantidad = 64,
+                velocidad = 3200,
+                imagen = "https://example.com/corsair_dominator_platinum_rgb.jpg",
+                precio = 329.99
+            ),
+            RAM(
+                nombre = "Team T-Force Xtreem ARGB",
+                tipoMemoria = "DDR5",
+                cantidad = 32,
+                velocidad = 5200,
+                imagen = "https://example.com/team_tforce_xtreem_argb.jpg",
+                precio = 249.99
+            ),
+            RAM(
+                nombre = "ADATA XPG Lancer RGB",
+                tipoMemoria = "DDR5",
+                cantidad = 16,
+                velocidad = 6000,
+                imagen = "https://example.com/adata_xpg_lancer_rgb.jpg",
+                precio = 189.99
             )
         )
+
 
 
     }

@@ -31,4 +31,7 @@ interface languages {
     val vermas: String
     val agregar : String
     val buscar: String
+    val reloj: String
+    val litografia: String
+
 }

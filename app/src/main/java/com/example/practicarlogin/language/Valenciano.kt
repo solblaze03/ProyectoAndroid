@@ -28,7 +28,7 @@ data class Valenciano(
     override val hilos: String,
     override val vermas: String,
     override val agregar: String,
-    override val buscar: String
+    override val buscar: String, override val reloj: String, override val litografia: String
 ) : languages
 
 val StringsValenciano = Valenciano(
@@ -59,5 +59,7 @@ val StringsValenciano = Valenciano(
     hilos = "Fils",
     vermas = "Veure més",
     agregar = "Agregar",
-    buscar = "Buscar Component"
+    buscar = "Buscar Component",
+    reloj = "Rellotge",
+    litografia = "Litografía"
 )

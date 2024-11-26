@@ -28,7 +28,7 @@ data class English(
     override val hilos: String,
     override val vermas: String,
     override val agregar: String,
-    override val buscar: String
+    override val buscar: String, override val reloj: String, override val litografia: String
 ) : languages
 
 val StringsEnglish = English(
@@ -59,5 +59,7 @@ val StringsEnglish = English(
     hilos = "Threads",
     vermas = "See more",
     agregar = "Add",
-    buscar = "Search component"
+    buscar = "Search component",
+    reloj = "Clock",
+    litografia = "Technology"
 )

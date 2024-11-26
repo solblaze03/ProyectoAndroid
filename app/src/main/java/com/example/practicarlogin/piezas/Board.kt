@@ -12,5 +12,6 @@ data class Board(
     val puertosSata: Int,
     val puertosM2: Int,
     val permiteAPU: Boolean,
-    val urlImagen: String
+    val urlImagen: String,
+    val precio : Double
 )

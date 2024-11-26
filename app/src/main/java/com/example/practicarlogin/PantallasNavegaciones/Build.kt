@@ -42,6 +42,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import cargarBoard
+import cargarInformacion
+import cargarProcesador
 import coil3.compose.AsyncImage
 import com.example.practicarlogin.R
 import com.example.practicarlogin.VM.ComponentViewModel
@@ -49,19 +52,29 @@ import com.example.practicarlogin.fuentes.Fuentes
 import com.example.practicarlogin.language.LenguajeSeleccionado
 import com.example.practicarlogin.language.languages
 import com.example.practicarlogin.languageSelect
+import com.example.practicarlogin.piezas.Board
 import com.example.practicarlogin.piezas.CPU
 
 private var cpuElegido: Boolean = false
+private var boardelegido: Boolean = false
+private var RAMelegido: Boolean = false
+
 @Composable
 fun buildPC(viewModell: ComponentViewModel, navigate: (Int) -> Unit) {
 
 
     val component by viewModell.component.observeAsState()
+    val boardElegida by viewModell.Board.observeAsState()
+    val ram by viewModell.Board.observeAsState()
 
+
+    RAMelegido = ram?.nombre != null
     cpuElegido = component?.nombre != null
+    boardelegido = boardElegida?.nombre != null
 
     val unlockMother by viewModell.procesador.observeAsState(true)
-
+    val unlockRAM by viewModell.RAM.observeAsState(true)
+    val lockProcesador by viewModell.processorOptions.observeAsState(false)
 
     val idioma: languages = LenguajeSeleccionado().idioma()
     LazyColumn(
@@ -91,221 +104,79 @@ fun buildPC(viewModell: ComponentViewModel, navigate: (Int) -> Unit) {
                     cargarInformacion(
                         idioma.procesador,
                         lock = false,
-                        painterResource(R.drawable.proccesor)
-                    ) { navigate(0) }
+                        painterResource(R.drawable.proccesor),
+                        { navigate(0) }
+                    ) { viewModell.cambiarComponente(0) }
                     viewModell.lockBoard()
                 }
-                if(cpuElegido){
+                if (cpuElegido) {
                     viewModell.unlockBoard()
-                    cargarProcesador(component,{viewModell.borrarCPU()}, {navigate(0)})
+                    cargarProcesador(
+                        component,
+                        { viewModell.borrarCPU() },
+                        { navigate(0) },
+                        { viewModell.cambiarComponente(0) },lockProcesador)
                 }
                 Spacer(modifier = Modifier.padding(10.dp))
 
-
                 //Placa base
-                cargarInformacion(
-                    idioma.placabase,
-                    !unlockMother,
-                    painterResource(R.drawable.motherboard)
-                ) { navigate(1) }
 
+                AnimatedVisibility(!boardelegido) {
+                    cargarInformacion(
+                        idioma.placabase,
+                        !unlockMother,
+                        painterResource(R.drawable.motherboard),
+                        { navigate(1) },
+                        { viewModell.cambiarComponente(1) })
+                }
+                if (boardelegido) {
+                    cargarBoard(
+                        boardElegida,
+                        { viewModell.borrarBoard() },
+                        { navigate(1) },
+                        { viewModell.cambiarComponente(1) },
+                        {viewModell.unlockProccesorOptions()},{viewModell.lockRAM()})
+                }
                 Spacer(modifier = Modifier.padding(10.dp))
+                //RAM
                 cargarInformacion(
                     "RAM",
-                    lock = true,
-                    painterResource(R.drawable.ram)
-                ) { navigate(2) }
+                    !unlockRAM,
+                    painterResource(R.drawable.ram),
+                    { navigate(2) }
+                ) { viewModell.cambiarComponente(2) }
                 Spacer(modifier = Modifier.padding(10.dp))
                 cargarInformacion(
                     idioma.Almacenamiento,
                     lock = true,
-                    painterResource(R.drawable.ssd_)
-                ) { navigate(3) }
+                    painterResource(R.drawable.ssd_),
+                    { navigate(3) }
+                ) { viewModell.cambiarComponente(3) }
                 Spacer(modifier = Modifier.padding(10.dp))
                 cargarInformacion(
                     idioma.tarjeta,
                     lock = true,
-                    painterResource(R.drawable.graphic)
-                ) { navigate(4) }
+                    painterResource(R.drawable.graphic),
+                    { navigate(4) }
+                ) { viewModell.cambiarComponente(4) }
                 Spacer(modifier = Modifier.padding(10.dp))
                 cargarInformacion(
                     idioma.caja,
                     lock = true,
-                    painterResource(R.drawable.resource_case)
-                ) { navigate(5) }
+                    painterResource(R.drawable.resource_case),
+                    { navigate(5) }
+                ) { viewModell.cambiarComponente(5) }
                 Spacer(modifier = Modifier.padding(10.dp))
                 cargarInformacion(
                     idioma.fuente,
                     lock = true,
-                    painterResource(R.drawable.power)
-                ) { navigate(6) }
+                    painterResource(R.drawable.power),
+                    { navigate(6) }
+                ) { viewModell.cambiarComponente(6) }
             }
         }
     }
 }
 
-@Composable
-fun cargarProcesador(cpu: CPU?, function: () -> Unit, remplazar: () -> Unit) {
-    OutlinedCard(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(shape = RoundedCornerShape(12.dp))
-            .wrapContentHeight(),
-        colors = CardColors(
-            containerColor = MaterialTheme.colorScheme.onSecondary,
-            contentColor = Color.Transparent,
-            disabledContainerColor = Color.Transparent,
-            disabledContentColor = Color.Transparent
-        )
-    ) {
-        Column(modifier = Modifier.padding(8.dp)) {
-
-            Row {
-                AsyncImage(
-                    model = cpu?.imagen,
-                    contentDescription = "",
-                    modifier = Modifier
-                        .size(95.dp)
-                        .clip(shape = RoundedCornerShape(5.dp)),
-                    contentScale = ContentScale.Crop
-                )
-                Column(modifier = Modifier.padding(start = 10.dp, end = 8.dp)) {
-                    Text(
-                        "${cpu?.nombre}",
-                        color = MaterialTheme.colorScheme.inverseSurface,
-                        fontSize = 14.5.sp,
-                        fontFamily = Fuentes.mulishBold
-                    )
-                    Text(
-                        "${cpu?.precio}€",
-                        color = MaterialTheme.colorScheme.inverseSurface,
-                        fontSize = 14.5.sp,
-                        fontFamily = Fuentes.mulishSemiBold
-                    )
-                    Row {
-                        Text(
-                            "${languageSelect.nucleos}: ${cpu?.nucleos}",
-                            color = MaterialTheme.colorScheme.inverseSurface,
-                            fontSize = 12.sp,
-                            fontFamily = Fuentes.mulishRegular,
-                            modifier = Modifier.weight(1f)
-                        )
-                        Text(
-                            "${languageSelect.hilos}: ${cpu?.nucleos}",
-                            color = MaterialTheme.colorScheme.inverseSurface,
-                            fontSize = 12.sp,
-                            fontFamily = Fuentes.mulishRegular,
-                            modifier = Modifier.weight(1.1f)
-                        )
-
-                    }
-                    Row {
-                        Text(
-                            "Reloj: ${cpu?.frecuencia}GHz",
-                            color = MaterialTheme.colorScheme.inverseSurface,
-                            fontSize = 12.sp,
-                            fontFamily = Fuentes.mulishRegular,
-                            modifier = Modifier.weight(1f)
-                        )
-                        Text(
-                            "TDP: ${cpu?.tdp}w",
-                            color = MaterialTheme.colorScheme.inverseSurface,
-                            fontSize = 12.sp,
-                            fontFamily = Fuentes.mulishRegular,
-                            modifier = Modifier.weight(1.1f)
-                        )
 
 
-                    }
-
-
-                }
-
-            }
-            Spacer(modifier = Modifier.padding(3.dp))
-            Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                OutlinedButton(onClick = {remplazar()},modifier = Modifier.weight(5f)) {
-                    Text(
-                        "Remplazar",
-                        fontFamily = Fuentes.mulishBold,
-                        color = MaterialTheme.colorScheme.inverseSurface
-                    )
-                }
-
-                Spacer(modifier = Modifier.padding(5.dp))
-                IconButton(onClick = {function()},modifier = Modifier.border(width = 0.8.dp, color = MaterialTheme.colorScheme.inverseSurface, shape = RoundedCornerShape(15.dp)).weight(1f).height(37.dp).width(37.dp), colors = IconButtonDefaults.iconButtonColors(containerColor = MaterialTheme.colorScheme.onSecondary) ,content = {
-                    Icon(
-                        imageVector = Icons.Default.Delete,
-                        contentDescription = "Quitar", tint = colorResource(R.color.blue)
-                    )
-                })
-            }
-
-        }
-
-
-    }
-}
-
-@Composable
-fun cargarInformacion(titulo: String, lock: Boolean, image: Painter, navigate: () -> Unit) {
-    OutlinedCard(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(shape = RoundedCornerShape(12.dp))
-            .wrapContentHeight()
-            .clickable {
-                if (!lock) {
-                    navigate()
-                }
-            },
-        colors = CardColors(
-            containerColor = MaterialTheme.colorScheme.onSecondary,
-            contentColor = Color.Transparent,
-            disabledContainerColor = Color.Transparent,
-            disabledContentColor = Color.Transparent
-        )
-    ) {
-        Row(
-            modifier = Modifier.fillMaxSize(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Box(
-                modifier = Modifier
-                    .width(50.dp)
-                    .height(50.dp)
-                    .weight(1f)
-                    .padding(15.dp)
-            ) {
-                Icon(
-                    painter = painterResource(
-                        if (!lock) {
-                            R.drawable.plus_sign
-                        } else {
-                            R.drawable.lock
-                        }
-                    ),
-                    contentDescription = "",
-                    tint = colorResource(R.color.blue)
-                )
-            }
-            Text(
-                titulo,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(3f),
-                textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.inverseSurface,
-                fontFamily = Fuentes.mulishSemiBold
-            )
-            Icon(
-                painter = image,
-                contentDescription = "",
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(10.dp),
-                tint = colorResource(R.color.blue)
-            )
-        }
-    }
-}

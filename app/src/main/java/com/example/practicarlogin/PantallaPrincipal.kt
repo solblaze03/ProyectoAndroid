@@ -94,21 +94,6 @@ fun MyAppContent(
     navigateTopLevelDestination: (myAppLevelDestination) -> Unit
 ) {
 
-    val listState = rememberLazyListState()
-    val coroutineScope = rememberCoroutineScope()
-    var previousIndex by remember { mutableStateOf(0) }
-    val navViewModel: NavigationViewModel = viewModel()
-
-    LaunchedEffect(remember { derivedStateOf { listState.firstVisibleItemIndex } }) {
-        val currentIndex = listState.firstVisibleItemIndex
-        if (currentIndex > previousIndex) {
-            navViewModel.setBottomNavigationVisible(false)
-        } else if (currentIndex < previousIndex) {
-            navViewModel.setBottomNavigationVisible(true)
-        }
-        previousIndex = currentIndex
-    }
-
 
     Row(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
@@ -132,13 +117,12 @@ fun MyAppContent(
             }
 
 
-            val bottomNavVisibility by navViewModel.isBottomNavigationVisible.collectAsState()
-            if (bottomNavVisibility) {
+
                 cargarUI(
                     selectedDestination = selectedDestination,
                     navigateTopLevelDestination = navigateTopLevelDestination
                 )
-            }
+
         }
     }
 }

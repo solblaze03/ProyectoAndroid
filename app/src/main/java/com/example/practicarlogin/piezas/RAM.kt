@@ -5,5 +5,6 @@ data class RAM(
     val tipoMemoria: String,
     val cantidad: Int,
     val velocidad: Int,
-    val imagen: String
+    val imagen: String,
+    val precio: Double
 )

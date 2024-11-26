@@ -4,17 +4,37 @@ import androidx.compose.runtime.MutableState
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.practicarlogin.piezas.Board
 import com.example.practicarlogin.piezas.CPU
+import com.example.practicarlogin.piezas.RAM
+import com.example.practicarlogin.piezas.storage
 
 class ComponentViewModel : ViewModel() {
     private val _component = MutableLiveData<CPU?>()
     val component : LiveData<CPU?> get() = _component
 
+    private val _Board = MutableLiveData<Board?>()
+    val Board : LiveData<Board?> get() = _Board
+
+    private val _ram = MutableLiveData<RAM?>()
+    val ram : LiveData<RAM?> get() = _ram
+
+    private val _storage = MutableLiveData<storage?>()
+    val storage : LiveData<storage?> get() = _storage
+
+
+
+    private val _componentSeleccionado = MutableLiveData<Int>(0)
+    val componentSeleccionado : LiveData<Int> = _componentSeleccionado
 
     private val _procesador = MutableLiveData<Boolean>(false)
     val procesador : LiveData<Boolean> = _procesador
 
-    private val _placaBase = MutableLiveData<Boolean>(true)
+    private val _processorOptions = MutableLiveData<Boolean>(false)
+    val processorOptions : LiveData<Boolean> = _processorOptions
+
+
+    private val _placaBase = MutableLiveData<Boolean>(false)
     val placaBase : LiveData<Boolean> = _placaBase
 
     private val _RAM = MutableLiveData<Boolean>(false)
@@ -37,6 +57,13 @@ class ComponentViewModel : ViewModel() {
     val FuenteAlimentacion : LiveData<Boolean> = _FuenteAlimentacion
 
 
+    fun guardarBoard(board : Board){
+        _Board.value = board
+    }
+    fun borrarBoard(){
+        _Board.value = null
+    }
+
     fun guardarCPU(cpu : CPU){
         _component.value = cpu
     }
@@ -48,6 +75,23 @@ class ComponentViewModel : ViewModel() {
     }
     fun lockBoard(){
         _procesador.value = false
+    }
+    fun unlockRAM(){
+        _RAM.value = true
+    }
+    fun lockRAM(){
+        _RAM.value = false
+    }
+
+    fun lockProccesorOptions(){
+        _processorOptions.value = true
+    }
+    fun unlockProccesorOptions(){
+        _processorOptions.value = false
+    }
+
+    fun cambiarComponente(component : Int){
+        _componentSeleccionado.value = component
     }
 
 }

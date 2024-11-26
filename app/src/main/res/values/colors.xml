@@ -12,4 +12,6 @@
     <color name="fondo">#1f1f1f</color>
     <color name="naranja">#FF5722</color>
     <color name="azulIntel">#0066cc</color>
+    <color name="rojo">#bb0617</color>
+    <color name="verde">#79bd28</color>
 </resources>

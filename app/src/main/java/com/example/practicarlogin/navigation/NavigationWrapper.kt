@@ -8,20 +8,35 @@ import com.example.practicarlogin.Login
 import com.example.practicarlogin.VM.LoginViewModel
 import com.example.practicarlogin.*
 import com.example.practicarlogin.PantallasNavegaciones.buildPC
-val loginViewModel : LoginViewModel = LoginViewModel()
+
+val loginViewModel: LoginViewModel = LoginViewModel()
 
 @Composable
-fun NavigationWrapper(){
+fun NavigationWrapper() {
 
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Login){
-        composable<Login>{
-            Login(loginViewModel) {navController.navigate(pantallaInicial)}
-        }
-        composable<pantallaInicial>{
-            pantallaInicial(loginViewModel)
-        }
+    val opcion = 1
+    if (opcion == 0) {
+        NavHost(navController = navController, startDestination = Login) {
+            composable<Login> {
+                Login(loginViewModel) { navController.navigate(pantallaInicial) }
+            }
+            composable<pantallaInicial> {
+                pantallaInicial(loginViewModel)
+            }
 
 
+        }
+    }else {
+
+        NavHost(navController = navController, startDestination = pantallaInicial) {
+
+            composable<pantallaInicial> {
+                pantallaInicial(loginViewModel)
+            }
+
+
+        }
     }
+
 }
