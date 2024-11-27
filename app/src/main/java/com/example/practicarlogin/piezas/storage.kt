@@ -5,8 +5,9 @@ data class storage(
     val marca: String,
     val tipo: String,
     val tipoDisco: String,
-    val tamaño: Int,
+    val tamaño: String,
     val Vl: String,
     val VE: String,
-    val imagen: String
+    val imagen: String,
+    val precio: Double
 )

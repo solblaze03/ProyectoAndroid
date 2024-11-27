@@ -33,8 +33,11 @@ class ComponentViewModel : ViewModel() {
     private val _processorOptions = MutableLiveData<Boolean>(false)
     val processorOptions : LiveData<Boolean> = _processorOptions
 
-
+    private val _BoardOptions = MutableLiveData<Boolean>(false)
+    val BoardOptions : LiveData<Boolean> = _BoardOptions
     private val _placaBase = MutableLiveData<Boolean>(false)
+
+
     val placaBase : LiveData<Boolean> = _placaBase
 
     private val _RAM = MutableLiveData<Boolean>(false)
@@ -57,19 +60,30 @@ class ComponentViewModel : ViewModel() {
     val FuenteAlimentacion : LiveData<Boolean> = _FuenteAlimentacion
 
 
+
+    //borrar componente y guardar componente
+    fun borrarRAM(){
+        _ram.value = null
+    }
+    fun guardarRAM(ram : RAM){
+        _ram.value  = ram
+    }
+
     fun guardarBoard(board : Board){
         _Board.value = board
     }
     fun borrarBoard(){
         _Board.value = null
     }
-
     fun guardarCPU(cpu : CPU){
         _component.value = cpu
     }
     fun borrarCPU(){
         _component.value = null
     }
+    //Borrar componente
+
+    //Desbloquear candados lista
     fun unlockBoard(){
         _procesador.value = true
     }
@@ -82,14 +96,29 @@ class ComponentViewModel : ViewModel() {
     fun lockRAM(){
         _RAM.value = false
     }
+    fun unlockStorage(){
+        _almacenamiento.value = true
+    }
+    fun lockStorage(){
+        _almacenamiento.value = false
+    }
 
+    //bloquear acceso a eliminar y remplazar
     fun lockProccesorOptions(){
         _processorOptions.value = true
     }
     fun unlockProccesorOptions(){
         _processorOptions.value = false
     }
+    fun lockBoardOptions(){
+        _BoardOptions.value = true
+    }
+    fun unlockBoardOptions(){
+        _BoardOptions.value = false
+    }
 
+
+    //Componente que seleccionamos
     fun cambiarComponente(component : Int){
         _componentSeleccionado.value = component
     }

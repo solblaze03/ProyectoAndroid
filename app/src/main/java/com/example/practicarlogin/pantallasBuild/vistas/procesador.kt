@@ -58,7 +58,6 @@ fun procesador(component: CPU, viewModel: ComponentViewModel, function: () ->  U
 }
 
 
-
 @Composable
 fun cargarUI(component: CPU) {
     LazyColumn(

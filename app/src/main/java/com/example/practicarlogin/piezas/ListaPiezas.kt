@@ -384,76 +384,220 @@ class ListaPiezas {
                 permiteAPU = false,
                 urlImagen = "https://asset.msi.com/global/picture/features/MB/Gaming/H370/h370_gaming_pro_carbon_cooling_3840.jpg",
                 precio = 139.99
+            ),
+            Board(
+                nombre = "PRIME A320M-K",
+                marca = "ASUS",
+                socket = "AM3",
+                tipoMemoria = "DDR4",
+                chipset = "A320",
+                cantidadUSB = "8",
+                slotsRam = 2,
+                factorForma = "Micro-ATX",
+                puertosSata = 4,
+                puertosM2 = 1,
+                permiteAPU = true,
+                urlImagen = "https://mla-s1-p.mlstatic.com/988290-MLA42603802782_072020-F.jpg",
+                precio = 61.95
             )
         )//RAM
 
         val rams = listOf(
             RAM(
-                nombre = "Corsair Vengeance LPX",
+                nombre = "Vengeance LPX",
+                marca = "Corsair",
                 tipoMemoria = "DDR4",
                 cantidad = 16,
                 velocidad = 3200,
-                imagen = "https://example.com/corsair_vengeance_lpx.jpg",
-                precio = 79.99
+                imagen = "https://media.flixcar.com/f360cdn/Corsair-4752184662-vengeance-lpx_09.jpg",
+                precio = 79.99,
             ),
             RAM(
-                nombre = "G.Skill Trident Z RGB",
+                nombre = "Trident Z RGB",
+                marca = "G.Skill",
                 tipoMemoria = "DDR4",
                 cantidad = 32,
                 velocidad = 3600,
-                imagen = "https://example.com/gskill_trident_z_rgb.jpg",
+                imagen = "https://cdna.artstation.com/p/assets/images/images/004/864/514/large/immortal-p-trident-z-rgb-1.jpg?1486835653",
                 precio = 159.99
             ),
             RAM(
-                nombre = "Kingston HyperX Fury",
+                nombre = "HyperX Fury",
+                marca = "Kingston",
                 tipoMemoria = "DDR4",
                 cantidad = 16,
                 velocidad = 2666,
-                imagen = "https://example.com/kingston_hyperx_fury.jpg",
+                imagen = "https://microless.com/cdn/product_description/3623011_1587411654.jpg",
                 precio = 69.99
             ),
             RAM(
-                nombre = "Crucial Ballistix Sport LT",
+                nombre = "Ballistix Sport LT",
+                marca = "Crucial",
                 tipoMemoria = "DDR4",
                 cantidad = 8,
                 velocidad = 2400,
-                imagen = "https://example.com/crucial_ballistix_sport_lt.jpg",
+                imagen = "https://technuovo.com/wp-content/uploads/2017/05/crucial-ballistix-sport-lt-ram-sticks-3.jpg",
                 precio = 39.99
             ),
             RAM(
-                nombre = "Patriot Viper Steel",
+                nombre = "Viper Steel",
+                marca = "Patriot",
                 tipoMemoria = "DDR4",
                 cantidad = 16,
                 velocidad = 3200,
-                imagen = "https://example.com/patriot_viper_steel.jpg",
+                imagen = "https://m.media-amazon.com/images/S/aplus-media-library-service-media/5bd946a5-5ac5-4437-9496-871c17eff816.__CR0,0,970,600_PT0_SX970_V1___.jpg",
                 precio = 74.99
             ),
             RAM(
-                nombre = "Corsair Dominator Platinum RGB",
+                nombre = "Dominator Platinum RGB",
+                marca = "Corsair",
                 tipoMemoria = "DDR4",
                 cantidad = 64,
                 velocidad = 3200,
-                imagen = "https://example.com/corsair_dominator_platinum_rgb.jpg",
+                imagen = "https://th.bing.com/th/id/R.2b19aca1c4abb0a48bdb01361a52ee17?rik=jvm0JEV2RJ%2f14w&pid=ImgRaw&r=0",
                 precio = 329.99
             ),
             RAM(
-                nombre = "Team T-Force Xtreem ARGB",
+                nombre = "Xtreem ARGB",
+                marca = "Team T-Force",
                 tipoMemoria = "DDR5",
                 cantidad = 32,
                 velocidad = 5200,
-                imagen = "https://example.com/team_tforce_xtreem_argb.jpg",
+                imagen = "https://images10.newegg.com/BizIntell/item/20/331/20-331-434/a2_022820.jpg",
                 precio = 249.99
             ),
             RAM(
-                nombre = "ADATA XPG Lancer RGB",
+                nombre = "Lancer RGB",
+                marca = "ADATA XPG",
                 tipoMemoria = "DDR5",
                 cantidad = 16,
                 velocidad = 6000,
-                imagen = "https://example.com/adata_xpg_lancer_rgb.jpg",
+                imagen = "https://th.bing.com/th/id/R.d588fb4cddec5624ec7ea0f8c924525b?rik=4VbCFNnamblwzA&pid=ImgRaw&r=0",
                 precio = 189.99
+            ),
+            RAM(
+                nombre = "Spectrix D50",
+                marca = "ADATA XPG",
+                tipoMemoria = "DDR4",
+                cantidad = 16,
+                velocidad = 3200,
+                imagen = "https://webapi3.adata.com/storage/product/spextrix_d50_1920x1080.jpg",
+                precio = 30.0
             )
         )
 
+        val ssdList = listOf(
+            storage(
+                nombre = "Samsung 970 EVO Plus",
+                marca = "Samsung",
+                tipo = "SSD",
+                tipoDisco = "NVMe",
+                tamaño = "2TB",
+                Vl = "3500 MB/s",
+                VE = "3200 MB/s",
+                imagen = "https://images.idgesg.net/images/article/2019/01/samsung-970-evo-plus-primary-100785851-large.jpg",
+                precio = 145.99
+            ),
+            storage(
+                nombre = "Crucial P5 Plus",
+                marca = "Crucial",
+                tipo = "SSD",
+                tipoDisco = "NVMe",
+                tamaño = "1TB",
+                Vl = "3400 MB/s",
+                VE = "3000 MB/s",
+                imagen = "https://www.crucial.com/content/dam/crucial/ssd-products/p5-plus/images/web/amazon-gallery/en/interoperable-2-en.jpg",
+                precio = 75.99
+            ),
+            storage(
+                nombre = "Kingston A2000",
+                marca = "Kingston",
+                tipo = "SSD",
+                tipoDisco = "NVMe",
+                tamaño = "1TB",
+                Vl = "2200 MB/s",
+                VE = "2000 MB/s",
+                imagen = "https://images.idgesg.net/images/article/2019/08/kingston-a2000-primary-100808110-large.jpg",
+                precio = 67.55
+            ),
+            storage(
+                nombre = "Intel 660p",
+                marca = "Intel",
+                tipo = "SSD",
+                tipoDisco = "NVMe",
+                tamaño = "1TB",
+                Vl = "1800 MB/s",
+                VE = "1350 MB/s",
+                imagen = "https://cdn.mos.cms.futurecdn.net/NpQwDrkPApjquTDNQuSUw.jpg",
+                precio = 80.55
+            ),
+            storage(
+                nombre = "Samsung 860 EVO",
+                marca = "Samsung",
+                tipo = "SSD",
+                tipoDisco = "SATA",
+                tamaño = "1TB",
+                Vl = "550 MB/s",
+                VE = "520 MB/s",
+                imagen = "https://www.techadvisor.com/wp-content/uploads/2022/06/samsung_860_evo_ssd_review.jpg?quality=50&strip=all",
+                precio = 65.99
+            ),
+            storage(
+                nombre = "Crucial MX500",
+                marca = "Crucial",
+                tipo = "SSD",
+                tipoDisco = "SATA",
+                tamaño = "1TB",
+                Vl = "560 MB/s",
+                VE = "510 MB/s",
+                imagen = "https://th.bing.com/th/id/R.bf92fb5bb18b42bb900ec8c754327938?rik=L3ISLFbEFSutgw&pid=ImgRaw&r=0",
+                precio = 55.15
+            ),
+            storage(
+                nombre = "Kingston A400",
+                marca = "Kingston",
+                tipo = "SSD",
+                tipoDisco = "SATA",
+                tamaño = "480GB",
+                Vl = "500 MB/s",
+                VE = "450 MB/s",
+                imagen = "https://3.bp.blogspot.com/-y9qc7SY8WkU/WPrvY5dP2vI/AAAAAAAAIRs/sm88j19_xl0FYLqMQnbOIEXTuxs42e5zQCLcB/s1600/Kingston%2BA400%2B%25288%2529.JPG",
+                precio = 67.88
+            ),
+            storage(
+                nombre = "Intel 545s",
+                marca = "Intel",
+                tipo = "SSD",
+                tipoDisco = "SATA",
+                tamaño = "256GB",
+                Vl = "550 MB/s",
+                VE = "500 MB/s",
+                imagen = "https://c1.neweggimages.com/ProductImageCompressAll1280/20-167-429-V05.jpg",
+                precio = 21.99
+            ),
+            storage(
+                nombre = "Samsung 970 EVO",
+                marca = "Samsung",
+                tipo = "SSD",
+                tipoDisco = "NVMe",
+                tamaño = "500GB",
+                Vl = "3500 MB/s",
+                VE = "3200 MB/s",
+                imagen = "https://th.bing.com/th/id/OIP._3xy_z6jjoIzCvcAFNuLfgAAAA?rs=1&pid=ImgDetMain",
+                precio = 39.99
+            ),
+            storage(
+                nombre = "Crucial P5",
+                marca = "Crucial",
+                tipo = "SSD",
+                tipoDisco = "NVMe",
+                tamaño = "512GB",
+                Vl = "3400 MB/s",
+                VE = "3000 MB/s",
+                imagen = "https://pics.computerbase.de/9/8/4/4/7-f31ad8e09a08b1d7/9-1080.9960c0e9.jpg",
+                precio = 45.99
+            )
+        )
 
 
     }

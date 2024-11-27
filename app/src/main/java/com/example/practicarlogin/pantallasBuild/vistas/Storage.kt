@@ -51,26 +51,26 @@ import com.example.practicarlogin.VM.ComponentViewModel
 import com.example.practicarlogin.fuentes.Fuentes
 import com.example.practicarlogin.piezas.Board
 import com.example.practicarlogin.piezas.RAM
+import com.example.practicarlogin.piezas.storage
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun ViewRAM(
-    component: RAM,
+fun Storage(
+    component: storage,
     viewModel: ComponentViewModel,
     volver: () -> Unit,
-
-) {
+    ) {
     val board by viewModel.Board.observeAsState()
     Scaffold(
-        content = { contentRAM(component,board) },
-        floatingActionButton = { fabRAM(component, viewModel,{ volver()}) },
+        content = { contentStorage(component,board) },
+        floatingActionButton = { fabStorage(component, viewModel,{ volver()}) },
         floatingActionButtonPosition = FabPosition.End
     )
 }
 
 
 @Composable
-fun contentRAM(component: RAM, board: Board?) {
+fun contentStorage(component: storage, board: Board?) {
 
 
 
@@ -182,14 +182,14 @@ fun contentRAM(component: RAM, board: Board?) {
                     Row {
 
                         Text(
-                            "cantidad: ${component.cantidad}GB",
+                            "cantidad: ${component.tamaño}GB",
                             modifier = Modifier.weight(1f),
                             fontSize = 15.sp,
                             fontFamily = Fuentes.mulishRegular,
                             color = MaterialTheme.colorScheme.inverseSurface
                         )
                         Text(
-                            "Velocidad: ${component.velocidad}",
+                            "Velocidad: ${component.VE}",
                             modifier = Modifier.weight(1f),
                             fontSize = 15.sp,
                             color = MaterialTheme.colorScheme.inverseSurface
@@ -198,7 +198,7 @@ fun contentRAM(component: RAM, board: Board?) {
                     }
                     Row {
                         Text(
-                            "Tipo: ${component.tipoMemoria}",
+                            "Tipo: ${component.tipo}",
                             modifier = Modifier.weight(1.1f),
                             fontSize = 15.sp,
                             color = MaterialTheme.colorScheme.inverseSurface
@@ -231,8 +231,8 @@ fun contentRAM(component: RAM, board: Board?) {
 }
 
 @Composable
-fun fabRAM(
-    ram: RAM,
+fun fabStorage(
+    ram: storage,
     viewModel: ComponentViewModel,
     function: () -> Unit,
 ) {
@@ -246,7 +246,8 @@ fun fabRAM(
         }
     )
     FloatingActionButton(
-        onClick = {viewModel.lockBoardOptions();viewModel.unlockStorage(); viewModel.cambiarComponente(2); viewModel.guardarRAM(ram) ; function()},
+        // viewModel.lockBoardOptions();viewModel.unlockStorage(); viewModel.cambiarComponente(2); viewModel.guardarRAM(ram) ; function()
+        onClick = {},
         containerColor = color
     ) {
         Icon(imageVector = Icons.Default.Add, contentDescription = "Añadir")
