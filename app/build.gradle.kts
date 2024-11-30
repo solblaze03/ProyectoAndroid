@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.jetbrainsKotlinSerialization)
+    id("com.google.gms.google-services")
+
 }
 
 android {
@@ -63,4 +65,9 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
     implementation(libs.gson)
+    implementation(libs.firebase.database)
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.firestore)
+    implementation(platform(libs.firebase.bom))
+
 }

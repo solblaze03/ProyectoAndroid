@@ -1,6 +1,9 @@
 package com.example.practicarlogin.navigation
 
+import androidx.compose.foundation.background
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -17,7 +20,7 @@ fun NavigationWrapper() {
     val navController = rememberNavController()
     val opcion = 1
     if (opcion == 0) {
-        NavHost(navController = navController, startDestination = Login) {
+        NavHost(navController = navController, startDestination = Login, modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
             composable<Login> {
                 Login(loginViewModel) { navController.navigate(pantallaInicial) }
             }

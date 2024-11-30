@@ -10,29 +10,41 @@ import com.example.practicarlogin.language.LenguajeSeleccionado
 import com.example.practicarlogin.pantallasBuild.BuscarComponente.ListaAlmacenamiento
 import com.example.practicarlogin.pantallasBuild.BuscarComponente.ListaProcesador
 import com.example.practicarlogin.pantallasBuild.BuscarComponente.ListaRAM
+import com.example.practicarlogin.ui.theme.PracticarLoginTheme
 
 private val language = LenguajeSeleccionado().idioma()
 
 @Composable
 fun productos(
     component: Int,
-    function: (String) -> Unit,
+    ComponenteSerializado: (String) -> Unit,
     Volver: () -> Unit,
     viewModel: ComponentViewModel
 ) {
+    PracticarLoginTheme {
 
+        val componentSeleccionado by viewModel.componentSeleccionado.observeAsState(initial = 0)
+        Log.i("componente", "$componentSeleccionado")
 
-    val componentSeleccionado by viewModel.componentSeleccionado.observeAsState(initial = 0)
-    Log.i("componente", "$componentSeleccionado")
+        when (componentSeleccionado) {
+            0 -> ListaProcesador(ComponenteSerializado, viewModel, Volver, component)
+            1 -> MotherBoardpc(
+                ComponenteSerializado,
+                viewModel,
+                Volver
+            ) { viewModel.lockProccesorOptions() }
 
-    when (componentSeleccionado){
-        0 -> ListaProcesador(function, viewModel, Volver, component)
-        1-> MotherBoardpc(function, viewModel, Volver) { viewModel.lockProccesorOptions() }
-        2-> ListaRAM(function,viewModel,Volver,component) { viewModel.lockBoardOptions() }
-        3 -> ListaAlmacenamiento(function,viewModel,Volver,component) {}
+            2 -> ListaRAM(
+                ComponenteSerializado,
+                viewModel,
+                Volver,
+                component
+            ) { viewModel.lockBoardOptions() }
 
+            3 -> ListaAlmacenamiento(ComponenteSerializado, viewModel, Volver, component) {}
+
+        }
     }
-
 
 }
 

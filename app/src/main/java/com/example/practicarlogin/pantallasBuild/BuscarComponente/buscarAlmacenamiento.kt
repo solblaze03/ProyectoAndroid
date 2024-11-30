@@ -198,6 +198,7 @@ fun ListaAlmacenamiento(
                                     Button(
                                         onClick = {
                                             // viewModel.unlockStorage(); lockBoard(); viewModel.guardarRAM(e); Volver(); viewModel.cambiarComponente( 1 )
+                                            viewModel.guardarAlmacenamiento(e); Volver();viewModel.cambiarComponente(2)
                                         },
                                         modifier = Modifier
                                             .weight(1.5f)

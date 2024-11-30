@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "279478700226",
+    "project_id": "componentes-e7232",
+    "storage_bucket": "componentes-e7232.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:279478700226:android:c07e4128129f9daabe535b",
+        "android_client_info": {
+          "package_name": "com.example.practicarlogin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmLXQ3rIb358QuOwDRVbX9B8nq6irXsDg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

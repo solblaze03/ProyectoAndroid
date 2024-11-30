@@ -1,6 +1,9 @@
 package com.example.practicarlogin.navigation
 
+import androidx.compose.foundation.background
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -17,7 +20,8 @@ private val viewModel: ComponentViewModel = ComponentViewModel()
 fun navWrapperBuild() {
 
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = ScreenBuild.build) {
+    NavHost(navController = navController, startDestination = ScreenBuild.build, modifier = Modifier.background(
+        MaterialTheme.colorScheme.background)) {
         composable<ScreenBuild.build> {
             buildPC(viewModel) { component ->
                 navController.navigate(

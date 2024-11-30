@@ -26,6 +26,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -67,6 +68,10 @@ fun ListaProcesador(
             .background(MaterialTheme.colorScheme.background)
 
     ) {
+
+        val lista by viewModel.cpus.observeAsState(emptyList())
+
+
         var busqueda by remember { mutableStateOf("") }
         Spacer(modifier = Modifier.padding(top = 50.dp))
         OutlinedTextField(
@@ -90,7 +95,7 @@ fun ListaProcesador(
 
         val filtrarItems = remember(busqueda) {
 
-            ListaPiezas.procesadores.filter { e ->
+            lista.filter { e ->
                 e.nombre.contains(
                     busqueda,
                     ignoreCase = true

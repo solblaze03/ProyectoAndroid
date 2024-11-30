@@ -134,11 +134,11 @@ fun contentStorage(component: storage, board: Board?) {
                                     )
                                 )
                             }
-                            var painter : Painter = if (component.marca.equals("Corsair")) {
-                                painterResource(R.drawable.corsair)
+                            var painter : Painter = if (component.marca.equals("Samsung")) {
+                                painterResource(R.drawable.samsung)
                             }else if (component.marca.equals("G.Skill")){
                                 painterResource(R.drawable.gskill)
-                            }else if (component.marca.equals("Kingstone")){
+                            }else if (component.marca.equals("Kingstone") || component.marca.equals("Kingston") ){
                                 painterResource(R.drawable.kingstone)
                             }else if(component.marca.equals("Crucial")){
                                 painterResource(R.drawable.crucial)
@@ -146,8 +146,10 @@ fun contentStorage(component: storage, board: Board?) {
                                 painterResource(R.drawable.patriot)
                             }else if(component.marca.equals("Team T-Force")){
                                 painterResource(R.drawable.tforce)
+                            }else if(component.marca.equals("Intel")){
+                                painterResource(R.drawable.intellogo)
                             }else{
-                                painterResource(R.drawable.xpg)
+                                painterResource(R.drawable.logo)
                             }
 
                             Image(
@@ -182,7 +184,7 @@ fun contentStorage(component: storage, board: Board?) {
                     Row {
 
                         Text(
-                            "cantidad: ${component.tamaño}GB",
+                            "cantidad: ${component.tamaño}",
                             modifier = Modifier.weight(1f),
                             fontSize = 15.sp,
                             fontFamily = Fuentes.mulishRegular,

@@ -41,6 +41,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.practicarlogin.DBFirebase.bd
 import com.example.practicarlogin.VM.LoginViewModel
 import com.example.practicarlogin.fuentes.Fuentes
 import com.example.practicarlogin.language.StringsSpanish
@@ -50,6 +51,9 @@ import com.example.practicarlogin.language.languages
 import com.example.practicarlogin.navigation.NavigationWrapper
 import com.example.practicarlogin.prefs.prefs
 import com.example.practicarlogin.ui.theme.PracticarLoginTheme
+import com.google.firebase.Firebase
+import com.google.firebase.FirebaseApp
+import com.google.firebase.initialize
 
 class MainActivity : ComponentActivity() {
 
@@ -59,6 +63,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             PracticarLoginTheme {
+                FirebaseApp.initializeApp(LocalContext.current)
+                    //bd()
                     NavigationWrapper()
             }
         }
