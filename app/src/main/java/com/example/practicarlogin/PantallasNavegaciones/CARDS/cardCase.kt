@@ -34,15 +34,16 @@ import com.example.practicarlogin.R
 import com.example.practicarlogin.fuentes.Fuentes
 import com.example.practicarlogin.languageSelect
 import com.example.practicarlogin.piezas.CPU
+import com.example.practicarlogin.piezas.Caja
 import com.example.practicarlogin.piezas.Graphic
 
 @Composable
-fun cargarGrafica(
-    graphic: Graphic?,
+fun cargarCase(
+    caja: Caja?,
     function: () -> Unit,
     remplazar: () -> Unit,
     cambiarComponente: () -> Unit,
-    lockCase: () -> Unit
+    lockPsu: () -> Unit
 ) {
     OutlinedCard(
         modifier = Modifier
@@ -60,7 +61,7 @@ fun cargarGrafica(
 
             Row {
                 AsyncImage(
-                    model = graphic?.imagen,
+                    model = caja?.imagen,
                     contentDescription = "",
                     modifier = Modifier
                         .size(95.dp)
@@ -69,27 +70,27 @@ fun cargarGrafica(
                 )
                 Column(modifier = Modifier.padding(start = 10.dp, end = 8.dp)) {
                     Text(
-                        "${graphic?.nombre}",
+                        "${caja?.nombre}",
                         color = MaterialTheme.colorScheme.inverseSurface,
                         fontSize = 14.5.sp,
                         fontFamily = Fuentes.mulishBold
                     )
                     Text(
-                        "${graphic?.precio}€",
+                        "${caja?.precio}€",
                         color = MaterialTheme.colorScheme.inverseSurface,
                         fontSize = 14.5.sp,
                         fontFamily = Fuentes.mulishSemiBold
                     )
                     Row {
                         Text(
-                            "Tipo: ${graphic?.tipoMemoria}",
+                            "Peso: ${caja?.peso}",
                             color = MaterialTheme.colorScheme.inverseSurface,
                             fontSize = 12.sp,
                             fontFamily = Fuentes.mulishRegular,
                             modifier = Modifier.weight(1.1f)
                         )
                         Text(
-                            "Marca: ${graphic?.marca}",
+                            "Marca: ${caja?.marca}",
                             color = MaterialTheme.colorScheme.inverseSurface,
                             fontSize = 12.sp,
                             fontFamily = Fuentes.mulishRegular,
@@ -99,14 +100,14 @@ fun cargarGrafica(
                     }
                     Row {
                         Text(
-                            "RTX: ${graphic?.rtx}",
+                            "RGB: ${caja?.rgb}",
                             color = MaterialTheme.colorScheme.inverseSurface,
                             fontSize = 12.sp,
                             fontFamily = Fuentes.mulishRegular,
                             modifier = Modifier.weight(1.1f)
                         )
                         Text(
-                            "TDP: ${graphic?.consumo}w",
+                            "FANs: ${caja?.ventiladores}w",
                             color = MaterialTheme.colorScheme.inverseSurface,
                             fontSize = 12.sp,
                             fontFamily = Fuentes.mulishRegular,
@@ -141,7 +142,7 @@ fun cargarGrafica(
 
                 Spacer(modifier = Modifier.padding(5.dp))
                 IconButton(
-                    onClick = { lockCase();function() },
+                    onClick = { lockPsu();function() },
                     modifier = Modifier
                         .border(
                             width = 0.8.dp,

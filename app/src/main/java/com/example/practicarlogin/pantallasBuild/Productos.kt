@@ -13,6 +13,7 @@ import com.example.practicarlogin.language.LenguajeSeleccionado
 import com.example.practicarlogin.pantallasBuild.BuscarComponente.ListaAlmacenamiento
 import com.example.practicarlogin.pantallasBuild.BuscarComponente.ListaProcesador
 import com.example.practicarlogin.pantallasBuild.BuscarComponente.ListaRAM
+import com.example.practicarlogin.pantallasBuild.BuscarComponente.buscarChasis
 import com.example.practicarlogin.pantallasBuild.BuscarComponente.buscarGrafica
 import com.example.practicarlogin.ui.theme.PracticarLoginTheme
 
@@ -63,6 +64,7 @@ fun productos(
                 component
             )
             4 -> buscarGrafica(ComponenteSerializado,viewModel,Volver,component)
+            5 -> buscarChasis(ComponenteSerializado,viewModel,Volver,component)
 
         }
     }

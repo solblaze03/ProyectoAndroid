@@ -3,7 +3,6 @@ package com.example.practicarlogin.PantallasNavegaciones
 import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -13,22 +12,20 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cargarBoard
+import cargarCase
 import cargarGrafica
 import cargarInformacion
 import cargarProcesador
@@ -39,7 +36,6 @@ import com.example.practicarlogin.VM.ComponentViewModel
 import com.example.practicarlogin.fuentes.Fuentes
 import com.example.practicarlogin.language.LenguajeSeleccionado
 import com.example.practicarlogin.language.languages
-import com.example.practicarlogin.pantallasBuild.vistas.viewGrafica
 import com.example.practicarlogin.ui.theme.PracticarLoginTheme
 
 private var cpuElegido: Boolean = false
@@ -47,6 +43,7 @@ private var boardelegido: Boolean = false
 private var RAMelegido: Boolean = false
 private var Storageelegido: Boolean = false
 private var GraphicElegida: Boolean = false
+private var CaseElegida: Boolean = false
 private val idioma: languages = LenguajeSeleccionado().idioma()
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -99,6 +96,7 @@ fun content(viewModell: ComponentViewModel, navigate: (Int) -> Unit) {
     val ram by viewModell.ram.observeAsState()
     val almacenamiento by viewModell.storage.observeAsState()
     val grafica by viewModell.graphic.observeAsState()
+    val case by viewModell.chasis.observeAsState()
 
     //Si el usuario eligio un componente
     RAMelegido = ram?.nombre != null
@@ -106,6 +104,7 @@ fun content(viewModell: ComponentViewModel, navigate: (Int) -> Unit) {
     boardelegido = boardElegida?.nombre != null
     Storageelegido = almacenamiento?.nombre != null
     GraphicElegida = grafica?.nombre != null
+    CaseElegida = case?.nombre != null
 
     //Desbloquear candado pantalla build
     val unlockMother by viewModell.procesador.observeAsState(true)
@@ -113,9 +112,11 @@ fun content(viewModell: ComponentViewModel, navigate: (Int) -> Unit) {
     val unlockStorage by viewModell.almacenamiento.observeAsState(true)
     val unlockGrafica by viewModell.tarjeta.observeAsState(true)
     val unlockCase by viewModell.caja.observeAsState(true)
+    val unlockpsu by viewModell.psu.observeAsState(true)
     //Bloquear Opciones de remplazar y eliminar
     val lockProcesador by viewModell.processorOptions.observeAsState(false)
     val lockBoard by viewModell.BoardOptions.observeAsState(false)
+
 
 
 
@@ -238,23 +239,33 @@ fun content(viewModell: ComponentViewModel, navigate: (Int) -> Unit) {
                         grafica,
                         { viewModell.borrarGrafica() },
                         { navigate(4) },
-                        { viewModell.cambiarComponente(4) },{viewModell.lockCase()})
+                        { viewModell.cambiarComponente(4) },
+                        { viewModell.lockCase() })
                 }
 
                 Spacer(modifier = Modifier.padding(10.dp))
                 //Caja
-                cargarInformacion(
-                    idioma.caja,
-                    !unlockCase,
-                    painterResource(R.drawable.resource_case),
-                    { navigate(5) }
-                ) { viewModell.cambiarComponente(5) }
-
+                AnimatedVisibility(!CaseElegida) {
+                    cargarInformacion(
+                        idioma.caja,
+                        !unlockCase,
+                        painterResource(R.drawable.resource_case),
+                        { navigate(5) }
+                    ) { viewModell.cambiarComponente(5) }
+                }
+                if (CaseElegida) {
+                    cargarCase(
+                        case,
+                        { viewModell.borrarCaja() },
+                        { navigate(5) },
+                        { viewModell.cambiarComponente(5) },
+                        { viewModell.lockPsu() })
+                }
 
                 Spacer(modifier = Modifier.padding(10.dp))
                 cargarInformacion(
                     idioma.fuente,
-                    lock = true,
+                    !unlockpsu,
                     painterResource(R.drawable.power),
                     { navigate(6) }
                 ) { viewModell.cambiarComponente(6) }

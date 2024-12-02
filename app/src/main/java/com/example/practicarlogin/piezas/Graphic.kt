@@ -10,5 +10,7 @@ data class Graphic(
     val rtx: Boolean,
     val conectoresPantalla: String,
     val precio: Double,
+    val altura : Double,
+    val longitud : Double,
     val ensamblador: String
 )

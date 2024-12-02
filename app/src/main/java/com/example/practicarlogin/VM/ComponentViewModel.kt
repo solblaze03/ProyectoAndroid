@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.practicarlogin.piezas.Board
 import com.example.practicarlogin.piezas.CPU
+import com.example.practicarlogin.piezas.Caja
 import com.example.practicarlogin.piezas.Graphic
 import com.example.practicarlogin.piezas.RAM
 import com.example.practicarlogin.piezas.storage
@@ -64,6 +65,8 @@ class ComponentViewModel : ViewModel() {
     private val _graphic = MutableLiveData<Graphic?>()
     val graphic : LiveData<Graphic?> = _graphic
 
+    private val _chasis = MutableLiveData<Caja?>()
+    val chasis : LiveData<Caja?> = _chasis
 
 
     private val _componentSeleccionado = MutableLiveData<Int>(0)
@@ -101,6 +104,8 @@ class ComponentViewModel : ViewModel() {
     private val _caja = MutableLiveData<Boolean>(false)
     val caja: LiveData<Boolean> = _caja
 
+    private val _psu = MutableLiveData<Boolean>(false)
+    val psu : LiveData<Boolean> = _psu
 
     private val _FuenteAlimentacion = MutableLiveData<Boolean>(false)
     val FuenteAlimentacion: LiveData<Boolean> = _FuenteAlimentacion
@@ -109,6 +114,13 @@ class ComponentViewModel : ViewModel() {
 
 
     //borrar componente y guardar componente
+
+    fun guardarCaja(chasis: Caja){
+        _chasis.value = chasis
+    }
+    fun borrarCaja(){
+        _chasis.value = null
+    }
 
     fun guardarGrafica(grafica: Graphic){
         _graphic.value = grafica
@@ -188,6 +200,12 @@ class ComponentViewModel : ViewModel() {
     }
     fun lockCase(){
         _caja.value = false
+    }
+    fun unlockPsu(){
+        _psu.value = true
+    }
+    fun lockPsu(){
+        _psu.value = false
     }
 
     //bloquear acceso a eliminar y remplazar
