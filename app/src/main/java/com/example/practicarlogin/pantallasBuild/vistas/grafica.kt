@@ -1,5 +1,7 @@
 package com.example.practicarlogin.pantallasBuild.vistas
 
+import com.example.practicarlogin.piezas.Graphic
+
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -51,26 +53,26 @@ import com.example.practicarlogin.VM.ComponentViewModel
 import com.example.practicarlogin.fuentes.Fuentes
 import com.example.practicarlogin.piezas.Board
 import com.example.practicarlogin.piezas.RAM
-import com.example.practicarlogin.piezas.storage
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun Storage(
-    component: storage,
+fun viewGrafica(
+    component: Graphic,
     viewModel: ComponentViewModel,
     volver: () -> Unit,
+
     ) {
     val board by viewModel.Board.observeAsState()
     Scaffold(
-        content = { contentStorage(component,board) },
-        floatingActionButton = { fabStorage(component, viewModel,{ volver()}) },
+        content = { contentGraphic(component,board) },
+        floatingActionButton = { fabGraphic(component, viewModel,{ volver()}) },
         floatingActionButtonPosition = FabPosition.End
     )
 }
 
 
 @Composable
-fun contentStorage(component: storage, board: Board?) {
+fun contentGraphic(component: Graphic, board: Board?) {
 
 
 
@@ -134,11 +136,11 @@ fun contentStorage(component: storage, board: Board?) {
                                     )
                                 )
                             }
-                            var painter : Painter = if (component.marca.equals("Samsung")) {
-                                painterResource(R.drawable.samsung)
+                            var painter : Painter = if (component.marca.equals("Corsair")) {
+                                painterResource(R.drawable.corsair)
                             }else if (component.marca.equals("G.Skill")){
                                 painterResource(R.drawable.gskill)
-                            }else if (component.marca.equals("Kingstone") || component.marca.equals("Kingston") ){
+                            }else if (component.marca.equals("Kingstone")){
                                 painterResource(R.drawable.kingstone)
                             }else if(component.marca.equals("Crucial")){
                                 painterResource(R.drawable.crucial)
@@ -146,10 +148,8 @@ fun contentStorage(component: storage, board: Board?) {
                                 painterResource(R.drawable.patriot)
                             }else if(component.marca.equals("Team T-Force")){
                                 painterResource(R.drawable.tforce)
-                            }else if(component.marca.equals("Intel")){
-                                painterResource(R.drawable.intellogo)
                             }else{
-                                painterResource(R.drawable.logo)
+                                painterResource(R.drawable.xpg)
                             }
 
                             Image(
@@ -184,14 +184,14 @@ fun contentStorage(component: storage, board: Board?) {
                     Row {
 
                         Text(
-                            "cantidad: ${component.tamaño}",
+                            "Cantidad: ${component.vram}GB",
                             modifier = Modifier.weight(1f),
                             fontSize = 15.sp,
                             fontFamily = Fuentes.mulishRegular,
                             color = MaterialTheme.colorScheme.inverseSurface
                         )
                         Text(
-                            "Velocidad: ${component.VE}",
+                            "Ensamblador: ${component.ensamblador}",
                             modifier = Modifier.weight(1f),
                             fontSize = 15.sp,
                             color = MaterialTheme.colorScheme.inverseSurface
@@ -200,7 +200,7 @@ fun contentStorage(component: storage, board: Board?) {
                     }
                     Row {
                         Text(
-                            "Tipo: ${component.tipo}",
+                            "Tipo: ${component.tipoMemoria}",
                             modifier = Modifier.weight(1.1f),
                             fontSize = 15.sp,
                             color = MaterialTheme.colorScheme.inverseSurface
@@ -233,23 +233,23 @@ fun contentStorage(component: storage, board: Board?) {
 }
 
 @Composable
-fun fabStorage(
-    storage: storage,
+fun fabGraphic(
+    grafica: Graphic,
     viewModel: ComponentViewModel,
     function: () -> Unit,
 ) {
     val color = colorResource(
-        if (storage.marca.equals("Gigabyte")) {
+        if (grafica.ensamblador.equals("Gigabyte")) {
             R.color.azulIntel
-        } else if(storage.marca.equals("ASRock")){
+        } else if(grafica.ensamblador.equals("ASRock")){
             R.color.verde
         }else{
             R.color.rojo
         }
     )
     FloatingActionButton(
-        // viewModel.lockBoardOptions();viewModel.unlockStorage(); viewModel.cambiarComponente(2); viewModel.guardarRAM(ram) ; function()
-        onClick = {viewModel.unlockGraphic(); viewModel.cambiarComponente(3);viewModel.guardarAlmacenamiento(storage);function()},
+        //viewModel.lockBoardOptions();viewModel.unlockStorage(); viewModel.cambiarComponente(2); viewModel.guardarRAM(ram) ; function()
+        onClick = {viewModel.unlockCase();function();viewModel.guardarGrafica(grafica)},
         containerColor = color
     ) {
         Icon(imageVector = Icons.Default.Add, contentDescription = "Añadir")

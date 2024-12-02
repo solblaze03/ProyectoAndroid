@@ -1,7 +1,4 @@
-package com.example.practicarlogin.PantallasNavegaciones.CARDS
-
-import com.example.practicarlogin.piezas.storage
-
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,7 +11,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.Icon
@@ -25,34 +21,28 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
 import com.example.practicarlogin.R
 import com.example.practicarlogin.fuentes.Fuentes
-import com.example.practicarlogin.piezas.Board
-import com.example.practicarlogin.piezas.RAM
+import com.example.practicarlogin.languageSelect
+import com.example.practicarlogin.piezas.CPU
+import com.example.practicarlogin.piezas.Graphic
 
 @Composable
-fun cargarStorage(
-    almacenamientoElegida: storage?,
-    BorrarAlmacenamiento: () -> Unit,
-    navigate: () -> Unit,
-    cambiarComponente: () -> Unit,
-    lockGraphic: () -> Unit,
-    boardElegida: Board?
+fun cargarGrafica(
+    graphic: Graphic?,
+    function: () -> Unit,
+    remplazar: () -> Unit,
+    cambiarProcesador: () -> Unit,
+    lockCase: () -> Unit
 ) {
     OutlinedCard(
         modifier = Modifier
@@ -70,7 +60,7 @@ fun cargarStorage(
 
             Row {
                 AsyncImage(
-                    model = almacenamientoElegida?.imagen,
+                    model = graphic?.imagen,
                     contentDescription = "",
                     modifier = Modifier
                         .size(95.dp)
@@ -79,27 +69,27 @@ fun cargarStorage(
                 )
                 Column(modifier = Modifier.padding(start = 10.dp, end = 8.dp)) {
                     Text(
-                        "${almacenamientoElegida?.nombre}",
+                        "${graphic?.nombre}",
                         color = MaterialTheme.colorScheme.inverseSurface,
                         fontSize = 14.5.sp,
                         fontFamily = Fuentes.mulishBold
                     )
                     Text(
-                        "${almacenamientoElegida?.precio}€",
+                        "${graphic?.precio}€",
                         color = MaterialTheme.colorScheme.inverseSurface,
                         fontSize = 14.5.sp,
                         fontFamily = Fuentes.mulishSemiBold
                     )
                     Row {
                         Text(
-                            "Cantidad: ${almacenamientoElegida?.tamaño}",
+                            "Tipo: ${graphic?.tipoMemoria}",
                             color = MaterialTheme.colorScheme.inverseSurface,
                             fontSize = 12.sp,
                             fontFamily = Fuentes.mulishRegular,
                             modifier = Modifier.weight(1.1f)
                         )
                         Text(
-                            "${almacenamientoElegida?.VE}",
+                            "Marca: ${graphic?.marca}",
                             color = MaterialTheme.colorScheme.inverseSurface,
                             fontSize = 12.sp,
                             fontFamily = Fuentes.mulishRegular,
@@ -109,15 +99,14 @@ fun cargarStorage(
                     }
                     Row {
                         Text(
-                            "" +
-                                    "Tipo: ${almacenamientoElegida?.tipo}",
+                            "RTX: ${graphic?.rtx}",
                             color = MaterialTheme.colorScheme.inverseSurface,
                             fontSize = 12.sp,
                             fontFamily = Fuentes.mulishRegular,
                             modifier = Modifier.weight(1.1f)
                         )
                         Text(
-                            "${almacenamientoElegida?.tipoDisco}",
+                            "TDP: ${graphic?.consumo}w",
                             color = MaterialTheme.colorScheme.inverseSurface,
                             fontSize = 12.sp,
                             fontFamily = Fuentes.mulishRegular,
@@ -131,81 +120,16 @@ fun cargarStorage(
                 }
 
             }
+            Spacer(modifier = Modifier.padding(3.dp))
 
 
-            var cont by remember { mutableStateOf(1) }
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-
-            }
-            //Agregar
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-
-                IconButton(
-                    onClick = {
-                        if (cont > 1) {
-                            cont--
-                        }
-                    },
-                    modifier = Modifier.size(30.dp),
-                    colors = IconButtonDefaults.outlinedIconButtonColors(
-                        containerColor = colorResource(
-                            R.color.blue
-                        )
-                    ),
-                    content = {
-                        Icon(
-                            painter = painterResource(R.drawable.minus), contentDescription = "",
-                            Modifier.size(15.dp), tint = Color.White
-                        )
-                    }
-                )
-                Spacer(Modifier.padding(4.8.dp))
-                Text(
-                    text = "$cont",
-                    fontSize = 25.sp,
-                    color = MaterialTheme.colorScheme.inverseSurface
-                )
-                Spacer(Modifier.padding(4.8.dp))
-
-
-                almacenamientoElegida?.tipoDisco
-
-
-                IconButton(
-                    onClick = {
-
-                        if (almacenamientoElegida?.tipoDisco?.equals("SATA") == true && cont < boardElegida?.puertosSata!!) {
-                            cont++
-                        } else if (almacenamientoElegida?.tipoDisco.equals("NVMe") && cont < boardElegida?.puertosM2!!) {
-                            cont++
-                        }
-                    },
-                    modifier = Modifier.size(30.dp),
-
-                    colors = IconButtonDefaults.outlinedIconButtonColors(
-                        containerColor = colorResource(
-                            R.color.blue
-                        )
-                    ),
-                    content = {
-                        Icon(
-                            imageVector = Icons.Default.Add,
-                            contentDescription = "",
-                            tint = Color.White
-                        )
-                    }
-                )
-
-
-                Spacer(modifier = Modifier.padding(5.dp))
                 OutlinedButton(
-                    onClick = { cambiarComponente();navigate() },// },
+                    onClick = { cambiarProcesador();remplazar() },
                     modifier = Modifier.weight(5f)
                 ) {
                     Text(
@@ -217,8 +141,7 @@ fun cargarStorage(
 
                 Spacer(modifier = Modifier.padding(5.dp))
                 IconButton(
-                    // lockRAM();unlockProcessor();BorrarBoard()
-                    onClick = { lockGraphic(); BorrarAlmacenamiento() },
+                    onClick = { lockCase();function() },
                     modifier = Modifier
                         .border(
                             width = 0.8.dp,
@@ -236,8 +159,6 @@ fun cargarStorage(
                         )
                     })
             }
-
-            //Cantidad
 
 
         }

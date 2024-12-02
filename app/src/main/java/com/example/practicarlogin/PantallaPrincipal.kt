@@ -132,8 +132,7 @@ fun cargarUI(
     selectedDestination: String,
     navigateTopLevelDestination: (myAppLevelDestination) -> Unit,
 ) {
-    HorizontalDivider(modifier = Modifier.fillMaxWidth(),
-        color = MaterialTheme.colorScheme.inverseSurface)
+    HorizontalDivider(modifier = Modifier.fillMaxWidth())
     NavigationBar(modifier = Modifier.fillMaxWidth(), containerColor = MaterialTheme.colorScheme.background) {
         topLevel.forEach { destination ->
 

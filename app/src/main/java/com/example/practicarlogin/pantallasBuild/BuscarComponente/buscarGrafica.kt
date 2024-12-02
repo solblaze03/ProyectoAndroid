@@ -1,6 +1,5 @@
 package com.example.practicarlogin.pantallasBuild.BuscarComponente
 
-
 import android.annotation.SuppressLint
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -57,7 +56,7 @@ private val language = LenguajeSeleccionado().idioma()
 
 @SuppressLint("RememberReturnType")
 @Composable
-fun ListaAlmacenamiento(
+fun buscarGrafica(
     function: (String) -> Unit,
     viewModel: ComponentViewModel,
     Volver: () -> Unit,
@@ -92,7 +91,7 @@ fun ListaAlmacenamiento(
 
         val filtrarItems = remember(busqueda) {
 
-            ListaPiezas.ssdList.filter { e ->
+            ListaPiezas.graphicList.filter { e ->
                 e.nombre.contains(
                     busqueda,
                     ignoreCase = true
@@ -151,13 +150,13 @@ fun ListaAlmacenamiento(
                                         .padding(end = 10.dp)
                                 ) {
                                     Text(
-                                        "Memoria: ${e.tamaño} ",
+                                        "Vram: ${e.vram} ",
                                         fontSize = 13.sp,
                                         modifier = Modifier.weight(1f),
                                         fontFamily = Fuentes.mulishRegular
                                     )
                                     Text(
-                                        "${e.VE} ",
+                                        "${e.tipoMemoria} ",
                                         fontSize = 13.sp,
                                         modifier = Modifier.weight(1f),
                                         fontFamily = Fuentes.mulishRegular
@@ -197,7 +196,8 @@ fun ListaAlmacenamiento(
                                     Button(
                                         onClick = {
                                             // viewModel.unlockStorage(); lockBoard(); viewModel.guardarRAM(e); Volver(); viewModel.cambiarComponente( 1 )
-                                            viewModel.guardarAlmacenamiento(e); Volver();viewModel.cambiarComponente(2);viewModel.unlockGraphic() },
+                                            viewModel.unlockCase();viewModel.guardarGrafica(e); Volver();viewModel.cambiarComponente(3);
+                                        },
                                         modifier = Modifier
                                             .weight(1.5f)
                                             .height(38.dp),

@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.practicarlogin.piezas.Board
 import com.example.practicarlogin.piezas.CPU
+import com.example.practicarlogin.piezas.Graphic
 import com.example.practicarlogin.piezas.RAM
 import com.example.practicarlogin.piezas.storage
 import com.google.firebase.firestore.FirebaseFirestore
@@ -46,6 +47,8 @@ class ComponentViewModel : ViewModel() {
         }
     }
 
+
+    //Componentes
     private val _component = MutableLiveData<CPU?>()
     val component: LiveData<CPU?> get() = _component
 
@@ -58,13 +61,20 @@ class ComponentViewModel : ViewModel() {
     private val _storage = MutableLiveData<storage?>()
     val storage: LiveData<storage?> get() = _storage
 
+    private val _graphic = MutableLiveData<Graphic?>()
+    val graphic : LiveData<Graphic?> = _graphic
+
+
 
     private val _componentSeleccionado = MutableLiveData<Int>(0)
     val componentSeleccionado: LiveData<Int> = _componentSeleccionado
 
+
+
     private val _procesador = MutableLiveData<Boolean>(false)
     val procesador: LiveData<Boolean> = _procesador
 
+    //deshabilitar opciones debajo
     private val _processorOptions = MutableLiveData<Boolean>(false)
     val processorOptions: LiveData<Boolean> = _processorOptions
 
@@ -73,6 +83,7 @@ class ComponentViewModel : ViewModel() {
     private val _placaBase = MutableLiveData<Boolean>(false)
 
 
+    //habilitar el si
     val placaBase: LiveData<Boolean> = _placaBase
 
     private val _RAM = MutableLiveData<Boolean>(false)
@@ -95,7 +106,18 @@ class ComponentViewModel : ViewModel() {
     val FuenteAlimentacion: LiveData<Boolean> = _FuenteAlimentacion
 
 
+
+
     //borrar componente y guardar componente
+
+    fun guardarGrafica(grafica: Graphic){
+        _graphic.value = grafica
+    }
+    fun borrarGrafica(){
+        _graphic.value = null
+    }
+
+
     fun guardarAlmacenamiento(storage: storage) {
         _storage.value = storage
     }
@@ -153,6 +175,19 @@ class ComponentViewModel : ViewModel() {
 
     fun lockStorage() {
         _almacenamiento.value = false
+    }
+
+    fun unlockGraphic(){
+        _tarjeta.value = true
+    }
+    fun lockGraphic(){
+        _tarjeta.value = false
+    }
+    fun unlockCase(){
+        _caja.value = true
+    }
+    fun lockCase(){
+        _caja.value = false
     }
 
     //bloquear acceso a eliminar y remplazar

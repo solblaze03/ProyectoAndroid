@@ -600,5 +600,134 @@ class ListaPiezas {
         )
 
 
+        val graphicList = listOf(
+            Graphic(
+                nombre = "GeForce RTX 3080",
+                marca = "NVIDIA",
+                consumo = 320.0,  // Cambio aquí
+                vram = "10GB",
+                imagen = "https://m.media-amazon.com/images/I/81SzNmM27EL.jpg",
+                tipoMemoria = "GDDR6X",
+                rtx = true,
+                conectoresPantalla = "HDMI, DisplayPort",
+                precio = 699.99,
+                ensamblador = "ASUS"
+            ),
+            Graphic(
+                nombre = "Radeon RX 6800 XT",
+                marca = "AMD",
+                consumo = 300.0,  // Cambio aquí
+                vram = "16GB",
+                imagen = "https://c1.neweggimages.com/ProductImageCompressAll1280/14-126-477-V08.jpg",
+                tipoMemoria = "GDDR6",
+                rtx = true,
+                conectoresPantalla = "HDMI, DisplayPort",
+                precio = 649.99,
+                ensamblador = "ASUS"
+            ),
+            Graphic(
+                nombre = "GeForce GTX 1660 Super",
+                marca = "NVIDIA",
+                consumo = 125.0,
+                vram = "6GB",
+                imagen = "https://os-jo.com/image/cache/catalog/products/Graphics-cards/GTX-1660-Super-VENTUS-XS-OC/619Ui9f--pL._AC_SL1000_-1200x1200.jpg",
+                tipoMemoria = "GDDR6",
+                rtx = false,
+                conectoresPantalla = "HDMI, DisplayPort",
+                precio = 229.99,
+                ensamblador = "MSI"
+            ),
+            Graphic(
+                nombre = "Radeon RX 5700 XT",
+                marca = "AMD",
+                consumo = 225.0,  // Cambio aquí
+                vram = "8GB",
+                imagen = "https://th.bing.com/th/id/R.bd52c26ebb26ee9eef320ba8dd74e62c?rik=zhjr9GiZJHcH%2fA&pid=ImgRaw&r=0",
+                tipoMemoria = "GDDR6",
+                rtx = false,
+                conectoresPantalla = "HDMI, DisplayPort",
+                precio = 399.99,
+                ensamblador = "Gigabyte"
+            ),
+            Graphic(
+                nombre = "GeForce RTX 3090",
+                marca = "NVIDIA",
+                consumo = 350.0,  // Cambio aquí
+                vram = "24GB",
+                imagen = "https://c1.neweggimages.com/ProductImageCompressAll1280/14-126-456-V12.jpg",
+                tipoMemoria = "GDDR6X",
+                rtx = true,
+                conectoresPantalla = "HDMI, DisplayPort",
+                precio = 1499.99,
+                ensamblador = "ASUS"
+            ),
+            Graphic(
+                nombre = "Radeon RX 6700 XT",
+                marca = "AMD",
+                consumo = 230.0,  // Cambio aquí
+                vram = "12GB",
+                imagen = "https://www.ask-corp.jp/products/images/sapphire/sapphire-radeon-rx-6700-xt-12g-gddr6_01.jpg",
+                tipoMemoria = "GDDR6",
+                rtx = false,
+                conectoresPantalla = "HDMI, DisplayPort",
+                precio = 479.99,
+                ensamblador = "Sapphire"
+            ),
+            Graphic(
+                nombre = "GeForce GTX 1080 Ti",
+                marca = "NVIDIA",
+                consumo = 250.0,  // Cambio aquí
+                vram = "11GB",
+                imagen = "https://images.evga.com/products/gallery/11G-P4-6390-KR_XL_1.jpg",
+                tipoMemoria = "GDDR5X",
+                rtx = false,
+                conectoresPantalla = "HDMI, DisplayPort",
+                precio = 799.99,
+                ensamblador = "EVGA"
+            ),
+            Graphic(
+                nombre = "Radeon RX 5600 XT",
+                marca = "AMD",
+                consumo = 150.0,  // Cambio aquí
+                vram = "6GB",
+                imagen = "https://img.pccomponentes.com/articles/30/308994/1157-powercolor-radeon-rx-5600-xt-itx-6gb-gddr6.jpg",
+                tipoMemoria = "GDDR6",
+                rtx = false,
+                conectoresPantalla = "HDMI, DisplayPort",
+                precio = 279.99,
+                ensamblador = "PowerColor"
+            ),
+            Graphic(
+                nombre = "GeForce RTX 2070 Super",
+                marca = "NVIDIA",
+                consumo = 215.0,  // Cambio aquí
+                vram = "8GB",
+                imagen = "https://www.zotac.com/download/files/styles/org/public/product_main_image/graphics_cards/zt-t20710d-10p_image01_rgb.jpg?itok=Nw6WQC4Q",
+                tipoMemoria = "GDDR6",
+                rtx = true,
+                conectoresPantalla = "HDMI, DisplayPort",
+                precio = 499.99,
+                ensamblador = "ZOTAC"
+            ),
+            Graphic(
+                nombre = "Radeon RX Vega 64",
+                marca = "AMD",
+                consumo = 295.0,  // Cambio aquí
+                vram = "8GB",
+                imagen = "https://a.scdn.gr/images/sku_main_images/016546/16546877/20181120094125_asus_radeon_rx_vega_64_8gb_arez_strix_oc_90yv0b03_m0nm00.jpeg",
+                tipoMemoria = "HBM2",
+                rtx = false,
+                conectoresPantalla = "HDMI, DisplayPort",
+                precio = 499.99,
+                ensamblador = "ASUS"
+            )
+        )
+
+
+
+
+
+
+
     }
 }

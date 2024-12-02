@@ -1,5 +1,7 @@
 package com.example.practicarlogin.navigation
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.foundation.background
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -16,45 +18,62 @@ import com.example.practicarlogin.pantallasBuild.productos
 private val viewModel: ComponentViewModel = ComponentViewModel()
 
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun navWrapperBuild() {
 
-    val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = ScreenBuild.build, modifier = Modifier.background(
-        MaterialTheme.colorScheme.background)) {
-        composable<ScreenBuild.build> {
-            buildPC(viewModel) { component ->
-                navController.navigate(
-                    ScreenBuild.procesador(
-                        component
-                    )
-                )
-            }
-        }
-        composable<ScreenBuild.procesador> { e ->
-            val valor = e.toRoute<ScreenBuild.procesador>()
-            productos(valor.component,
-                { e -> navController.navigate(ScreenBuild.detalleComponente(e)) },
-                {
-                    navController.navigate(ScreenBuild.build) {
-                        popUpTo<ScreenBuild.build> {
-                            inclusive = true
-                        }
-                    }
-                },
-                viewModel,
+    SharedTransitionLayout {
 
-                )
-        }
-        composable<ScreenBuild.detalleComponente> { e ->
-            val componente = e.toRoute<ScreenBuild.detalleComponente>()
-            detalleProducto(componente.componente, viewModel) {
-                navController.navigate(ScreenBuild.build) {
-                    popUpTo<ScreenBuild.build> { inclusive = false }
+        val navController = rememberNavController()
+        NavHost(
+            navController = navController,
+            startDestination = ScreenBuild.build,
+            modifier = Modifier.background(
+                MaterialTheme.colorScheme.background
+            )
+        ) {
+            composable<ScreenBuild.build> {
+                buildPC(viewModel) { component ->
+                    navController.navigate(
+                        ScreenBuild.procesador(
+                            component
+                        )
+                    )
                 }
             }
+            composable<ScreenBuild.procesador> { e ->
+                val valor = e.toRoute<ScreenBuild.procesador>()
+                productos(
+                    valor.component,
+                    { e -> navController.navigate(ScreenBuild.detalleComponente(e)) },
+                    {
+                        navController.navigate(ScreenBuild.build) {
+                            popUpTo<ScreenBuild.build> {
+                                inclusive = true
+                            }
+                        }
+                    },
+                    viewModel,
+                    sharedTransitionScope = this@SharedTransitionLayout,
+                    animatedVisibilityScope = this@composable
+                )
+            }
+            composable<ScreenBuild.detalleComponente> { e ->
+                val componente = e.toRoute<ScreenBuild.detalleComponente>()
+                detalleProducto(
+                    componente.componente,
+                    viewModel,
+                    {
+                        navController.navigate(ScreenBuild.build) {
+                            popUpTo<ScreenBuild.build> { inclusive = false }
+                        }
+                    },
+                    sharedTransitionScope = this@SharedTransitionLayout,
+                    animatedVisibilityScope = this@composable
+                )
+            }
+
+
         }
-
-
     }
 }
