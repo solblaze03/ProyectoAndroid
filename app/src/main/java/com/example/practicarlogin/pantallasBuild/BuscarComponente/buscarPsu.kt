@@ -1,5 +1,6 @@
 package com.example.practicarlogin.pantallasBuild.BuscarComponente
 
+
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -55,16 +56,15 @@ import com.google.gson.Gson
 private val language = LenguajeSeleccionado().idioma()
 
 @Composable
-fun ListaRAM(
+fun ListaPsu(
     function: (String) -> Unit,
     viewModel: ComponentViewModel,
     Volver: () -> Unit,
     component: Int,
-    lockBoard: () -> Unit
 ) {
 
 
-    val listViewRam by viewModel.ListRam.observeAsState(emptyList())
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -94,7 +94,7 @@ fun ListaRAM(
 
         val filtrarItems = remember(busqueda) {
 
-            listViewRam.filter { e ->
+            ListaPiezas.listaFuentes.filter { e ->
                 e.nombre.contains(
                     busqueda,
                     ignoreCase = true
@@ -153,13 +153,13 @@ fun ListaRAM(
                                         .padding(end = 10.dp)
                                 ) {
                                     Text(
-                                        "Memoria: ${e.cantidad} ",
+                                        "Modularidad: ${e.modularidad} ",
                                         fontSize = 13.sp,
                                         modifier = Modifier.weight(1f),
                                         fontFamily = Fuentes.mulishRegular
                                     )
                                     Text(
-                                        "${language.hilos}: ${e.velocidad} ",
+                                        "Certificación: ${e.certificacion} ",
                                         fontSize = 13.sp,
                                         modifier = Modifier.weight(1f),
                                         fontFamily = Fuentes.mulishRegular
@@ -198,9 +198,7 @@ fun ListaRAM(
                                     Spacer(modifier = Modifier.padding(4.dp))
                                     Button(
                                         onClick = {
-                                            viewModel.unlockStorage();
-                                            lockBoard();
-                                            viewModel.guardarRAM(e);
+                                            viewModel.guardarPsu(e);
                                             Volver(); viewModel.cambiarComponente(
                                             1
                                         )

@@ -2,6 +2,7 @@ package com.example.practicarlogin
 
 import android.annotation.SuppressLint
 import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -100,7 +101,7 @@ fun MyAppContent(
             NavHost(
                 modifier = Modifier
                     .weight(1f)
-                    .height(30.dp),
+                    .height(30.dp).background(color = MaterialTheme.colorScheme.background),
                 navController = navController,
                 startDestination = myappRoute.build
             ) {

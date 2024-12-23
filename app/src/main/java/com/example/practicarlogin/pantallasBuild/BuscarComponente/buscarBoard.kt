@@ -24,8 +24,11 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -58,13 +61,16 @@ fun MotherBoardpc(
     Volver: () -> Unit,
     lockProcessor: () -> Unit
 ) {
+    val listBoardss by viewModel.listBoards.observeAsState(emptyList())
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
 
     ) {
-        var busqueda by remember { mutableStateOf("") }
+
+
+        var busqueda by rememberSaveable { mutableStateOf("") }
         Spacer(modifier = Modifier.padding(top = 50.dp))
         OutlinedTextField(
             value = busqueda,
@@ -85,14 +91,18 @@ fun MotherBoardpc(
 
         )
 
-        val filtrarItems = remember(busqueda) {
 
-            ListaPiezas.boards.filter { e ->
-                e.nombre.contains(
-                    busqueda,
-                    ignoreCase = true
-                ) || e.marca.contains(busqueda, ignoreCase = true)
-            }
+
+
+        val filtrarItems by remember(busqueda) {
+            mutableStateOf(
+                listBoardss.filter { e ->
+                    e.nombre.contains(
+                        busqueda,
+                        ignoreCase = true
+                    ) || e.marca.contains(busqueda, ignoreCase = true)
+                }
+            )
         }
 
         LazyColumn(
@@ -212,7 +222,11 @@ fun MotherBoardpc(
                                 })
                             Spacer(modifier = Modifier.padding(4.dp))
                             Button(
-                                onClick = { viewModel.unlockRAM();lockProcessor();viewModel.guardarBoard(e);Volver() },
+                                onClick = {
+                                    viewModel.unlockRAM();lockProcessor();viewModel.guardarBoard(
+                                    e
+                                );Volver()
+                                },
                                 modifier = Modifier
                                     .weight(1.5f)
                                     .height(38.dp),

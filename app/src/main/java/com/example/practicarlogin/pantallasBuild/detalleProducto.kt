@@ -12,9 +12,11 @@ import com.example.practicarlogin.pantallasBuild.vistas.MotherBoard
 import com.example.practicarlogin.pantallasBuild.vistas.Storage
 import com.example.practicarlogin.pantallasBuild.vistas.ViewRAM
 import com.example.practicarlogin.pantallasBuild.vistas.procesador
+import com.example.practicarlogin.pantallasBuild.vistas.viewCase
 import com.example.practicarlogin.pantallasBuild.vistas.viewGrafica
 import com.example.practicarlogin.piezas.Board
 import com.example.practicarlogin.piezas.CPU
+import com.example.practicarlogin.piezas.Caja
 import com.example.practicarlogin.piezas.Graphic
 import com.example.practicarlogin.piezas.RAM
 import com.example.practicarlogin.piezas.storage
@@ -40,6 +42,7 @@ fun detalleProducto(
         val ram = Gson().fromJson(producto, RAM::class.java)
         val storage = Gson().fromJson(producto, storage::class.java)
         val graphic = Gson().fromJson(producto, Graphic::class.java)
+        val case = Gson().fromJson(producto,Caja::class.java)
         val componenteSeleccionado by viewModel.componentSeleccionado.observeAsState(0)
 
 
@@ -49,6 +52,7 @@ fun detalleProducto(
             2 -> ViewRAM(ram, viewModel, function)
             3 -> Storage(storage, viewModel, function)
             4 -> viewGrafica(graphic, viewModel, function)
+            5 -> viewCase(case, viewModel, function)
         }
     }
 

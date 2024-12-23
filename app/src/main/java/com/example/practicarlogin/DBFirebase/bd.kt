@@ -22,7 +22,7 @@ fun bd(){
 }
 
 fun addCPU(){
-
+    /*
     ListaPiezas.procesadores
         .forEach { e ->
 
@@ -33,4 +33,6 @@ fun addCPU(){
             Log.i("firebase", "Error al agregar el procesador: ${e}")
         })
     }
+
+     */
 }

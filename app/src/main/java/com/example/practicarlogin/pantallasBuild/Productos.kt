@@ -12,6 +12,7 @@ import com.example.practicarlogin.VM.ComponentViewModel
 import com.example.practicarlogin.language.LenguajeSeleccionado
 import com.example.practicarlogin.pantallasBuild.BuscarComponente.ListaAlmacenamiento
 import com.example.practicarlogin.pantallasBuild.BuscarComponente.ListaProcesador
+import com.example.practicarlogin.pantallasBuild.BuscarComponente.ListaPsu
 import com.example.practicarlogin.pantallasBuild.BuscarComponente.ListaRAM
 import com.example.practicarlogin.pantallasBuild.BuscarComponente.buscarChasis
 import com.example.practicarlogin.pantallasBuild.BuscarComponente.buscarGrafica
@@ -65,6 +66,7 @@ fun productos(
             )
             4 -> buscarGrafica(ComponenteSerializado,viewModel,Volver,component)
             5 -> buscarChasis(ComponenteSerializado,viewModel,Volver,component)
+            6 -> ListaPsu(ComponenteSerializado,viewModel,Volver,component)
 
         }
     }

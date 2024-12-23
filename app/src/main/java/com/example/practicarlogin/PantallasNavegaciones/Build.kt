@@ -29,6 +29,7 @@ import cargarCase
 import cargarGrafica
 import cargarInformacion
 import cargarProcesador
+import com.example.practicarlogin.PantallasNavegaciones.CARDS.cargarPsu
 import com.example.practicarlogin.PantallasNavegaciones.CARDS.cargarRAM
 import com.example.practicarlogin.PantallasNavegaciones.CARDS.cargarStorage
 import com.example.practicarlogin.R
@@ -44,6 +45,7 @@ private var RAMelegido: Boolean = false
 private var Storageelegido: Boolean = false
 private var GraphicElegida: Boolean = false
 private var CaseElegida: Boolean = false
+private var psuElegida : Boolean = false
 private val idioma: languages = LenguajeSeleccionado().idioma()
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -97,6 +99,7 @@ fun content(viewModell: ComponentViewModel, navigate: (Int) -> Unit) {
     val almacenamiento by viewModell.storage.observeAsState()
     val grafica by viewModell.graphic.observeAsState()
     val case by viewModell.chasis.observeAsState()
+    val psu by viewModell.psuComponent.observeAsState()
 
     //Si el usuario eligio un componente
     RAMelegido = ram?.nombre != null
@@ -105,6 +108,7 @@ fun content(viewModell: ComponentViewModel, navigate: (Int) -> Unit) {
     Storageelegido = almacenamiento?.nombre != null
     GraphicElegida = grafica?.nombre != null
     CaseElegida = case?.nombre != null
+    psuElegida = psu?.nombre != null
 
     //Desbloquear candado pantalla build
     val unlockMother by viewModell.procesador.observeAsState(true)
@@ -253,6 +257,7 @@ fun content(viewModell: ComponentViewModel, navigate: (Int) -> Unit) {
                         { navigate(5) }
                     ) { viewModell.cambiarComponente(5) }
                 }
+
                 if (CaseElegida) {
                     cargarCase(
                         case,
@@ -261,14 +266,21 @@ fun content(viewModell: ComponentViewModel, navigate: (Int) -> Unit) {
                         { viewModell.cambiarComponente(5) },
                         { viewModell.lockPsu() })
                 }
-
                 Spacer(modifier = Modifier.padding(10.dp))
-                cargarInformacion(
-                    idioma.fuente,
-                    !unlockpsu,
-                    painterResource(R.drawable.power),
-                    { navigate(6) }
-                ) { viewModell.cambiarComponente(6) }
+                AnimatedVisibility(!psuElegida){
+                    cargarInformacion(
+                        idioma.fuente,
+                        !unlockpsu,
+                        painterResource(R.drawable.power),
+                        { navigate(6) }
+                    ) { viewModell.cambiarComponente(6) }
+                }
+                if (psuElegida){
+                    cargarPsu(psu,{viewModell.borrarPsu()}, {navigate(6)} , {viewModell.cambiarComponente(6)})
+
+                }
+
+
                 Spacer(modifier = Modifier.padding(12.dp))
             }
         }

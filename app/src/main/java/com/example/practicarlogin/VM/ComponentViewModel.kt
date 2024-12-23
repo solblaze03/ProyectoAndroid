@@ -9,6 +9,7 @@ import com.example.practicarlogin.piezas.CPU
 import com.example.practicarlogin.piezas.Caja
 import com.example.practicarlogin.piezas.Graphic
 import com.example.practicarlogin.piezas.RAM
+import com.example.practicarlogin.piezas.fuente
 import com.example.practicarlogin.piezas.storage
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -17,11 +18,44 @@ class ComponentViewModel : ViewModel() {
 
     //Lista procesadores
     private val db = FirebaseFirestore.getInstance()
+
     private val _cpus = MutableLiveData<List<CPU>>()
     val cpus: LiveData<List<CPU>> get() = _cpus
+    private val _ListBoards = MutableLiveData<List<Board>>()
+    val listBoards :  LiveData<List<Board>> = _ListBoards
+    private val _ListRAM = MutableLiveData<List<RAM>>()
+    val ListRam : LiveData<List<RAM>> = _ListRAM
 
     init {
         buscarCPU()
+        buscarBoard()
+        buscarRam()
+    }
+    fun buscarBoard(){
+        val docRef = db.collection("Boards")
+            .get()
+            .addOnSuccessListener { documents ->
+                val boardsList = mutableListOf<Board>()
+                documents.forEach { e -> 
+                    val Board = Board(
+                        nombre = e.getString("nombre") ?: "",
+                        marca = e.getString("marca") ?: "",
+                        socket = e.getString("socket") ?: "",
+                        tipoMemoria = e.getString("tipoMemoria") ?: "",
+                        chipset = e.getString("chipset") ?: "",
+                        cantidadUSB = e.getString("cantidadUSB") ?: "",
+                        slotsRam = e.getLong("slotsRam")?.toInt() ?: 0,
+                        factorForma = e.getString("factorForma") ?: "",
+                        puertosSata = e.getLong("puertosSata")?.toInt() ?: 0,
+                        puertosM2 = e.getLong("puertosM2")?.toInt() ?: 0 ,
+                        permiteAPU = e.getBoolean("permiteAPU") ?: false,
+                        urlImagen = e.getString("urlImagen") ?: "",
+                        precio = e.getDouble("precio") ?: 0.0
+                    )
+                    boardsList.add(Board)
+                }
+                _ListBoards.value = boardsList
+            }
     }
 
     fun buscarCPU() {
@@ -48,6 +82,26 @@ class ComponentViewModel : ViewModel() {
         }
     }
 
+    fun buscarRam(){
+        val docRef = db.collection("Ram")
+            .get()
+            .addOnSuccessListener { document ->
+                val listram = mutableListOf<RAM>()
+                document.forEach {
+                    val ram = RAM(
+                        nombre = it.getString("nombre")!!,
+                        marca = it.getString("marca")!!,
+                        tipoMemoria = it.getString("tipoMemoria")!!,
+                        cantidad = it.getLong("cantidad")!!.toInt() ,
+                        velocidad = it.getLong("velocidad")!!.toInt(),
+                        imagen = it.getString("imagen")!!,
+                        precio = it.getDouble("precio")!!
+                    )
+                    listram.add(ram)
+                }
+                _ListRAM.value = listram
+            }
+    }
 
     //Componentes
     private val _component = MutableLiveData<CPU?>()
@@ -68,6 +122,8 @@ class ComponentViewModel : ViewModel() {
     private val _chasis = MutableLiveData<Caja?>()
     val chasis : LiveData<Caja?> = _chasis
 
+    private val _psuComponent = MutableLiveData<fuente?>()
+    val psuComponent : LiveData<fuente?> = _psuComponent
 
     private val _componentSeleccionado = MutableLiveData<Int>(0)
     val componentSeleccionado: LiveData<Int> = _componentSeleccionado
@@ -85,6 +141,8 @@ class ComponentViewModel : ViewModel() {
     val BoardOptions: LiveData<Boolean> = _BoardOptions
     private val _placaBase = MutableLiveData<Boolean>(false)
 
+    private val _graphicsOptions = MutableLiveData<Boolean>(false)
+    val graphicOptions : LiveData<Boolean> = _graphicsOptions
 
     //habilitar el si
     val placaBase: LiveData<Boolean> = _placaBase
@@ -114,6 +172,15 @@ class ComponentViewModel : ViewModel() {
 
 
     //borrar componente y guardar componente
+
+    fun guardarPsu(fuente: fuente){
+        _psuComponent.value = fuente
+
+    }
+
+    fun borrarPsu(){
+     _psuComponent.value = null
+    }
 
     fun guardarCaja(chasis: Caja){
         _chasis.value = chasis

@@ -117,7 +117,7 @@ fun cargarUI(
             modifier = Modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.onSecondary)
-                .padding(top = 40.dp).background(color = MaterialTheme.colorScheme.onSecondary)
+                .padding(top = 40.dp, bottom = 10.dp).background(color = MaterialTheme.colorScheme.onSecondary)
 
 
         ) {
@@ -263,7 +263,7 @@ fun cargarUI(
                     )
 
                 }
-                Spacer(modifier = Modifier.padding(8.dp))
+                Spacer(modifier = Modifier.padding(40.dp))
 
 
             }

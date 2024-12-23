@@ -16,7 +16,7 @@ composeBom = "2024.04.01"
 lifecycleRuntimeKtxVersion = "28.7"
 material3 = "15"
 runtimeLivedata = "1.7.5"
-navigationCompose = "2.8.0"
+navigationCompose = "2.8.4"
 kotlinxSerialization = "1.6.3"
 
 [libraries]

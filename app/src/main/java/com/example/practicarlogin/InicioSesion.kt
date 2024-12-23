@@ -21,6 +21,7 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -67,13 +68,12 @@ fun Login(viewModel: LoginViewModel, function: () -> Unit) {
         modifier = Modifier
             .fillMaxSize()
             .background(color = MaterialTheme.colorScheme.background)
-            .padding(start = 20.dp, end = 20.dp, top = 60.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
+            .padding(start = 20.dp, end = 20.dp)
 
         ) {
         Column(
             modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             val seleccionIdioma: List<languages> = listOf(spanish, english, valenciano)
@@ -85,17 +85,17 @@ fun Login(viewModel: LoginViewModel, function: () -> Unit) {
             }
             cambioIdioma()
             cargarImagenLogo()
-            Spacer(modifier = Modifier.padding(16.dp))
+            Spacer(modifier = Modifier.padding(11.dp))
             cargarTextfieldUser(user) { viewModel.inicioSesion(it, password) }
-            Spacer(modifier = Modifier.padding(16.dp))
+            Spacer(modifier = Modifier.padding(11.dp))
             cargarTextPassword(password) { viewModel.inicioSesion(user, it) }
             Spacer(modifier = Modifier.padding(1.dp))
             checkBox()
-            Spacer(modifier = Modifier.padding(10.dp))
+            Spacer(modifier = Modifier.padding(8.dp))
             Boton({ viewModel.verificar(user, password, context) { function() } })
-            Spacer(modifier = Modifier.padding(10.dp))
+            Spacer(modifier = Modifier.padding(8.dp))
             oIniciar()
-            Spacer(modifier = Modifier.padding(10.dp))
+            Spacer(modifier = Modifier.padding(8.dp))
             continuarGoogle()
 
 
