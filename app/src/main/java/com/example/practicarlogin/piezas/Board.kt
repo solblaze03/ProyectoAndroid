@@ -15,3 +15,5 @@ data class Board(
     val urlImagen: String,
     val precio : Double
 )
+fun o(){
+}

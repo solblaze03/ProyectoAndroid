@@ -27,6 +27,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
@@ -74,26 +75,20 @@ fun cargarBoard(
                         fontSize = 14.5.sp,
                         fontFamily = Fuentes.mulishBold
                     )
-                    Text(
-                        "${boardElegida?.precio}€",
-                        color = MaterialTheme.colorScheme.inverseSurface,
-                        fontSize = 14.5.sp,
-                        fontFamily = Fuentes.mulishSemiBold
-                    )
                     Row {
                         Text(
                             "Chipset: ${boardElegida?.chipset}",
                             color = MaterialTheme.colorScheme.inverseSurface,
                             fontSize = 12.sp,
                             fontFamily = Fuentes.mulishRegular,
-                            modifier = Modifier.weight(1.1f)
+                            modifier = Modifier.weight(1f)
                         )
                         Text(
-                            "Slots: ${boardElegida?.slotsRam}",
+                            "Slots RAM: ${boardElegida?.slotsRam}",
                             color = MaterialTheme.colorScheme.inverseSurface,
                             fontSize = 12.sp,
                             fontFamily = Fuentes.mulishRegular,
-                            modifier = Modifier.weight(0.9f)
+                            modifier = Modifier.weight(1.14f)
                         )
 
                     }
@@ -104,18 +99,35 @@ fun cargarBoard(
                             color = MaterialTheme.colorScheme.inverseSurface,
                             fontSize = 12.sp,
                             fontFamily = Fuentes.mulishRegular,
-                            modifier = Modifier.weight(1.1f)
+                            modifier = Modifier.weight(1f)
                         )
                         Text(
                             "Forma: ${boardElegida?.factorForma}",
                             color = MaterialTheme.colorScheme.inverseSurface,
                             fontSize = 12.sp,
                             fontFamily = Fuentes.mulishRegular,
-                            modifier = Modifier.weight(0.9f)
+                            modifier = Modifier.weight(1.14f)
                         )
 
 
                     }
+                    Row (modifier = Modifier){
+                        Text("Precio:",
+                            color = MaterialTheme.colorScheme.inverseSurface,
+                            fontSize = 16.sp,
+                            fontFamily = Fuentes.mulishBold,)
+                        Text(
+                            "${boardElegida?.precio}€",
+                            color = MaterialTheme.colorScheme.inverseSurface,
+                            fontSize = 16.sp,
+                            fontFamily = Fuentes.mulishBold,
+                            textAlign = TextAlign.End,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(end = 28.dp)
+                        )
+                    }
+
 
 
                 }

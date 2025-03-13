@@ -64,7 +64,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             PracticarLoginTheme {
                 FirebaseApp.initializeApp(LocalContext.current)
-                    //bd()
+                        //bd()
                     NavigationWrapper()
             }
         }

@@ -1,4 +1,3 @@
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -27,15 +26,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.example.practicarlogin.R
 import com.example.practicarlogin.fuentes.Fuentes
-import com.example.practicarlogin.languageSelect
-import com.example.practicarlogin.piezas.CPU
 import com.example.practicarlogin.piezas.Caja
-import com.example.practicarlogin.piezas.Graphic
 
 @Composable
 fun cargarCase(
@@ -43,7 +40,8 @@ fun cargarCase(
     function: () -> Unit,
     remplazar: () -> Unit,
     cambiarComponente: () -> Unit,
-    lockPsu: () -> Unit
+    lockPsu: () -> Unit,
+    unlockGraphicOptions: () -> Unit
 ) {
     OutlinedCard(
         modifier = Modifier
@@ -75,46 +73,58 @@ fun cargarCase(
                         fontSize = 14.5.sp,
                         fontFamily = Fuentes.mulishBold
                     )
-                    Text(
-                        "${caja?.precio}€",
-                        color = MaterialTheme.colorScheme.inverseSurface,
-                        fontSize = 14.5.sp,
-                        fontFamily = Fuentes.mulishSemiBold
-                    )
+
                     Row {
                         Text(
                             "Peso: ${caja?.peso}",
                             color = MaterialTheme.colorScheme.inverseSurface,
                             fontSize = 12.sp,
                             fontFamily = Fuentes.mulishRegular,
-                            modifier = Modifier.weight(1.1f)
+                            modifier = Modifier.weight(1f)
                         )
                         Text(
-                            "Marca: ${caja?.marca}",
+                            "Altura: ${caja?.alturaChasis}mm",
                             color = MaterialTheme.colorScheme.inverseSurface,
                             fontSize = 12.sp,
                             fontFamily = Fuentes.mulishRegular,
-                            modifier = Modifier.weight(0.9f)
+                            modifier = Modifier.weight(1.2f)
                         )
-
                     }
+                    val rgb = if(caja?.rgb == true){"Si"}else{"No"}
                     Row {
                         Text(
-                            "RGB: ${caja?.rgb}",
+                            text = "RGB: $rgb",
                             color = MaterialTheme.colorScheme.inverseSurface,
                             fontSize = 12.sp,
                             fontFamily = Fuentes.mulishRegular,
-                            modifier = Modifier.weight(1.1f)
+                            modifier = Modifier.weight(1f)
                         )
                         Text(
-                            "FANs: ${caja?.ventiladores}w",
+                            "FANs: ${caja?.ventiladores}",
                             color = MaterialTheme.colorScheme.inverseSurface,
                             fontSize = 12.sp,
                             fontFamily = Fuentes.mulishRegular,
-                            modifier = Modifier.weight(0.9f)
+                            modifier = Modifier.weight(1.2f)
                         )
 
 
+                    }
+
+                    Row (modifier = Modifier){
+                        Text("Precio:",
+                            color = MaterialTheme.colorScheme.inverseSurface,
+                            fontSize = 16.sp,
+                            fontFamily = Fuentes.mulishBold,)
+                        Text(
+                            "${caja?.precio}€",
+                            color = MaterialTheme.colorScheme.inverseSurface,
+                            fontSize = 16.sp,
+                            fontFamily = Fuentes.mulishBold,
+                            textAlign = TextAlign.End,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(end = 28.dp)
+                        )
                     }
 
 
@@ -142,7 +152,7 @@ fun cargarCase(
 
                 Spacer(modifier = Modifier.padding(5.dp))
                 IconButton(
-                    onClick = { lockPsu();function() },
+                    onClick = { lockPsu();function();unlockGraphicOptions() },
                     modifier = Modifier
                         .border(
                             width = 0.8.dp,

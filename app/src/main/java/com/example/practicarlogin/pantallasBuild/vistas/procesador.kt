@@ -221,16 +221,17 @@ fun cargarUI(
                                 fontSize = 15.sp,
                                 color = MaterialTheme.colorScheme.inverseSurface
                             )
-                            Text(
-                                "${idiomaSeleccionado.zocalo}: ${component.socket}",
-                                modifier = Modifier.weight(1.1f),
-                                fontSize = 15.sp,
-                                color = MaterialTheme.colorScheme.inverseSurface
-                            )
+
                         }
                         Spacer(modifier = Modifier.padding(5.dp))
                         Row {
 
+                            Text(
+                                "${idiomaSeleccionado.zocalo}: ${component.socket}",
+                                modifier = Modifier.weight(1f),
+                                fontSize = 15.sp,
+                                color = MaterialTheme.colorScheme.inverseSurface
+                            )
                             Text(
                                 "${languageSelect.reloj}: ${component.frecuencia}GHz",
                                 modifier = Modifier.weight(1f),
@@ -238,6 +239,10 @@ fun cargarUI(
                                 fontSize = 15.sp,
                                 color = MaterialTheme.colorScheme.inverseSurface
                             )
+
+                        }
+                        Spacer(modifier = Modifier.padding(5.dp))
+                        Row {
                             Text(
                                 "TDP: ${component.tdp}w",
                                 modifier = Modifier.weight(1f),
@@ -247,7 +252,7 @@ fun cargarUI(
                             )
                             Text(
                                 "${languageSelect.litografia}: ${component.tecnologia}",
-                                modifier = Modifier.weight(1.1f),
+                                modifier = Modifier.weight(1f),
                                 fontSize = 15.sp,
                                 fontFamily = Fuentes.mulishRegular,
                                 color = MaterialTheme.colorScheme.inverseSurface

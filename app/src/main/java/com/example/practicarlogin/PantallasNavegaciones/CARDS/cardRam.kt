@@ -26,6 +26,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,11 +35,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.example.practicarlogin.R
 import com.example.practicarlogin.fuentes.Fuentes
+import com.example.practicarlogin.language.languages
+import com.example.practicarlogin.languageSelect
 import com.example.practicarlogin.piezas.Board
 import com.example.practicarlogin.piezas.RAM
 
@@ -82,26 +86,21 @@ fun cargarRAM(
                         fontSize = 14.5.sp,
                         fontFamily = Fuentes.mulishBold
                     )
-                    Text(
-                        "${ramElegida?.precio}€",
-                        color = MaterialTheme.colorScheme.inverseSurface,
-                        fontSize = 14.5.sp,
-                        fontFamily = Fuentes.mulishSemiBold
-                    )
+
                     Row {
                         Text(
-                            "Cantidad: ${ramElegida?.cantidad}",
+                            "Cantidad: ${ramElegida?.cantidad}GB",
+                            color = MaterialTheme.colorScheme.inverseSurface,
+                            fontSize = 12.sp,
+                            fontFamily = Fuentes.mulishRegular,
+                            modifier = Modifier.weight(1f)
+                        )
+                        Text(
+                            "${languageSelect.reloj}: ${ramElegida?.velocidad}MHz",
                             color = MaterialTheme.colorScheme.inverseSurface,
                             fontSize = 12.sp,
                             fontFamily = Fuentes.mulishRegular,
                             modifier = Modifier.weight(1.1f)
-                        )
-                        Text(
-                            "${ramElegida?.velocidad}",
-                            color = MaterialTheme.colorScheme.inverseSurface,
-                            fontSize = 12.sp,
-                            fontFamily = Fuentes.mulishRegular,
-                            modifier = Modifier.weight(0.9f)
                         )
 
                     }
@@ -112,17 +111,33 @@ fun cargarRAM(
                             color = MaterialTheme.colorScheme.inverseSurface,
                             fontSize = 12.sp,
                             fontFamily = Fuentes.mulishRegular,
-                            modifier = Modifier.weight(1.1f)
+                            modifier = Modifier.weight(1f)
                         )
                         Text(
                             "${ramElegida?.marca}",
                             color = MaterialTheme.colorScheme.inverseSurface,
                             fontSize = 12.sp,
                             fontFamily = Fuentes.mulishRegular,
-                            modifier = Modifier.weight(0.9f)
+                            modifier = Modifier.weight(1.1f)
                         )
 
 
+                    }
+                    Row (modifier = Modifier){
+                        Text("Precio:",
+                            color = MaterialTheme.colorScheme.inverseSurface,
+                            fontSize = 16.sp,
+                            fontFamily = Fuentes.mulishBold,)
+                        Text(
+                            "${ramElegida?.precio}€",
+                            color = MaterialTheme.colorScheme.inverseSurface,
+                            fontSize = 16.sp,
+                            fontFamily = Fuentes.mulishBold,
+                            textAlign = TextAlign.End,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(end = 28.dp)
+                        )
                     }
 
 
@@ -132,7 +147,7 @@ fun cargarRAM(
 
 
 
-            var cont by remember{ mutableStateOf(1) }
+            var cont by rememberSaveable{ mutableStateOf(1) }
             Row (modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically){
 
             }

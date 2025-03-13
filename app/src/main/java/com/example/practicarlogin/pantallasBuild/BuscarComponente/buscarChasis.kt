@@ -1,6 +1,7 @@
 package com.example.practicarlogin.pantallasBuild.BuscarComponente
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -27,6 +28,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -49,8 +51,10 @@ import com.example.practicarlogin.VM.ComponentViewModel
 import com.example.practicarlogin.fuentes.Fuentes
 import com.example.practicarlogin.language.LenguajeSeleccionado
 import com.example.practicarlogin.languageSelect
+import com.example.practicarlogin.piezas.Caja
 import com.example.practicarlogin.piezas.ListaPiezas
 import com.google.gson.Gson
+import javax.annotation.meta.When
 
 private val language = LenguajeSeleccionado().idioma()
 
@@ -68,6 +72,8 @@ fun buscarChasis(
             .background(MaterialTheme.colorScheme.background)
 
     ) {
+        val graphic by viewModel.graphic.observeAsState()
+        val board by viewModel.Board.observeAsState()
         var busqueda by remember { mutableStateOf("") }
         Spacer(modifier = Modifier.padding(top = 50.dp))
         OutlinedTextField(
@@ -89,22 +95,52 @@ fun buscarChasis(
 
         )
 
-        val filtrarItems = remember(busqueda) {
 
-            ListaPiezas.cajaList.filter { e ->
-                e.nombre.contains(
+        var lista by remember { mutableStateOf(emptyList<Caja>()) }
+
+        if (board?.factorForma.equals("ATX")) {
+            lista = ListaPiezas.cajaList.filter { e ->
+                (e.nombre.contains(
                     busqueda,
                     ignoreCase = true
-                ) || e.marca.contains(busqueda, ignoreCase = true)
+                ) || e.marca.contains(
+                    busqueda,
+                    ignoreCase = true
+                )) && e.factorForma.equals("ATX") && (graphic?.altura!! < e.alturaGPU) && (graphic?.longitud!! < e.longitudMaximaGPU)
             }
+            Log.i("case", "1")
+        } else if (board?.factorForma.equals("Micro-ATX")) {
+            lista = ListaPiezas.cajaList.filter { e ->
+                (e.nombre.contains(
+                    busqueda,
+                    ignoreCase = true
+                ) || e.marca.contains(
+                    busqueda,
+                    ignoreCase = true
+                ))
+                        && (e.factorForma.equals("ATX") || e.factorForma.equals("Micro-ATX")) && (graphic?.altura!! < e.alturaGPU) && (graphic?.longitud!! < e.longitudMaximaGPU)
+            }
+            Log.i("case", "2")
+        } else {
+            lista = ListaPiezas.cajaList.filter { e ->
+                (e.nombre.contains(
+                    busqueda,
+                    ignoreCase = true
+                ) || e.marca.contains(
+                    busqueda,
+                    ignoreCase = true
+                )) && (e.factorForma.equals("ATX") || e.factorForma.equals("Mini-ITX") || e.factorForma.equals(
+                    "Micro-ATX"
+                )) && (graphic?.altura!! < (e.alturaGPU + 5)) && (graphic?.longitud!! < (e.longitudMaximaGPU + 5))
+            }
+            Log.i("case", "3")
         }
-
         LazyColumn(
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.background)
                 .padding(start = 15.dp, end = 15.dp)
         ) {
-            items(filtrarItems) { e ->
+            items(lista) { e ->
 
                 val component = Gson().toJson(e)
 
@@ -144,82 +180,88 @@ fun buscarChasis(
                                 )
                                 Spacer(modifier = Modifier.padding(3.dp))
 
-                                Row(
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                        .padding(end = 10.dp)
-                                ) {
-                                    Text(
-                                        "Forma: ${e.factorForma} ",
-                                        fontSize = 13.sp,
-                                        modifier = Modifier.weight(1f),
-                                        fontFamily = Fuentes.mulishRegular
-                                    )
-                                    Text(
-                                        "Peso ${e.peso} ",
-                                        fontSize = 13.sp,
-                                        modifier = Modifier.weight(1f),
-                                        fontFamily = Fuentes.mulishRegular
-                                    )
 
-                                }
                                 Text(
-                                    "${e.precio}€",
-                                    fontSize = 15.sp,
-                                    fontFamily = Fuentes.mulishSemiBold,
-                                    modifier = Modifier
-                                        .align(Alignment.Start)
-                                        .padding(start = 1.dp)
+                                    "Forma: ${e.factorForma} ",
+                                    fontSize = 13.sp,
+                                    fontFamily = Fuentes.mulishRegular
                                 )
+                                Text(
+                                    "Peso ${e.peso} ",
+                                    fontSize = 13.sp,
+                                    fontFamily = Fuentes.mulishRegular
+                                )
+
+
+                                Row(modifier = Modifier) {
+                                    Text(
+                                        "Precio:",
+                                        color = MaterialTheme.colorScheme.inverseSurface,
+                                        fontSize = 16.sp,
+                                        fontFamily = Fuentes.mulishBold,
+                                    )
+                                    Text(
+                                        "${e?.precio}€",
+                                        color = MaterialTheme.colorScheme.inverseSurface,
+                                        fontSize = 16.sp,
+                                        fontFamily = Fuentes.mulishBold,
+                                        textAlign = TextAlign.End,
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(end = 28.dp)
+                                    )
+                                }
                                 Spacer(modifier = Modifier.padding(5.dp))
 
-                                Row {
-                                    OutlinedButton(
-                                        onClick = { function(component) },
-                                        modifier = Modifier
-                                            .weight(2f)
-                                            .height(38.dp),
-                                        border = BorderStroke(
-                                            1.5.dp,
-                                            color = colorResource(R.color.blue)
-                                        ),
 
-                                        content = {
-                                            Text(
-                                                languageSelect.vermas,
-                                                fontFamily = Fuentes.mulishBold,
-                                                fontSize = 13.sp,
-                                                color = colorResource(R.color.teal_700)
-                                            )
-                                        })
-                                    Spacer(modifier = Modifier.padding(4.dp))
-                                    Button(
-                                        onClick = {
-                                            // viewModel.unlockStorage(); lockBoard(); viewModel.guardarRAM(e); Volver(); viewModel.cambiarComponente( 1 )
-                                            viewModel.unlockPsu();viewModel.guardarCaja(e); Volver();viewModel.cambiarComponente(4);
-                                        },
-                                        modifier = Modifier
-                                            .weight(1.5f)
-                                            .height(38.dp),
-                                        colors = ButtonDefaults.buttonColors(
-                                            containerColor = colorResource(
-                                                R.color.blue
-                                            )
-                                        ),
-                                        content = {
-                                            Text(
-                                                languageSelect.agregar,
-                                                color = Color.White
-                                            )
-                                        }
-                                    )
-                                }
                             }
 
 
                         }
 
+                        Row {
+                            OutlinedButton(
+                                onClick = { function(component) },
+                                modifier = Modifier
+                                    .weight(2f)
+                                    .height(38.dp),
+                                border = BorderStroke(
+                                    1.5.dp,
+                                    color = colorResource(R.color.blue)
+                                ),
 
+                                content = {
+                                    Text(
+                                        languageSelect.vermas,
+                                        fontFamily = Fuentes.mulishBold,
+                                        fontSize = 13.sp,
+                                        color = colorResource(R.color.teal_700)
+                                    )
+                                })
+                            Spacer(modifier = Modifier.padding(4.dp))
+                            Button(
+                                onClick = {
+                                    // viewModel.unlockStorage(); lockBoard(); viewModel.guardarRAM(e); Volver(); viewModel.cambiarComponente( 1 )
+                                    viewModel.lockGraphicOptions();viewModel.unlockPsu();viewModel.guardarCaja(e); Volver();viewModel.cambiarComponente(
+                                    4
+                                );
+                                },
+                                modifier = Modifier
+                                    .weight(1.5f)
+                                    .height(38.dp),
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = colorResource(
+                                        R.color.blue
+                                    )
+                                ),
+                                content = {
+                                    Text(
+                                        languageSelect.agregar,
+                                        color = Color.White
+                                    )
+                                }
+                            )
+                        }
                     }
 
                 }

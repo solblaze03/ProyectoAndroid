@@ -52,28 +52,26 @@ import com.example.practicarlogin.R
 import com.example.practicarlogin.VM.ComponentViewModel
 import com.example.practicarlogin.fuentes.Fuentes
 import com.example.practicarlogin.piezas.Board
-import com.example.practicarlogin.piezas.Caja
 import com.example.practicarlogin.piezas.RAM
+import com.example.practicarlogin.piezas.fuente
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun viewCase(
-    component: Caja,
+fun Psu(
+    component: fuente,
     viewModel: ComponentViewModel,
-    volver: () -> Unit,
-
-    ) {
+    volver: () -> Unit) {
     val board by viewModel.Board.observeAsState()
     Scaffold(
-        content = { contentCase(component, board) },
-        floatingActionButton = { fabCase(component, viewModel, { volver() }) },
+        content = { contentPSU(component, board) },
+        floatingActionButton = { fabPSU(component, viewModel, { volver() }) },
         floatingActionButtonPosition = FabPosition.End
     )
 }
 
 
 @Composable
-fun contentCase(component: Caja, board: Board?) {
+fun contentPSU(component: fuente, board: Board?) {
 
 
     LazyColumn(
@@ -114,6 +112,7 @@ fun contentCase(component: Caja, board: Board?) {
                     Column(modifier = Modifier.padding(start = 15.dp, end = 15.dp)) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Column(modifier = Modifier.weight(3f)) {
+
                                 Spacer(modifier = Modifier.padding(8.dp))
                                 Text(
                                     component.nombre,
@@ -171,7 +170,7 @@ fun contentCase(component: Caja, board: Board?) {
 
 
                 }
-                Column(modifier = Modifier.padding(start = 15.dp, end = 15.dp)) {
+                Column(modifier = Modifier.padding(start = 15.dp, end = 15.dp, bottom = 42.dp)) {
                     Text(
                         "Especificaciones",
                         fontSize = 18.sp,
@@ -180,69 +179,53 @@ fun contentCase(component: Caja, board: Board?) {
                     )
                     HorizontalDivider(modifier = Modifier.fillMaxWidth())
                     Spacer(modifier = Modifier.padding(6.dp))
-                    Row {
 
                         Text(
-                            "Peso: ${component.peso}",
-                            modifier = Modifier.weight(1f),
+                            "Certificación: ${component.certificacion}",
                             fontSize = 15.sp,
                             fontFamily = Fuentes.mulishRegular,
                             color = MaterialTheme.colorScheme.inverseSurface
                         )
-                        val rgb = if (component.rgb) {
-                            "Si"
-                        } else {
-                            "No"
-                        }
+                    Spacer(modifier = Modifier.padding(2.dp))
                         Text(
-                            "RGB: ${rgb}",
-                            modifier = Modifier.weight(1f),
+                            "Modularidad: ${component.modularidad}",
+                            fontSize = 15.sp,
+                            color = MaterialTheme.colorScheme.inverseSurface
+                        )
+                    Spacer(modifier = Modifier.padding(2.dp))
+
+
+
+                        Text(
+                            "Potencia: ${component.potencia}",
+                            fontSize = 15.sp,
+                            color = MaterialTheme.colorScheme.inverseSurface
+                        )
+                    Spacer(modifier = Modifier.padding(2.dp))
+                        Text(
+                            "Marca: ${component.marca}",
                             fontSize = 15.sp,
                             color = MaterialTheme.colorScheme.inverseSurface
                         )
 
-                    }
-                    Spacer(modifier = Modifier.padding(2.dp))
-                    Row {
-                        Text(
-                            "Forma: ${component.factorForma}",
-                            modifier = Modifier.weight(1.1f),
-                            fontSize = 15.sp,
-                            color = MaterialTheme.colorScheme.inverseSurface
-                        )
-                        Text(
-                            "Marca: ${component.marca}",
-                            modifier = Modifier.weight(1.1f),
-                            fontSize = 15.sp,
-                            color = MaterialTheme.colorScheme.inverseSurface
-                        )
-                    }
-                    Spacer(modifier = Modifier.padding(2.dp))
-                    Row {
-                        Text(
-                            "Ventiladores: ${component.ventiladores}",
-                            modifier = Modifier.weight(1.1f),
-                            fontSize = 15.sp,
-                            color = MaterialTheme.colorScheme.inverseSurface
-                        )
-                        Text(
-                            "Altura: ${component.alturaChasis}mm",
-                            modifier = Modifier.weight(1.1f),
-                            fontSize = 15.sp,
-                            color = MaterialTheme.colorScheme.inverseSurface
-                        )
-                    }
+
                     Spacer(modifier = Modifier.padding(2.dp))
 
                     Text(
-                        "Longitud:  ${component.longitudChasis}mm",
+                        "Conectores: ${component.conectores}W",
                         fontSize = 15.sp,
                         color = MaterialTheme.colorScheme.inverseSurface
                     )
 
 
-                }
 
+
+
+                    Spacer(modifier = Modifier.padding(2.dp))
+
+
+
+                }
 
 
             }
@@ -254,16 +237,24 @@ fun contentCase(component: Caja, board: Board?) {
 }
 
 @Composable
-fun fabCase(
-    case: Caja,
+fun fabPSU(
+    psu: fuente,
     viewModel: ComponentViewModel,
     function: () -> Unit,
 ) {
-
+    val color = colorResource(
+        if (psu.marca.equals("Gigabyte")) {
+            R.color.azulIntel
+        } else if (psu.marca.equals("ASRock")) {
+            R.color.verde
+        } else {
+            R.color.rojo
+        }
+    )
     FloatingActionButton(
-        //viewModel.lockBoardOptions();viewModel.unlockStorage(); viewModel.cambiarComponente(2); viewModel.guardarRAM(ram) ; function()
-        onClick = { viewModel.unlockPsu();function();viewModel.guardarCaja(case) },
-        containerColor = Color.Red
+
+        onClick = { function(); viewModel.guardarPsu(psu) },
+        containerColor = color
     ) {
         Icon(imageVector = Icons.Default.Add, contentDescription = "Añadir")
     }

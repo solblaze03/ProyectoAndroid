@@ -1,9 +1,12 @@
 package com.example.practicarlogin.VM
 
 import android.util.Log
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.practicarlogin.pantallasBuild.vistas.Storage
 import com.example.practicarlogin.piezas.Board
 import com.example.practicarlogin.piezas.CPU
 import com.example.practicarlogin.piezas.Caja
@@ -12,6 +15,7 @@ import com.example.practicarlogin.piezas.RAM
 import com.example.practicarlogin.piezas.fuente
 import com.example.practicarlogin.piezas.storage
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.launch
 
 class ComponentViewModel : ViewModel() {
 
@@ -22,85 +26,144 @@ class ComponentViewModel : ViewModel() {
     private val _cpus = MutableLiveData<List<CPU>>()
     val cpus: LiveData<List<CPU>> get() = _cpus
     private val _ListBoards = MutableLiveData<List<Board>>()
-    val listBoards :  LiveData<List<Board>> = _ListBoards
+    val listBoards: LiveData<List<Board>> = _ListBoards
     private val _ListRAM = MutableLiveData<List<RAM>>()
-    val ListRam : LiveData<List<RAM>> = _ListRAM
+    val ListRam: LiveData<List<RAM>> = _ListRAM
 
-    init {
-        buscarCPU()
-        buscarBoard()
-        buscarRam()
-    }
-    fun buscarBoard(){
-        val docRef = db.collection("Boards")
-            .get()
-            .addOnSuccessListener { documents ->
-                val boardsList = mutableListOf<Board>()
-                documents.forEach { e -> 
-                    val Board = Board(
-                        nombre = e.getString("nombre") ?: "",
-                        marca = e.getString("marca") ?: "",
-                        socket = e.getString("socket") ?: "",
-                        tipoMemoria = e.getString("tipoMemoria") ?: "",
-                        chipset = e.getString("chipset") ?: "",
-                        cantidadUSB = e.getString("cantidadUSB") ?: "",
-                        slotsRam = e.getLong("slotsRam")?.toInt() ?: 0,
-                        factorForma = e.getString("factorForma") ?: "",
-                        puertosSata = e.getLong("puertosSata")?.toInt() ?: 0,
-                        puertosM2 = e.getLong("puertosM2")?.toInt() ?: 0 ,
-                        permiteAPU = e.getBoolean("permiteAPU") ?: false,
-                        urlImagen = e.getString("urlImagen") ?: "",
-                        precio = e.getDouble("precio") ?: 0.0
-                    )
-                    boardsList.add(Board)
+    private val _ssdList = MutableLiveData<List<storage>>()
+    val ssdlist: LiveData<List<storage>> = _ssdList
+
+    private val _graphicList = MutableLiveData<List<Graphic>>()
+    val graphiclist: LiveData<List<Graphic>> = _graphicList
+
+    fun buscarBoard() {
+        viewModelScope.launch {
+            val docRef = db.collection("Boards")
+                .get()
+                .addOnSuccessListener { documents ->
+                    val boardsList = mutableListOf<Board>()
+                    documents.forEach { e ->
+                        val Board = Board(
+                            nombre = e.getString("nombre") ?: "",
+                            marca = e.getString("marca") ?: "",
+                            socket = e.getString("socket") ?: "",
+                            tipoMemoria = e.getString("tipoMemoria") ?: "",
+                            chipset = e.getString("chipset") ?: "",
+                            cantidadUSB = e.getString("cantidadUSB") ?: "",
+                            slotsRam = e.getLong("slotsRam")?.toInt() ?: 0,
+                            factorForma = e.getString("factorForma") ?: "",
+                            puertosSata = e.getLong("puertosSata")?.toInt() ?: 0,
+                            puertosM2 = e.getLong("puertosM2")?.toInt() ?: 0,
+                            permiteAPU = e.getBoolean("permiteAPU") ?: false,
+                            urlImagen = e.getString("urlImagen") ?: "",
+                            precio = e.getDouble("precio") ?: 0.0
+                        )
+                        boardsList.add(Board)
+                    }
+                    _ListBoards.value = boardsList
                 }
-                _ListBoards.value = boardsList
-            }
-    }
-
-    fun buscarCPU() {
-        val docRef = db.collection("CPU").get()
-            .addOnSuccessListener { documents ->
-            val cpuList = mutableListOf<CPU>()
-            for (document in documents) {
-                val cpu = CPU(
-                    nombre = document.getString("nombre") ?: "null",
-                    marca = document.getString("marca") ?: "null",
-                    socket = document.getString("socket") ?: "null",
-                    nucleos = document.getLong("nucleos")!!.toInt() ,
-                    hilos = document.getLong("hilos")!!.toInt(),
-                    precio = document.getDouble("precio") ?: 0.0,
-                    frecuencia = document.getDouble("frecuencia") ?: 0.0,
-                    grafica = document.getString("grafica") ?: "null",
-                    tdp = document.getDouble("tdp") ?: 0.0,
-                    tecnologia =document.getString("tecnologia") ?: "null",
-                    imagen = document.getString("imagen") ?: "null"
-                )
-                cpuList.add(cpu)
-            }
-            _cpus.value = cpuList
         }
     }
 
-    fun buscarRam(){
-        val docRef = db.collection("Ram")
-            .get()
-            .addOnSuccessListener { document ->
-                val listram = mutableListOf<RAM>()
-                document.forEach {
-                    val ram = RAM(
-                        nombre = it.getString("nombre")!!,
-                        marca = it.getString("marca")!!,
-                        tipoMemoria = it.getString("tipoMemoria")!!,
-                        cantidad = it.getLong("cantidad")!!.toInt() ,
-                        velocidad = it.getLong("velocidad")!!.toInt(),
-                        imagen = it.getString("imagen")!!,
-                        precio = it.getDouble("precio")!!
-                    )
-                    listram.add(ram)
+    fun buscarCPU() {
+        viewModelScope.launch {
+            val docRef = db.collection("CPU").get()
+                .addOnSuccessListener { documents ->
+                    val cpuList = mutableListOf<CPU>()
+                    for (document in documents) {
+                        val cpu = CPU(
+                            nombre = document.getString("nombre") ?: "null",
+                            marca = document.getString("marca") ?: "null",
+                            socket = document.getString("socket") ?: "null",
+                            nucleos = document.getLong("nucleos")!!.toInt(),
+                            hilos = document.getLong("hilos")!!.toInt(),
+                            precio = document.getDouble("precio") ?: 0.0,
+                            frecuencia = document.getDouble("frecuencia") ?: 0.0,
+                            grafica = document.getString("grafica") ?: "null",
+                            tdp = document.getDouble("tdp") ?: 0.0,
+                            tecnologia = document.getString("tecnologia") ?: "null",
+                            imagen = document.getString("imagen") ?: "null"
+                        )
+                        cpuList.add(cpu)
+                    }
+                    _cpus.value = cpuList
                 }
-                _ListRAM.value = listram
-            }
+        }
+    }
+
+    fun buscarRam() {
+        viewModelScope.launch {
+            val docRef = db.collection("Ram")
+                .get()
+                .addOnSuccessListener { document ->
+                    val listram = mutableListOf<RAM>()
+                    document.forEach {
+                        val ram = RAM(
+                            nombre = it.getString("nombre")!!,
+                            marca = it.getString("marca")!!,
+                            tipoMemoria = it.getString("tipoMemoria")!!,
+                            cantidad = it.getLong("cantidad")!!.toInt(),
+                            velocidad = it.getLong("velocidad")!!.toInt(),
+                            imagen = it.getString("imagen")!!,
+                            precio = it.getDouble("precio")!!
+                        )
+                        listram.add(ram)
+                    }
+                    _ListRAM.value = listram
+                }
+        }
+    }
+
+    fun buscarSSD() {
+        viewModelScope.launch {
+            val docRef = db.collection("Storage")
+                .get().addOnSuccessListener { document ->
+                    val list = mutableListOf<storage>()
+                    document.forEach {
+                        val ssd = storage(
+                            nombre = it.getString("nombre")!!,
+                            marca = it.getString("marca")!!,
+                            tipo = it.getString("tipo")!!,
+                            tipoDisco = it.getString("tipoDisco")!!,
+                            tamaño = it.getString("tamaño")!!,
+                            Vl = it.getString("vl")!!,
+                            VE = it.getString("ve")!!,
+                            imagen = it.getString("imagen")!!,
+                            precio = it.getDouble("precio")!!
+                        )
+                        list.add(ssd)
+                    }
+                    _ssdList.value = list
+                }
+        }
+    }
+
+    fun buscarGraphic(){
+        viewModelScope.launch {
+            val docRef = db.collection("Graphics")
+                .get().addOnSuccessListener { document ->
+                    val list = mutableListOf<Graphic>()
+                    document.forEach { 
+                        val graphic = Graphic(
+                            nombre = it.getString("nombre")!!,
+                            marca = it.getString("marca")!!,
+                            consumo = it.getLong("consumo")?.toDouble()!!,
+                            vram = it.getString("vram")!!,
+                            imagen = it.getString("imagen")!!,
+                            tipoMemoria = it.getString("tipoMemoria")!!,
+                            rtx = it.getBoolean("rtx")!!,
+                            conectoresPantalla = it.getString("conectoresPantalla")!!,
+                            precio = it.getDouble("precio")!!,
+                            altura = it.getDouble("altura")!!,
+                            longitud = it.getDouble("longitud")!!,
+                            ensamblador = it.getString("ensamblador")!!,
+                            rendimientoMinimo = it.getDouble("rendimientoMinimo")!!
+                        )
+                        list.add(graphic)
+                    }
+                    _graphicList.value = list
+                }
+        }
     }
 
     //Componentes
@@ -117,17 +180,16 @@ class ComponentViewModel : ViewModel() {
     val storage: LiveData<storage?> get() = _storage
 
     private val _graphic = MutableLiveData<Graphic?>()
-    val graphic : LiveData<Graphic?> = _graphic
+    val graphic: LiveData<Graphic?> = _graphic
 
     private val _chasis = MutableLiveData<Caja?>()
-    val chasis : LiveData<Caja?> = _chasis
+    val chasis: LiveData<Caja?> = _chasis
 
     private val _psuComponent = MutableLiveData<fuente?>()
-    val psuComponent : LiveData<fuente?> = _psuComponent
+    val psuComponent: LiveData<fuente?> = _psuComponent
 
     private val _componentSeleccionado = MutableLiveData<Int>(0)
     val componentSeleccionado: LiveData<Int> = _componentSeleccionado
-
 
 
     private val _procesador = MutableLiveData<Boolean>(false)
@@ -142,7 +204,7 @@ class ComponentViewModel : ViewModel() {
     private val _placaBase = MutableLiveData<Boolean>(false)
 
     private val _graphicsOptions = MutableLiveData<Boolean>(false)
-    val graphicOptions : LiveData<Boolean> = _graphicsOptions
+    val graphicOptions: LiveData<Boolean> = _graphicsOptions
 
     //habilitar el si
     val placaBase: LiveData<Boolean> = _placaBase
@@ -163,36 +225,36 @@ class ComponentViewModel : ViewModel() {
     val caja: LiveData<Boolean> = _caja
 
     private val _psu = MutableLiveData<Boolean>(false)
-    val psu : LiveData<Boolean> = _psu
+    val psu: LiveData<Boolean> = _psu
 
     private val _FuenteAlimentacion = MutableLiveData<Boolean>(false)
     val FuenteAlimentacion: LiveData<Boolean> = _FuenteAlimentacion
 
 
-
-
     //borrar componente y guardar componente
 
-    fun guardarPsu(fuente: fuente){
+    fun guardarPsu(fuente: fuente) {
         _psuComponent.value = fuente
 
     }
 
-    fun borrarPsu(){
-     _psuComponent.value = null
+    fun borrarPsu() {
+        _psuComponent.value = null
     }
 
-    fun guardarCaja(chasis: Caja){
+    fun guardarCaja(chasis: Caja) {
         _chasis.value = chasis
     }
-    fun borrarCaja(){
+
+    fun borrarCaja() {
         _chasis.value = null
     }
 
-    fun guardarGrafica(grafica: Graphic){
+    fun guardarGrafica(grafica: Graphic) {
         _graphic.value = grafica
     }
-    fun borrarGrafica(){
+
+    fun borrarGrafica() {
         _graphic.value = null
     }
 
@@ -256,22 +318,27 @@ class ComponentViewModel : ViewModel() {
         _almacenamiento.value = false
     }
 
-    fun unlockGraphic(){
+    fun unlockGraphic() {
         _tarjeta.value = true
     }
-    fun lockGraphic(){
+
+    fun lockGraphic() {
         _tarjeta.value = false
     }
-    fun unlockCase(){
+
+    fun unlockCase() {
         _caja.value = true
     }
-    fun lockCase(){
+
+    fun lockCase() {
         _caja.value = false
     }
-    fun unlockPsu(){
+
+    fun unlockPsu() {
         _psu.value = true
     }
-    fun lockPsu(){
+
+    fun lockPsu() {
         _psu.value = false
     }
 
@@ -292,6 +359,13 @@ class ComponentViewModel : ViewModel() {
         _BoardOptions.value = false
     }
 
+    fun lockGraphicOptions() {
+        _graphicsOptions.value = true
+    }
+
+    fun unlockGraphicOptions() {
+        _graphicsOptions.value = false
+    }
 
     //Componente que seleccionamos
     fun cambiarComponente(component: Int) {

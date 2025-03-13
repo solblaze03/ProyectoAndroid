@@ -64,8 +64,8 @@ fun viewGrafica(
     ) {
     val board by viewModel.Board.observeAsState()
     Scaffold(
-        content = { contentGraphic(component,board) },
-        floatingActionButton = { fabGraphic(component, viewModel,{ volver()}) },
+        content = { contentGraphic(component, board) },
+        floatingActionButton = { fabGraphic(component, viewModel, { volver() }) },
         floatingActionButtonPosition = FabPosition.End
     )
 }
@@ -73,7 +73,6 @@ fun viewGrafica(
 
 @Composable
 fun contentGraphic(component: Graphic, board: Board?) {
-
 
 
     LazyColumn(
@@ -128,27 +127,27 @@ fun contentGraphic(component: Graphic, board: Board?) {
                                     color = colorResource(
                                         if (component.marca.equals("Gigabyte")) {
                                             R.color.azulIntel
-                                        } else if(component.marca.equals("ASRock")){
+                                        } else if (component.marca.equals("ASRock")) {
                                             R.color.verde
-                                        }else{
+                                        } else {
                                             R.color.rojo
                                         }
                                     )
                                 )
                             }
-                            var painter : Painter = if (component.marca.equals("Corsair")) {
+                            var painter: Painter = if (component.marca.equals("Corsair")) {
                                 painterResource(R.drawable.corsair)
-                            }else if (component.marca.equals("G.Skill")){
+                            } else if (component.marca.equals("G.Skill")) {
                                 painterResource(R.drawable.gskill)
-                            }else if (component.marca.equals("Kingstone")){
+                            } else if (component.marca.equals("Kingstone")) {
                                 painterResource(R.drawable.kingstone)
-                            }else if(component.marca.equals("Crucial")){
+                            } else if (component.marca.equals("Crucial")) {
                                 painterResource(R.drawable.crucial)
-                            }else if(component.marca.equals("Patriot")){
+                            } else if (component.marca.equals("Patriot")) {
                                 painterResource(R.drawable.patriot)
-                            }else if(component.marca.equals("Team T-Force")){
+                            } else if (component.marca.equals("Team T-Force")) {
                                 painterResource(R.drawable.tforce)
-                            }else{
+                            } else {
                                 painterResource(R.drawable.xpg)
                             }
 
@@ -184,20 +183,26 @@ fun contentGraphic(component: Graphic, board: Board?) {
                     Row {
 
                         Text(
-                            "Cantidad: ${component.vram}GB",
+                            "VRAM: ${component.vram}",
                             modifier = Modifier.weight(1f),
                             fontSize = 15.sp,
                             fontFamily = Fuentes.mulishRegular,
                             color = MaterialTheme.colorScheme.inverseSurface
                         )
+                        val rtx = if (component.rtx) {
+                            "Si"
+                        } else {
+                            "No"
+                        }
                         Text(
-                            "Ensamblador: ${component.ensamblador}",
+                            "RTX: ${rtx}",
                             modifier = Modifier.weight(1f),
                             fontSize = 15.sp,
                             color = MaterialTheme.colorScheme.inverseSurface
                         )
 
                     }
+                    Spacer(modifier = Modifier.padding(2.dp))
                     Row {
                         Text(
                             "Tipo: ${component.tipoMemoria}",
@@ -213,16 +218,34 @@ fun contentGraphic(component: Graphic, board: Board?) {
                         )
 
                     }
-                    Spacer(modifier = Modifier.padding(5.dp))
+                    Spacer(modifier = Modifier.padding(2.dp))
+
+                        Text(
+                            "TDP: ${component.consumo}W",
+                            fontSize = 15.sp,
+                            color = MaterialTheme.colorScheme.inverseSurface
+                        )
+
+
+
+
+
+                    Spacer(modifier = Modifier.padding(2.dp))
+                    Text(
+                        "Ensamblador: ${component.ensamblador}",
+                        fontSize = 15.sp,
+                        color = MaterialTheme.colorScheme.inverseSurface
+                    )
+                    Spacer(modifier = Modifier.padding(2.dp))
+                    Text(
+                        "Conectores: ${component.conectoresPantalla}",
+                        fontSize = 15.sp,
+                        color = MaterialTheme.colorScheme.inverseSurface
+                    )
+
 
                 }
                 Spacer(modifier = Modifier.padding(5.dp))
-                Text(
-                    "${component.marca}",
-                    modifier = Modifier.padding(start = 15.dp, end = 15.dp),
-                    fontFamily = Fuentes.mulishRegular,
-                    color = MaterialTheme.colorScheme.inverseSurface
-                )
 
             }
             Spacer(modifier = Modifier.padding(8.dp))
@@ -241,15 +264,15 @@ fun fabGraphic(
     val color = colorResource(
         if (grafica.ensamblador.equals("Gigabyte")) {
             R.color.azulIntel
-        } else if(grafica.ensamblador.equals("ASRock")){
+        } else if (grafica.ensamblador.equals("ASRock")) {
             R.color.verde
-        }else{
+        } else {
             R.color.rojo
         }
     )
     FloatingActionButton(
         //viewModel.lockBoardOptions();viewModel.unlockStorage(); viewModel.cambiarComponente(2); viewModel.guardarRAM(ram) ; function()
-        onClick = {viewModel.unlockCase();function();viewModel.guardarGrafica(grafica)},
+        onClick = { viewModel.unlockCase();function();viewModel.guardarGrafica(grafica) },
         containerColor = color
     ) {
         Icon(imageVector = Icons.Default.Add, contentDescription = "Añadir")

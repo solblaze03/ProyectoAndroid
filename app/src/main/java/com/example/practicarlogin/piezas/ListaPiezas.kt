@@ -118,7 +118,6 @@ class ListaPiezas {
 
 
         val graphicList = listOf(
-
             Graphic(
                 nombre = "GeForce RTX 3080",
                 marca = "NVIDIA",
@@ -129,9 +128,10 @@ class ListaPiezas {
                 rtx = true,
                 conectoresPantalla = "HDMI, DisplayPort",
                 precio = 699.99,
-                altura = 140.1,       // Altura añadida
-                longitud = 318.5,     // Longitud añadida
-                ensamblador = "ASUS"
+                altura = 69.0,
+                longitud = 170.0,
+                ensamblador = "ASUS",
+                rendimientoMinimo = 53.2 // Procesador mínimo: 6 núcleos, 12 hilos, 2.4 GHz -> (6 + 12) * 2.4
             ),
             Graphic(
                 nombre = "Radeon RX 6800 XT",
@@ -143,9 +143,10 @@ class ListaPiezas {
                 rtx = true,
                 conectoresPantalla = "HDMI, DisplayPort",
                 precio = 649.99,
-                altura = 120.0,       // Altura añadida
-                longitud = 267.0,     // Longitud añadida
-                ensamblador = "ASUS"
+                altura = 120.0,
+                longitud = 267.0,
+                ensamblador = "ASUS",
+                rendimientoMinimo = 49.8 // Procesador mínimo: 6 núcleos, 12 hilos, 2.6 GHz -> (6 + 12) * 2.6
             ),
             Graphic(
                 nombre = "GeForce GTX 1660 Super",
@@ -157,9 +158,10 @@ class ListaPiezas {
                 rtx = false,
                 conectoresPantalla = "HDMI, DisplayPort",
                 precio = 229.99,
-                altura = 115.0,       // Altura añadida
-                longitud = 204.0,     // Longitud añadida
-                ensamblador = "MSI"
+                altura = 115.0,
+                longitud = 204.0,
+                ensamblador = "MSI",
+                rendimientoMinimo = 36.0 // Procesador mínimo: 4 núcleos, 8 hilos, 2.5 GHz -> (4 + 8) * 2.5
             ),
             Graphic(
                 nombre = "Radeon RX 5700 XT",
@@ -173,7 +175,8 @@ class ListaPiezas {
                 precio = 399.99,
                 altura = 114.0,
                 longitud = 267.0,
-                ensamblador = "Gigabyte"
+                ensamblador = "Gigabyte",
+                rendimientoMinimo = 40.0 // Procesador mínimo: 6 núcleos, 6 hilos, 2.5 GHz -> (6 + 6) * 2.5
             ),
             Graphic(
                 nombre = "GeForce RTX 3090",
@@ -185,9 +188,10 @@ class ListaPiezas {
                 rtx = true,
                 conectoresPantalla = "HDMI, DisplayPort",
                 precio = 1499.99,
-                altura = 140.1,       // Altura añadida
-                longitud = 313.0,     // Longitud añadida
-                ensamblador = "ASUS"
+                altura = 140.1,
+                longitud = 313.0,
+                ensamblador = "ASUS",
+                rendimientoMinimo = 48.0 // Procesador mínimo: 8 núcleos, 8 hilos, 3.0 GHz -> (8 + 8) * 3.0
             ),
             Graphic(
                 nombre = "Radeon RX 6700 XT",
@@ -199,9 +203,10 @@ class ListaPiezas {
                 rtx = false,
                 conectoresPantalla = "HDMI, DisplayPort",
                 precio = 479.99,
-                altura = 125.0,       // Altura añadida
-                longitud = 267.0,     // Longitud añadida
-                ensamblador = "Sapphire"
+                altura = 125.0,
+                longitud = 267.0,
+                ensamblador = "Sapphire",
+                rendimientoMinimo = 41.6 // Procesador mínimo: 6 núcleos, 10 hilos, 2.6 GHz -> (6 + 10) * 2.6
             ),
             Graphic(
                 nombre = "GeForce GTX 1080 Ti",
@@ -213,9 +218,10 @@ class ListaPiezas {
                 rtx = false,
                 conectoresPantalla = "HDMI, DisplayPort",
                 precio = 799.99,
-                altura = 111.15,      // Altura añadida
-                longitud = 267.0,     // Longitud añadida
-                ensamblador = "EVGA"
+                altura = 111.15,
+                longitud = 267.0,
+                ensamblador = "EVGA",
+                rendimientoMinimo = 30.0 // Procesador mínimo: 4 núcleos, 8 hilos, 2.5 GHz -> (4 + 8) * 2.5
             ),
             Graphic(
                 nombre = "Radeon RX 5600 XT",
@@ -227,38 +233,29 @@ class ListaPiezas {
                 rtx = false,
                 conectoresPantalla = "HDMI, DisplayPort",
                 precio = 279.99,
-                altura = 110.0,       // Altura añadida
-                longitud = 250.0,     // Longitud añadida
-                ensamblador = "PowerColor"
+                altura = 110.0,
+                longitud = 250.0,
+                ensamblador = "PowerColor",
+                rendimientoMinimo = 33.6 // Procesador mínimo: 4 núcleos, 8 hilos, 2.8 GHz -> (4 + 8) * 2.8
+
             ),
             Graphic(
-                nombre = "GeForce RTX 2070 Super",
+                nombre = "NVIDIA GeForce GT 710",
                 marca = "NVIDIA",
-                consumo = 215.0,
-                vram = "8GB",
-                imagen = "https://www.zotac.com/download/files/styles/org/public/product_main_image/graphics_cards/zt-t20710d-10p_image01_rgb.jpg?itok=Nw6WQC4Q",
-                tipoMemoria = "GDDR6",
-                rtx = true,
-                conectoresPantalla = "HDMI, DisplayPort",
-                precio = 499.99,
-                altura = 115.7,       // Altura añadida
-                longitud = 268.5,     // Longitud añadida
-                ensamblador = "ZOTAC"
-            ),
-            Graphic(
-                nombre = "Radeon RX Vega 64",
-                marca = "AMD",
-                consumo = 295.0,
-                vram = "8GB",
-                imagen = "https://a.scdn.gr/images/sku_main_images/016546/16546877/20181120094125_asus_radeon_rx_vega_64_8gb_arez_strix_oc_90yv0b03_m0nm00.jpeg",
-                tipoMemoria = "HBM2",
+                consumo = 19.0,
+                vram = "2GB",
+                imagen = "https://dlcdnwebimgs.asus.com/gain/72387687-0437-45b6-83e1-2f8dfb34efba/w692",
+                tipoMemoria = "DDR3",
                 rtx = false,
-                conectoresPantalla = "HDMI, DisplayPort",
-                precio = 499.99,
-                altura = 120.0,       // Altura añadida
-                longitud = 280.0,     // Longitud añadida
-                ensamblador = "ASUS"
+                conectoresPantalla = "HDMI, DVI, D-Sub",
+                precio = 40.0,
+                altura = 110.0,
+                longitud = 250.0,
+                ensamblador = "PowerColor",
+                rendimientoMinimo = 21.0 // Procesador mínimo: 4 núcleos, 8 hilos, 2.8 GHz -> (4 + 8) * 2.8
+
             )
+
         )
 
         val cajaList = listOf(
@@ -306,11 +303,11 @@ class ListaPiezas {
             ),
             Caja(
                 nombre = "Corsair 7000D Airflow",
-                factorForma = "ATX Full Tower",
+                factorForma = "ATX",
                 marca = "Corsair",
                 ventiladores = 5,
                 imagen = "https://dynaquestpc.com/cdn/shop/products/CC-9011218-WW.jpg?v=1632259397&width=1214",
-                 peso = "10.5 kg",
+                peso = "10.5 kg",
                 rgb = true,
                 longitudMaximaGPU = 450.0,
                 alturaGPU = 200.0,
@@ -320,7 +317,7 @@ class ListaPiezas {
             ),
             Caja(
                 nombre = "Phanteks Eclipse P400A",
-                factorForma = "ATX Mid Tower",
+                factorForma = "ATX",
                 marca = "Phanteks",
                 ventiladores = 3,
                 imagen = "https://files.pccasegear.com/images/1603068871-PH-EC400ATG_DBK01_SYS02-thb.jpg",
@@ -437,9 +434,6 @@ class ListaPiezas {
                 modularidad = "Semimodular"
             )
         )
-
-
-
 
 
     }

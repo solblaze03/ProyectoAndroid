@@ -27,13 +27,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.example.practicarlogin.R
 import com.example.practicarlogin.fuentes.Fuentes
-import com.example.practicarlogin.languageSelect
-import com.example.practicarlogin.piezas.CPU
 import com.example.practicarlogin.piezas.Graphic
 
 @Composable
@@ -42,7 +41,8 @@ fun cargarGrafica(
     function: () -> Unit,
     remplazar: () -> Unit,
     cambiarComponente: () -> Unit,
-    lockCase: () -> Unit
+    lockCase: () -> Unit,
+    graphicOptions: Boolean
 ) {
     OutlinedCard(
         modifier = Modifier
@@ -74,46 +74,63 @@ fun cargarGrafica(
                         fontSize = 14.5.sp,
                         fontFamily = Fuentes.mulishBold
                     )
-                    Text(
-                        "${graphic?.precio}€",
-                        color = MaterialTheme.colorScheme.inverseSurface,
-                        fontSize = 14.5.sp,
-                        fontFamily = Fuentes.mulishSemiBold
-                    )
+
                     Row {
                         Text(
                             "Tipo: ${graphic?.tipoMemoria}",
                             color = MaterialTheme.colorScheme.inverseSurface,
                             fontSize = 12.sp,
                             fontFamily = Fuentes.mulishRegular,
-                            modifier = Modifier.weight(1.1f)
+                            modifier = Modifier.weight(1f)
                         )
                         Text(
                             "Marca: ${graphic?.marca}",
                             color = MaterialTheme.colorScheme.inverseSurface,
                             fontSize = 12.sp,
                             fontFamily = Fuentes.mulishRegular,
-                            modifier = Modifier.weight(0.9f)
+                            modifier = Modifier.weight(1.15f)
                         )
 
                     }
+                    val rtx = if (graphic?.rtx == true) {
+                        "Si"
+                    } else {
+                        "No"
+                    }
                     Row {
                         Text(
-                            "RTX: ${graphic?.rtx}",
+                            "RTX: $rtx",
                             color = MaterialTheme.colorScheme.inverseSurface,
                             fontSize = 12.sp,
                             fontFamily = Fuentes.mulishRegular,
-                            modifier = Modifier.weight(1.1f)
+                            modifier = Modifier.weight(1f)
                         )
                         Text(
                             "TDP: ${graphic?.consumo}w",
                             color = MaterialTheme.colorScheme.inverseSurface,
                             fontSize = 12.sp,
                             fontFamily = Fuentes.mulishRegular,
-                            modifier = Modifier.weight(0.9f)
+                            modifier = Modifier.weight(1.15f)
                         )
 
-
+                    }
+                    Row(modifier = Modifier) {
+                        Text(
+                            "Precio:",
+                            color = MaterialTheme.colorScheme.inverseSurface,
+                            fontSize = 16.sp,
+                            fontFamily = Fuentes.mulishBold,
+                        )
+                        Text(
+                            "${graphic?.precio}€",
+                            color = MaterialTheme.colorScheme.inverseSurface,
+                            fontSize = 16.sp,
+                            fontFamily = Fuentes.mulishBold,
+                            textAlign = TextAlign.End,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(end = 28.dp)
+                        )
                     }
 
 
@@ -123,41 +140,42 @@ fun cargarGrafica(
             Spacer(modifier = Modifier.padding(3.dp))
 
 
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                OutlinedButton(
-                    onClick = { cambiarComponente();remplazar() },
-                    modifier = Modifier.weight(5f)
+            AnimatedVisibility(!graphicOptions) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(
-                        "Remplazar",
-                        fontFamily = Fuentes.mulishBold,
-                        color = MaterialTheme.colorScheme.inverseSurface
-                    )
-                }
+                    OutlinedButton(
+                        onClick = { cambiarComponente();remplazar() },
+                        modifier = Modifier.weight(5f)
+                    ) {
+                        Text(
+                            "Remplazar",
+                            fontFamily = Fuentes.mulishBold,
+                            color = MaterialTheme.colorScheme.inverseSurface
+                        )
+                    }
 
-                Spacer(modifier = Modifier.padding(5.dp))
-                IconButton(
-                    onClick = { lockCase();function() },
-                    modifier = Modifier
-                        .border(
-                            width = 0.8.dp,
-                            color = MaterialTheme.colorScheme.inverseSurface,
-                            shape = RoundedCornerShape(15.dp)
-                        )
-                        .weight(1f)
-                        .height(37.dp)
-                        .width(37.dp),
-                    colors = IconButtonDefaults.iconButtonColors(containerColor = MaterialTheme.colorScheme.onSecondary),
-                    content = {
-                        Icon(
-                            imageVector = Icons.Default.Delete,
-                            contentDescription = "Quitar", tint = colorResource(R.color.blue)
-                        )
-                    })
+                    Spacer(modifier = Modifier.padding(5.dp))
+                    IconButton(
+                        onClick = { lockCase();function() },
+                        modifier = Modifier
+                            .border(
+                                width = 0.8.dp,
+                                color = MaterialTheme.colorScheme.inverseSurface,
+                                shape = RoundedCornerShape(15.dp)
+                            )
+                            .weight(1f)
+                            .height(37.dp)
+                            .width(37.dp),
+                        colors = IconButtonDefaults.iconButtonColors(containerColor = MaterialTheme.colorScheme.onSecondary),
+                        content = {
+                            Icon(
+                                imageVector = Icons.Default.Delete,
+                                contentDescription = "Quitar", tint = colorResource(R.color.blue)
+                            )
+                        })
+                }
             }
 
 

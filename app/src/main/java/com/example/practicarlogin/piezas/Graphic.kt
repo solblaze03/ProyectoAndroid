@@ -12,5 +12,6 @@ data class Graphic(
     val precio: Double,
     val altura : Double,
     val longitud : Double,
-    val ensamblador: String
+    val ensamblador: String,
+    val rendimientoMinimo: Double
 )

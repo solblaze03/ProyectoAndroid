@@ -29,6 +29,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
@@ -77,46 +78,38 @@ fun cargarPsu(
                         fontSize = 14.5.sp,
                         fontFamily = Fuentes.mulishBold
                     )
+
                     Text(
-                        "${fuente?.precio}€",
+                        "Certificación: ${fuente?.certificacion}",
                         color = MaterialTheme.colorScheme.inverseSurface,
-                        fontSize = 14.5.sp,
-                        fontFamily = Fuentes.mulishSemiBold
+                        fontSize = 12.sp,
+                        fontFamily = Fuentes.mulishRegular
                     )
-                    Row {
-                        Text(
-                            "Certificación: ${fuente?.certificacion}",
-                            color = MaterialTheme.colorScheme.inverseSurface,
-                            fontSize = 12.sp,
-                            fontFamily = Fuentes.mulishRegular,
-                            modifier = Modifier.weight(1.1f)
-                        )
-                        Text(
-                            "Marca: ${fuente?.conectores}",
-                            color = MaterialTheme.colorScheme.inverseSurface,
-                            fontSize = 12.sp,
-                            fontFamily = Fuentes.mulishRegular,
-                            modifier = Modifier.weight(0.9f)
-                        )
 
-                    }
-                    Row {
+                    Text(
+                        "Potencia: ${fuente?.potencia}",
+                        color = MaterialTheme.colorScheme.inverseSurface,
+                        fontSize = 12.sp,
+                        fontFamily = Fuentes.mulishRegular
+                    )
+
+                    Row(modifier = Modifier) {
                         Text(
-                            "RGB: ${fuente?.potencia}",
+                            "Precio:",
                             color = MaterialTheme.colorScheme.inverseSurface,
-                            fontSize = 12.sp,
-                            fontFamily = Fuentes.mulishRegular,
-                            modifier = Modifier.weight(1.1f)
+                            fontSize = 16.sp,
+                            fontFamily = Fuentes.mulishBold,
                         )
                         Text(
-                            "Modularidad: ${fuente?.modularidad}w",
+                            "${fuente?.precio}€",
                             color = MaterialTheme.colorScheme.inverseSurface,
-                            fontSize = 12.sp,
-                            fontFamily = Fuentes.mulishRegular,
-                            modifier = Modifier.weight(0.9f)
+                            fontSize = 16.sp,
+                            fontFamily = Fuentes.mulishBold,
+                            textAlign = TextAlign.End,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(end = 28.dp)
                         )
-
-
                     }
 
 

@@ -25,6 +25,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -44,6 +45,7 @@ import coil3.request.CachePolicy
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import coil3.request.placeholder
+import com.example.practicarlogin.Loading.loadingScreen
 import com.example.practicarlogin.R
 import com.example.practicarlogin.VM.ComponentViewModel
 import com.example.practicarlogin.fuentes.Fuentes
@@ -63,7 +65,11 @@ fun ListaRAM(
     lockBoard: () -> Unit
 ) {
 
+    LaunchedEffect(Unit) {
+        viewModel.buscarRam()
+    }
 
+    val board by viewModel.Board.observeAsState()
     val listViewRam by viewModel.ListRam.observeAsState(emptyList())
     Column(
         modifier = Modifier
@@ -91,148 +97,159 @@ fun ListaRAM(
             }
 
         )
+        if (listViewRam.isNotEmpty()) {
+            val filtrarItems = remember(busqueda) {
 
-        val filtrarItems = remember(busqueda) {
-
-            listViewRam.filter { e ->
-                e.nombre.contains(
-                    busqueda,
-                    ignoreCase = true
-                ) || e.marca.contains(busqueda, ignoreCase = true)
+                listViewRam.filter { e ->
+                    (e.nombre.contains(
+                        busqueda,
+                        ignoreCase = true
+                    ) || e.marca.contains(busqueda, ignoreCase = true)) && e.tipoMemoria.equals(
+                        board?.tipoMemoria
+                    )
+                }
             }
-        }
 
-        LazyColumn(
-            modifier = Modifier
-                .background(MaterialTheme.colorScheme.background)
-                .padding(start = 15.dp, end = 15.dp)
-        ) {
-            items(filtrarItems) { e ->
+            LazyColumn(
+                modifier = Modifier
+                    .background(MaterialTheme.colorScheme.background)
+                    .padding(start = 15.dp, end = 15.dp)
+            ) {
+                items(filtrarItems) { e ->
 
-                val component = Gson().toJson(e)
-
+                    val component = Gson().toJson(e)
 
 
-                HorizontalDivider(modifier = Modifier.weight(1f))
-                Spacer(modifier = Modifier.padding(5.dp))
-                Surface(modifier = Modifier.fillMaxSize()) {
-                    Column(modifier = Modifier.fillMaxSize()) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(5.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Surface(shape = RoundedCornerShape(10.dp)) {
-                                AsyncImage(
-                                    model = ImageRequest.Builder(LocalContext.current)
-                                        .data(e.imagen)
-                                        .crossfade(enable = true)
-                                        .placeholder(R.drawable.logo)
-                                        .diskCachePolicy(CachePolicy.ENABLED)
-                                        .memoryCachePolicy(CachePolicy.ENABLED)
-                                        .build(),
-                                    contentDescription = e.nombre,
-                                    modifier = Modifier.size(105.dp),
-                                    contentScale = ContentScale.Crop,
-                                )
-                            }
-                            Spacer(modifier = Modifier.padding(5.dp))
-                            Column {
-                                Text(
-                                    e.nombre,
-                                    modifier = Modifier.fillMaxWidth(),
-                                    textAlign = TextAlign.Left,
-                                    fontFamily = Fuentes.mulishBold
-                                )
-                                Spacer(modifier = Modifier.padding(3.dp))
 
-                                Row(
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                        .padding(end = 10.dp)
-                                ) {
-                                    Text(
-                                        "Memoria: ${e.cantidad} ",
-                                        fontSize = 13.sp,
-                                        modifier = Modifier.weight(1f),
-                                        fontFamily = Fuentes.mulishRegular
+                    HorizontalDivider(modifier = Modifier.weight(1f))
+                    Spacer(modifier = Modifier.padding(5.dp))
+                    Surface(modifier = Modifier.fillMaxSize()) {
+                        Column(modifier = Modifier.fillMaxSize()) {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(5.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Surface(shape = RoundedCornerShape(10.dp)) {
+                                    AsyncImage(
+                                        model = ImageRequest.Builder(LocalContext.current)
+                                            .data(e.imagen)
+                                            .crossfade(enable = true)
+                                            .placeholder(R.drawable.logo)
+                                            .diskCachePolicy(CachePolicy.ENABLED)
+                                            .memoryCachePolicy(CachePolicy.ENABLED)
+                                            .build(),
+                                        contentDescription = e.nombre,
+                                        modifier = Modifier.size(105.dp),
+                                        contentScale = ContentScale.Crop,
                                     )
-                                    Text(
-                                        "${language.hilos}: ${e.velocidad} ",
-                                        fontSize = 13.sp,
-                                        modifier = Modifier.weight(1f),
-                                        fontFamily = Fuentes.mulishRegular
-                                    )
-
                                 }
-                                Text(
-                                    "${e.precio}€",
-                                    fontSize = 15.sp,
-                                    fontFamily = Fuentes.mulishSemiBold,
-                                    modifier = Modifier
-                                        .align(Alignment.Start)
-                                        .padding(start = 1.dp)
-                                )
                                 Spacer(modifier = Modifier.padding(5.dp))
-
-                                Row {
-                                    OutlinedButton(
-                                        onClick = { function(component) },
-                                        modifier = Modifier
-                                            .weight(2f)
-                                            .height(38.dp),
-                                        border = BorderStroke(
-                                            1.5.dp,
-                                            color = colorResource(R.color.blue)
-                                        ),
-
-                                        content = {
-                                            Text(
-                                                languageSelect.vermas,
-                                                fontFamily = Fuentes.mulishBold,
-                                                fontSize = 13.sp,
-                                                color = colorResource(R.color.teal_700)
-                                            )
-                                        })
-                                    Spacer(modifier = Modifier.padding(4.dp))
-                                    Button(
-                                        onClick = {
-                                            viewModel.unlockStorage();
-                                            lockBoard();
-                                            viewModel.guardarRAM(e);
-                                            Volver(); viewModel.cambiarComponente(
-                                            1
-                                        )
-                                        },
-                                        modifier = Modifier
-                                            .weight(1.5f)
-                                            .height(38.dp),
-                                        colors = ButtonDefaults.buttonColors(
-                                            containerColor = colorResource(
-                                                R.color.blue
-                                            )
-                                        ),
-                                        content = {
-                                            Text(
-                                                languageSelect.agregar,
-                                                color = Color.White
-                                            )
-                                        }
+                                Column {
+                                    Text(
+                                        e.nombre,
+                                        modifier = Modifier.fillMaxWidth(),
+                                        textAlign = TextAlign.Left,
+                                        fontFamily = Fuentes.mulishBold
                                     )
+                                    Spacer(modifier = Modifier.padding(3.dp))
+
+
+                                    Text(
+                                        "Memoria: ${e.cantidad}GB ",
+                                        fontSize = 13.sp,
+                                        fontFamily = Fuentes.mulishRegular
+                                    )
+
+                                    Text(
+                                        "${language.reloj}: ${e.velocidad}MHz ",
+                                        fontSize = 13.sp,
+                                        fontFamily = Fuentes.mulishRegular
+                                    )
+
+
+                                    Row(modifier = Modifier) {
+                                        Text(
+                                            "Precio:",
+                                            color = MaterialTheme.colorScheme.inverseSurface,
+                                            fontSize = 16.sp,
+                                            fontFamily = Fuentes.mulishBold,
+                                        )
+                                        Text(
+                                            "${e?.precio}€",
+                                            color = MaterialTheme.colorScheme.inverseSurface,
+                                            fontSize = 16.sp,
+                                            fontFamily = Fuentes.mulishBold,
+                                            textAlign = TextAlign.End,
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .padding(end = 28.dp)
+                                        )
+                                    }
+                                    Spacer(modifier = Modifier.padding(5.dp))
+
+
                                 }
+
+
+                            }
+                            Row {
+                                OutlinedButton(
+                                    onClick = { function(component) },
+                                    modifier = Modifier
+                                        .weight(2f)
+                                        .height(38.dp),
+                                    border = BorderStroke(
+                                        1.5.dp,
+                                        color = colorResource(R.color.blue)
+                                    ),
+
+                                    content = {
+                                        Text(
+                                            languageSelect.vermas,
+                                            fontFamily = Fuentes.mulishBold,
+                                            fontSize = 13.sp,
+                                            color = colorResource(R.color.teal_700)
+                                        )
+                                    })
+                                Spacer(modifier = Modifier.padding(4.dp))
+                                Button(
+                                    onClick = {
+                                        viewModel.unlockStorage();
+                                        lockBoard();
+                                        viewModel.guardarRAM(e);
+                                        Volver(); viewModel.cambiarComponente(
+                                        1
+                                    )
+                                    },
+                                    modifier = Modifier
+                                        .weight(1.5f)
+                                        .height(38.dp),
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = colorResource(
+                                            R.color.blue
+                                        )
+                                    ),
+                                    content = {
+                                        Text(
+                                            languageSelect.agregar,
+                                            color = Color.White
+                                        )
+                                    }
+                                )
                             }
 
 
                         }
 
-
                     }
+                    Spacer(modifier = Modifier.padding(5.dp))
 
                 }
-                Spacer(modifier = Modifier.padding(5.dp))
-
             }
+        }else{
+            loadingScreen()
         }
     }
 }

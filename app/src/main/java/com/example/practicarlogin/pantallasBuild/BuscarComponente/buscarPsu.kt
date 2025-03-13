@@ -63,6 +63,9 @@ fun ListaPsu(
     component: Int,
 ) {
 
+    val cpu by viewModel.component.observeAsState()
+    val graphic by viewModel.graphic.observeAsState()
+
 
 
     Column(
@@ -91,14 +94,16 @@ fun ListaPsu(
             }
 
         )
-
+        val consumo = cpu?.tdp!! + graphic?.consumo!!
         val filtrarItems = remember(busqueda) {
 
             ListaPiezas.listaFuentes.filter { e ->
-                e.nombre.contains(
+                (e.nombre.contains(
                     busqueda,
                     ignoreCase = true
-                ) || e.marca.contains(busqueda, ignoreCase = true)
+                ) || e.marca.contains(busqueda, ignoreCase = true)) && (e.potencia.replace("W", "")
+                    .toInt() > (consumo + 200))
+                        //200 entre todas las piezas
             }
         }
 
@@ -147,25 +152,24 @@ fun ListaPsu(
                                 )
                                 Spacer(modifier = Modifier.padding(3.dp))
 
-                                Row(
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                        .padding(end = 10.dp)
-                                ) {
-                                    Text(
-                                        "Modularidad: ${e.modularidad} ",
-                                        fontSize = 13.sp,
-                                        modifier = Modifier.weight(1f),
-                                        fontFamily = Fuentes.mulishRegular
-                                    )
-                                    Text(
-                                        "Certificación: ${e.certificacion} ",
-                                        fontSize = 13.sp,
-                                        modifier = Modifier.weight(1f),
-                                        fontFamily = Fuentes.mulishRegular
-                                    )
 
-                                }
+                                Text(
+                                    "Modularidad: ${e.modularidad} ",
+                                    fontSize = 13.sp,
+                                    fontFamily = Fuentes.mulishRegular
+                                )
+                                Text(
+                                    "Certificación: ${e.certificacion} ",
+                                    fontSize = 13.sp,
+                                    fontFamily = Fuentes.mulishRegular
+                                )
+                                Text(
+                                    "Potencia: ${e.potencia}",
+                                    fontSize = 13.sp,
+                                    fontFamily = Fuentes.mulishRegular
+                                )
+
+
                                 Text(
                                     "${e.precio}€",
                                     fontSize = 15.sp,

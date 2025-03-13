@@ -3,8 +3,10 @@ package com.example.practicarlogin.PantallasNavegaciones
 import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,15 +14,27 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -45,7 +59,7 @@ private var RAMelegido: Boolean = false
 private var Storageelegido: Boolean = false
 private var GraphicElegida: Boolean = false
 private var CaseElegida: Boolean = false
-private var psuElegida : Boolean = false
+private var psuElegida: Boolean = false
 private val idioma: languages = LenguajeSeleccionado().idioma()
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -120,6 +134,7 @@ fun content(viewModell: ComponentViewModel, navigate: (Int) -> Unit) {
     //Bloquear Opciones de remplazar y eliminar
     val lockProcesador by viewModell.processorOptions.observeAsState(false)
     val lockBoard by viewModell.BoardOptions.observeAsState(false)
+    val graphicOptions by viewModell.graphicOptions.observeAsState(false)
 
 
 
@@ -137,7 +152,7 @@ fun content(viewModell: ComponentViewModel, navigate: (Int) -> Unit) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 30.dp, end = 30.dp, top = 50.dp)
+                    .padding(start = 10.dp, end = 10.dp, top = 40.dp)
             ) {
 
 
@@ -244,7 +259,8 @@ fun content(viewModell: ComponentViewModel, navigate: (Int) -> Unit) {
                         { viewModell.borrarGrafica() },
                         { navigate(4) },
                         { viewModell.cambiarComponente(4) },
-                        { viewModell.lockCase() })
+                        { viewModell.lockCase() }, graphicOptions
+                    )
                 }
 
                 Spacer(modifier = Modifier.padding(10.dp))
@@ -264,10 +280,10 @@ fun content(viewModell: ComponentViewModel, navigate: (Int) -> Unit) {
                         { viewModell.borrarCaja() },
                         { navigate(5) },
                         { viewModell.cambiarComponente(5) },
-                        { viewModell.lockPsu() })
+                        { viewModell.lockPsu() }, { viewModell.unlockGraphicOptions() })
                 }
                 Spacer(modifier = Modifier.padding(10.dp))
-                AnimatedVisibility(!psuElegida){
+                AnimatedVisibility(!psuElegida) {
                     cargarInformacion(
                         idioma.fuente,
                         !unlockpsu,
@@ -275,13 +291,50 @@ fun content(viewModell: ComponentViewModel, navigate: (Int) -> Unit) {
                         { navigate(6) }
                     ) { viewModell.cambiarComponente(6) }
                 }
-                if (psuElegida){
-                    cargarPsu(psu,{viewModell.borrarPsu()}, {navigate(6)} , {viewModell.cambiarComponente(6)})
+                if (psuElegida) {
+                    cargarPsu(
+                        psu,
+                        { viewModell.borrarPsu() },
+                        { navigate(6) },
+                        { viewModell.cambiarComponente(6) })
 
                 }
 
 
                 Spacer(modifier = Modifier.padding(12.dp))
+                var seleccionado by remember { mutableStateOf(false) }
+
+                if (component != null && boardElegida != null && ram != null && almacenamiento != null && grafica != null && case != null && psu != null) {
+                    seleccionado = true
+                } else {
+                    seleccionado = false
+                }
+
+                val total =
+                    (component?.precio ?: 0.0) + (boardElegida?.precio ?: 0.0) + (ram?.precio
+                        ?: 0.0) + (almacenamiento?.precio ?: 0.0) + (grafica?.precio
+                        ?: 0.0) + (case?.precio ?: 0.0) + (psu?.precio ?: 0.0)
+                Text("Total: $total€", fontSize = 21.sp, fontFamily = Fuentes.mulishSemiBold)
+                Spacer(modifier = Modifier.padding(8.dp))
+                Row {
+                    OutlinedButton(
+                        onClick = {},
+                        content = { Text("Guardar configuración", fontFamily = Fuentes.mulishSemiBold)  },
+
+                        modifier = Modifier.weight(3f),
+                        enabled = seleccionado
+                    )
+                    Spacer(modifier = Modifier.padding(4.dp))
+                    Button(
+                        onClick = { },
+                        content = { Icon(imageVector = Icons.Default.ShoppingCart, contentDescription = "", tint = Color.White)},
+                        modifier = Modifier.weight(1f),
+                        enabled = seleccionado,
+                        colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.blue))
+                    )
+
+                }
+                Spacer(modifier = Modifier.padding(10.dp))
             }
         }
     }

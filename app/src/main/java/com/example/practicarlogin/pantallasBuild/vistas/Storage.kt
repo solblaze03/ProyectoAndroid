@@ -59,11 +59,11 @@ fun Storage(
     component: storage,
     viewModel: ComponentViewModel,
     volver: () -> Unit,
-    ) {
+) {
     val board by viewModel.Board.observeAsState()
     Scaffold(
-        content = { contentStorage(component,board) },
-        floatingActionButton = { fabStorage(component, viewModel,{ volver()}) },
+        content = { contentStorage(component, board) },
+        floatingActionButton = { fabStorage(component, viewModel, { volver() }) },
         floatingActionButtonPosition = FabPosition.End
     )
 }
@@ -71,7 +71,6 @@ fun Storage(
 
 @Composable
 fun contentStorage(component: storage, board: Board?) {
-
 
 
     LazyColumn(
@@ -126,29 +125,32 @@ fun contentStorage(component: storage, board: Board?) {
                                     color = colorResource(
                                         if (component.marca.equals("Gigabyte")) {
                                             R.color.azulIntel
-                                        } else if(component.marca.equals("ASRock")){
+                                        } else if (component.marca.equals("ASRock")) {
                                             R.color.verde
-                                        }else{
+                                        } else {
                                             R.color.rojo
                                         }
                                     )
                                 )
                             }
-                            var painter : Painter = if (component.marca.equals("Samsung")) {
+                            var painter: Painter = if (component.marca.equals("Samsung")) {
                                 painterResource(R.drawable.samsung)
-                            }else if (component.marca.equals("G.Skill")){
+                            } else if (component.marca.equals("G.Skill")) {
                                 painterResource(R.drawable.gskill)
-                            }else if (component.marca.equals("Kingstone") || component.marca.equals("Kingston") ){
+                            } else if (component.marca.equals("Kingstone") || component.marca.equals(
+                                    "Kingston"
+                                )
+                            ) {
                                 painterResource(R.drawable.kingstone)
-                            }else if(component.marca.equals("Crucial")){
+                            } else if (component.marca.equals("Crucial")) {
                                 painterResource(R.drawable.crucial)
-                            }else if(component.marca.equals("Patriot")){
+                            } else if (component.marca.equals("Patriot")) {
                                 painterResource(R.drawable.patriot)
-                            }else if(component.marca.equals("Team T-Force")){
+                            } else if (component.marca.equals("Team T-Force")) {
                                 painterResource(R.drawable.tforce)
-                            }else if(component.marca.equals("Intel")){
+                            } else if (component.marca.equals("Intel")) {
                                 painterResource(R.drawable.intellogo)
-                            }else{
+                            } else {
                                 painterResource(R.drawable.logo)
                             }
 
@@ -181,48 +183,38 @@ fun contentStorage(component: storage, board: Board?) {
                     )
                     HorizontalDivider(modifier = Modifier.fillMaxWidth())
                     Spacer(modifier = Modifier.padding(6.dp))
-                    Row {
 
-                        Text(
-                            "cantidad: ${component.tamaño}",
-                            modifier = Modifier.weight(1f),
-                            fontSize = 15.sp,
-                            fontFamily = Fuentes.mulishRegular,
-                            color = MaterialTheme.colorScheme.inverseSurface
-                        )
-                        Text(
-                            "Velocidad: ${component.VE}",
-                            modifier = Modifier.weight(1f),
-                            fontSize = 15.sp,
-                            color = MaterialTheme.colorScheme.inverseSurface
-                        )
 
-                    }
-                    Row {
-                        Text(
-                            "Tipo: ${component.tipo}",
-                            modifier = Modifier.weight(1.1f),
-                            fontSize = 15.sp,
-                            color = MaterialTheme.colorScheme.inverseSurface
-                        )
-                        Text(
-                            "Marca: ${component.marca}",
-                            modifier = Modifier.weight(1.1f),
-                            fontSize = 15.sp,
-                            color = MaterialTheme.colorScheme.inverseSurface
-                        )
+                    Text(
+                        "Cantidad: ${component.tamaño}",
+                        fontSize = 15.sp,
+                        fontFamily = Fuentes.mulishRegular,
+                        color = MaterialTheme.colorScheme.inverseSurface
+                    )
+                    Text(
+                        "Velocidad escritura: ${component.VE}",
+                        fontSize = 15.sp,
+                        color = MaterialTheme.colorScheme.inverseSurface
+                    )
+                    Text(
+                        "Velocidad lectura: ${component.Vl}",
+                        fontSize = 15.sp,
+                        color = MaterialTheme.colorScheme.inverseSurface
+                    )
+                    Text(
+                        "Tipo: ${component.tipo}",
+                        fontSize = 15.sp,
+                        color = MaterialTheme.colorScheme.inverseSurface
+                    )
+                    Text(
+                        "Marca: ${component.marca}",
+                        color = MaterialTheme.colorScheme.inverseSurface
+                    )
 
-                    }
                     Spacer(modifier = Modifier.padding(5.dp))
 
                 }
-                Spacer(modifier = Modifier.padding(5.dp))
-                Text(
-                    "${component.marca}",
-                    modifier = Modifier.padding(start = 15.dp, end = 15.dp),
-                    fontFamily = Fuentes.mulishRegular,
-                    color = MaterialTheme.colorScheme.inverseSurface
-                )
+
 
             }
             Spacer(modifier = Modifier.padding(8.dp))
@@ -241,15 +233,19 @@ fun fabStorage(
     val color = colorResource(
         if (storage.marca.equals("Gigabyte")) {
             R.color.azulIntel
-        } else if(storage.marca.equals("ASRock")){
+        } else if (storage.marca.equals("ASRock")) {
             R.color.verde
-        }else{
+        } else {
             R.color.rojo
         }
     )
     FloatingActionButton(
         // viewModel.lockBoardOptions();viewModel.unlockStorage(); viewModel.cambiarComponente(2); viewModel.guardarRAM(ram) ; function()
-        onClick = {viewModel.unlockGraphic(); viewModel.cambiarComponente(3);viewModel.guardarAlmacenamiento(storage);function()},
+        onClick = {
+            viewModel.unlockGraphic(); viewModel.cambiarComponente(3);viewModel.guardarAlmacenamiento(
+            storage
+        );function()
+        },
         containerColor = color
     ) {
         Icon(imageVector = Icons.Default.Add, contentDescription = "Añadir")

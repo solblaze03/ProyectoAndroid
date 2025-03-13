@@ -1,5 +1,6 @@
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -27,6 +28,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
@@ -66,53 +68,64 @@ fun cargarProcesador(
                         .clip(shape = RoundedCornerShape(5.dp)),
                     contentScale = ContentScale.Crop
                 )
-                Column(modifier = Modifier.padding(start = 10.dp, end = 8.dp)) {
+                Column(
+                    modifier = Modifier.padding(start = 10.dp, end = 8.dp),
+                    verticalArrangement = Arrangement.spacedBy(1.5.dp)
+                ) {
                     Text(
                         "${cpu?.nombre}",
                         color = MaterialTheme.colorScheme.inverseSurface,
-                        fontSize = 14.5.sp,
+                        fontSize = 16.sp,
                         fontFamily = Fuentes.mulishBold
-                    )
-                    Text(
-                        "${cpu?.precio}€",
-                        color = MaterialTheme.colorScheme.inverseSurface,
-                        fontSize = 14.5.sp,
-                        fontFamily = Fuentes.mulishSemiBold
                     )
                     Row {
                         Text(
                             "${languageSelect.nucleos}: ${cpu?.nucleos}",
                             color = MaterialTheme.colorScheme.inverseSurface,
-                            fontSize = 12.sp,
+                            fontSize = 14.sp,
                             fontFamily = Fuentes.mulishRegular,
-                            modifier = Modifier.weight(1.1f)
+                            modifier = Modifier.weight(0.7f)
                         )
                         Text(
-                            "${languageSelect.hilos}: ${cpu?.nucleos}",
+                            "${languageSelect.reloj}: ${cpu?.frecuencia}GHz",
                             color = MaterialTheme.colorScheme.inverseSurface,
-                            fontSize = 12.sp,
+                            fontSize = 14.sp,
                             fontFamily = Fuentes.mulishRegular,
-                            modifier = Modifier.weight(0.9f)
+                            modifier = Modifier.weight(1.2f)
                         )
 
                     }
                     Row {
                         Text(
-                            "${languageSelect.reloj}: ${cpu?.frecuencia}GHz",
+                            "${languageSelect.hilos}: ${cpu?.hilos}",
                             color = MaterialTheme.colorScheme.inverseSurface,
-                            fontSize = 12.sp,
+                            fontSize = 14.sp,
                             fontFamily = Fuentes.mulishRegular,
-                            modifier = Modifier.weight(1.1f)
+                            modifier = Modifier.weight(0.7f)
                         )
                         Text(
-                            "TDP: ${cpu?.tdp}w",
+                            "${languageSelect.litografia}: ${cpu?.tecnologia}",
                             color = MaterialTheme.colorScheme.inverseSurface,
-                            fontSize = 12.sp,
+                            fontSize = 14.sp,
                             fontFamily = Fuentes.mulishRegular,
-                            modifier = Modifier.weight(0.9f)
+                            modifier = Modifier.weight(1.2f)
                         )
-
-
+                    }
+                    Row (modifier = Modifier){
+                        Text("Precio:",
+                            color = MaterialTheme.colorScheme.inverseSurface,
+                            fontSize = 16.sp,
+                            fontFamily = Fuentes.mulishBold,)
+                        Text(
+                            "${cpu?.precio}€",
+                            color = MaterialTheme.colorScheme.inverseSurface,
+                            fontSize = 16.sp,
+                            fontFamily = Fuentes.mulishBold,
+                            textAlign = TextAlign.End,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(end = 28.dp)
+                        )
                     }
 
 

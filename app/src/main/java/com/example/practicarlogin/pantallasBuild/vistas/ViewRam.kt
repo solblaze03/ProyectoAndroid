@@ -59,11 +59,11 @@ fun ViewRAM(
     viewModel: ComponentViewModel,
     volver: () -> Unit,
 
-) {
+    ) {
     val board by viewModel.Board.observeAsState()
     Scaffold(
-        content = { contentRAM(component,board) },
-        floatingActionButton = { fabRAM(component, viewModel,{ volver()}) },
+        content = { contentRAM(component, board) },
+        floatingActionButton = { fabRAM(component, viewModel, { volver() }) },
         floatingActionButtonPosition = FabPosition.End
     )
 }
@@ -71,7 +71,6 @@ fun ViewRAM(
 
 @Composable
 fun contentRAM(component: RAM, board: Board?) {
-
 
 
     LazyColumn(
@@ -126,27 +125,27 @@ fun contentRAM(component: RAM, board: Board?) {
                                     color = colorResource(
                                         if (component.marca.equals("Gigabyte")) {
                                             R.color.azulIntel
-                                        } else if(component.marca.equals("ASRock")){
+                                        } else if (component.marca.equals("ASRock")) {
                                             R.color.verde
-                                        }else{
+                                        } else {
                                             R.color.rojo
                                         }
                                     )
                                 )
                             }
-                            var painter : Painter = if (component.marca.equals("Corsair")) {
+                            var painter: Painter = if (component.marca.equals("Corsair")) {
                                 painterResource(R.drawable.corsair)
-                            }else if (component.marca.equals("G.Skill")){
+                            } else if (component.marca.equals("G.Skill")) {
                                 painterResource(R.drawable.gskill)
-                            }else if (component.marca.equals("Kingstone")){
+                            } else if (component.marca.equals("Kingstone")) {
                                 painterResource(R.drawable.kingstone)
-                            }else if(component.marca.equals("Crucial")){
+                            } else if (component.marca.equals("Crucial")) {
                                 painterResource(R.drawable.crucial)
-                            }else if(component.marca.equals("Patriot")){
+                            } else if (component.marca.equals("Patriot")) {
                                 painterResource(R.drawable.patriot)
-                            }else if(component.marca.equals("Team T-Force")){
+                            } else if (component.marca.equals("Team T-Force")) {
                                 painterResource(R.drawable.tforce)
-                            }else{
+                            } else {
                                 painterResource(R.drawable.xpg)
                             }
 
@@ -179,51 +178,39 @@ fun contentRAM(component: RAM, board: Board?) {
                     )
                     HorizontalDivider(modifier = Modifier.fillMaxWidth())
                     Spacer(modifier = Modifier.padding(6.dp))
-                    Row {
 
-                        Text(
-                            "cantidad: ${component.cantidad}GB",
-                            modifier = Modifier.weight(1f),
-                            fontSize = 15.sp,
-                            fontFamily = Fuentes.mulishRegular,
-                            color = MaterialTheme.colorScheme.inverseSurface
-                        )
-                        Text(
-                            "Velocidad: ${component.velocidad}",
-                            modifier = Modifier.weight(1f),
-                            fontSize = 15.sp,
-                            color = MaterialTheme.colorScheme.inverseSurface
-                        )
 
-                    }
-                    Row {
-                        Text(
-                            "Tipo: ${component.tipoMemoria}",
-                            modifier = Modifier.weight(1.1f),
-                            fontSize = 15.sp,
-                            color = MaterialTheme.colorScheme.inverseSurface
-                        )
-                        Text(
-                            "Marca: ${component.marca}",
-                            modifier = Modifier.weight(1.1f),
-                            fontSize = 15.sp,
-                            color = MaterialTheme.colorScheme.inverseSurface
-                        )
+                    Text(
+                        "Cantidad: ${component.cantidad}GB",
+                        fontSize = 15.sp,
+                        fontFamily = Fuentes.mulishRegular,
+                        color = MaterialTheme.colorScheme.inverseSurface
+                    )
+                    Text(
+                        "Velocidad: ${component.velocidad}MHz",
+                        fontSize = 15.sp,
+                        color = MaterialTheme.colorScheme.inverseSurface
+                    )
 
-                    }
-                    Spacer(modifier = Modifier.padding(5.dp))
+
+
+                    Text(
+                        "Tipo: ${component.tipoMemoria}",
+                        fontSize = 15.sp,
+                        color = MaterialTheme.colorScheme.inverseSurface
+                    )
+                    Text(
+                        "Marca: ${component.marca}",
+                        fontSize = 15.sp,
+                        color = MaterialTheme.colorScheme.inverseSurface
+                    )
+
 
                 }
-                Spacer(modifier = Modifier.padding(5.dp))
-                Text(
-                    "${component.marca}",
-                    modifier = Modifier.padding(start = 15.dp, end = 15.dp),
-                    fontFamily = Fuentes.mulishRegular,
-                    color = MaterialTheme.colorScheme.inverseSurface
-                )
+
 
             }
-            Spacer(modifier = Modifier.padding(8.dp))
+
 
 
         }
@@ -239,14 +226,18 @@ fun fabRAM(
     val color = colorResource(
         if (ram.marca.equals("Gigabyte")) {
             R.color.azulIntel
-        } else if(ram.marca.equals("ASRock")){
+        } else if (ram.marca.equals("ASRock")) {
             R.color.verde
-        }else{
+        } else {
             R.color.rojo
         }
     )
     FloatingActionButton(
-        onClick = {viewModel.lockBoardOptions();viewModel.unlockStorage(); viewModel.cambiarComponente(2); viewModel.guardarRAM(ram) ; function()},
+        onClick = {
+            viewModel.lockBoardOptions();viewModel.unlockStorage(); viewModel.cambiarComponente(
+            2
+        ); viewModel.guardarRAM(ram); function()
+        },
         containerColor = color
     ) {
         Icon(imageVector = Icons.Default.Add, contentDescription = "Añadir")

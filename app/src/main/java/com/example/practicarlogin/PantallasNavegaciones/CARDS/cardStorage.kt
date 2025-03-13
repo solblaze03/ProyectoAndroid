@@ -28,6 +28,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,6 +37,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -96,14 +98,14 @@ fun cargarStorage(
                             color = MaterialTheme.colorScheme.inverseSurface,
                             fontSize = 12.sp,
                             fontFamily = Fuentes.mulishRegular,
-                            modifier = Modifier.weight(1.1f)
+                            modifier = Modifier.weight(1f)
                         )
                         Text(
-                            "${almacenamientoElegida?.VE}",
+                            "Escritura: ${almacenamientoElegida?.VE}",
                             color = MaterialTheme.colorScheme.inverseSurface,
                             fontSize = 12.sp,
                             fontFamily = Fuentes.mulishRegular,
-                            modifier = Modifier.weight(0.9f)
+                            modifier = Modifier.weight(1.2f)
                         )
 
                     }
@@ -114,17 +116,33 @@ fun cargarStorage(
                             color = MaterialTheme.colorScheme.inverseSurface,
                             fontSize = 12.sp,
                             fontFamily = Fuentes.mulishRegular,
-                            modifier = Modifier.weight(1.1f)
+                            modifier = Modifier.weight(1f)
                         )
                         Text(
-                            "${almacenamientoElegida?.tipoDisco}",
+                            "Lectura: ${almacenamientoElegida?.Vl}",
                             color = MaterialTheme.colorScheme.inverseSurface,
                             fontSize = 12.sp,
                             fontFamily = Fuentes.mulishRegular,
-                            modifier = Modifier.weight(0.9f)
+                            modifier = Modifier.weight(1.2f)
                         )
 
 
+                    }
+                    Row (modifier = Modifier){
+                        Text("Precio:",
+                            color = MaterialTheme.colorScheme.inverseSurface,
+                            fontSize = 16.sp,
+                            fontFamily = Fuentes.mulishBold,)
+                        Text(
+                            "${almacenamientoElegida?.precio}€",
+                            color = MaterialTheme.colorScheme.inverseSurface,
+                            fontSize = 16.sp,
+                            fontFamily = Fuentes.mulishBold,
+                            textAlign = TextAlign.End,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(end = 28.dp)
+                        )
                     }
 
 
@@ -133,7 +151,7 @@ fun cargarStorage(
             }
 
 
-            var cont by remember { mutableStateOf(1) }
+            var cont by rememberSaveable { mutableStateOf(1) }
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
@@ -174,7 +192,7 @@ fun cargarStorage(
                 Spacer(Modifier.padding(4.8.dp))
 
 
-                almacenamientoElegida?.tipoDisco
+
 
 
                 IconButton(
@@ -205,7 +223,7 @@ fun cargarStorage(
 
                 Spacer(modifier = Modifier.padding(5.dp))
                 OutlinedButton(
-                    onClick = { cambiarComponente();navigate() },// },
+                    onClick = { cambiarComponente();navigate() },
                     modifier = Modifier.weight(5f)
                 ) {
                     Text(

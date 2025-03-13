@@ -71,7 +71,7 @@ fun content(component: Board) {
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.onSecondary)
-            .padding(top = 40.dp)
+            .padding(top = 40.dp, bottom = 0.dp)
             .background(color = MaterialTheme.colorScheme.onSecondary)
 
 
@@ -102,7 +102,7 @@ fun content(component: Board) {
                     )
                 ) {
 
-                    Column(modifier = Modifier.padding(start = 15.dp, end = 15.dp)) {
+                    Column(modifier = Modifier.padding(start = 15.dp,end = 15.dp)) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Column(modifier = Modifier.weight(3f)) {
                                 Spacer(modifier = Modifier.padding(8.dp))
@@ -115,7 +115,7 @@ fun content(component: Board) {
                                 )
                                 Spacer(modifier = Modifier.padding(4.dp))
                                 Text(
-                                    "${component.precio}€", fontSize = 21.sp,
+                                    text= "${component.precio}€", fontSize = 21.sp,
                                     color = colorResource(
                                         if (component.marca.equals("Gigabyte")) {
                                             R.color.azulIntel
@@ -159,7 +159,7 @@ fun content(component: Board) {
 
 
                 }
-                Column(modifier = Modifier.padding(start = 15.dp, end = 15.dp)) {
+                Column(modifier = Modifier.padding(start = 15.dp, bottom = 70.dp, end = 15.dp)) {
                     Text(
                         "Especificaciones",
                         fontSize = 18.sp,
@@ -183,12 +183,7 @@ fun content(component: Board) {
                             fontSize = 15.sp,
                             color = MaterialTheme.colorScheme.inverseSurface
                         )
-                        Text(
-                            "${idiomaSeleccionado.zocalo}: ${component.socket}",
-                            modifier = Modifier.weight(1.1f),
-                            fontSize = 15.sp,
-                            color = MaterialTheme.colorScheme.inverseSurface
-                        )
+
                     }
                     Spacer(modifier = Modifier.padding(5.dp))
                     Row {
@@ -201,10 +196,20 @@ fun content(component: Board) {
                             color = MaterialTheme.colorScheme.inverseSurface
                         )
                         Text(
-                            "${languageSelect.zocalo}: ${component.socket}w",
+                            "Tipo RAM: ${component.tipoMemoria}",
                             modifier = Modifier.weight(1f),
                             fontSize = 15.sp,
                             fontFamily = Fuentes.mulishRegular,
+                            color = MaterialTheme.colorScheme.inverseSurface
+                        )
+
+                    }
+                    Spacer(modifier = Modifier.padding(5.dp))
+                    Row {
+                        Text(
+                            "${idiomaSeleccionado.zocalo}: ${component.socket}",
+                            modifier = Modifier.weight(1.1f),
+                            fontSize = 15.sp,
                             color = MaterialTheme.colorScheme.inverseSurface
                         )
                         Text(
@@ -215,14 +220,11 @@ fun content(component: Board) {
                             color = MaterialTheme.colorScheme.inverseSurface
                         )
                     }
+                    Text("Forma: ${component.factorForma}")
                 }
+
                 Spacer(modifier = Modifier.padding(5.dp))
-                Text(
-                    "${component.marca}",
-                    modifier = Modifier.padding(start = 15.dp, end = 15.dp),
-                    fontFamily = Fuentes.mulishRegular,
-                    color = MaterialTheme.colorScheme.inverseSurface
-                )
+
 
             }
             Spacer(modifier = Modifier.padding(8.dp))

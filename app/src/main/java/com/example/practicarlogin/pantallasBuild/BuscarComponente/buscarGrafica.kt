@@ -27,6 +27,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -68,7 +69,11 @@ fun buscarGrafica(
             .background(MaterialTheme.colorScheme.background)
 
     ) {
+        viewModel.buscarGraphic()
+        val graphicList by viewModel.graphiclist.observeAsState(emptyList())
         var busqueda by remember { mutableStateOf("") }
+        val procesador by viewModel.component.observeAsState()
+
         Spacer(modifier = Modifier.padding(top = 50.dp))
         OutlinedTextField(
             value = busqueda,
@@ -90,12 +95,12 @@ fun buscarGrafica(
         )
 
         val filtrarItems = remember(busqueda) {
-
+            val rendimientoCPU = (procesador?.nucleos!! + procesador?.hilos!!) * procesador?.frecuencia!!
             ListaPiezas.graphicList.filter { e ->
-                e.nombre.contains(
+                (e.nombre.contains(
                     busqueda,
                     ignoreCase = true
-                ) || e.marca.contains(busqueda, ignoreCase = true)
+                ) || e.marca.contains(busqueda, ignoreCase = true)) && rendimientoCPU > e.rendimientoMinimo
             }
         }
 
@@ -150,27 +155,57 @@ fun buscarGrafica(
                                         .padding(end = 10.dp)
                                 ) {
                                     Text(
-                                        "Vram: ${e.vram} ",
+                                        "VRAM: ${e.vram} ",
                                         fontSize = 13.sp,
                                         modifier = Modifier.weight(1f),
                                         fontFamily = Fuentes.mulishRegular
                                     )
                                     Text(
-                                        "${e.tipoMemoria} ",
+                                        "Tipo: ${e.tipoMemoria} ",
                                         fontSize = 13.sp,
                                         modifier = Modifier.weight(1f),
                                         fontFamily = Fuentes.mulishRegular
                                     )
 
                                 }
-                                Text(
-                                    "${e.precio}€",
-                                    fontSize = 15.sp,
-                                    fontFamily = Fuentes.mulishSemiBold,
+                                Row(
                                     modifier = Modifier
-                                        .align(Alignment.Start)
-                                        .padding(start = 1.dp)
-                                )
+                                        .fillMaxSize()
+                                        .padding(end = 10.dp)
+                                ) {
+
+                                    val rtx = if(e.rtx){"Si"}else{"No"}
+
+                                    Text(
+                                        "RTX: ${rtx} ",
+                                        fontSize = 13.sp,
+                                        modifier = Modifier.weight(1f),
+                                        fontFamily = Fuentes.mulishRegular
+                                    )
+                                    Text(
+                                        "TDP: ${e.consumo}W ",
+                                        fontSize = 13.sp,
+                                        modifier = Modifier.weight(1f),
+                                        fontFamily = Fuentes.mulishRegular
+                                    )
+
+                                }
+                                Row (modifier = Modifier){
+                                    Text("Precio:",
+                                        color = MaterialTheme.colorScheme.inverseSurface,
+                                        fontSize = 16.sp,
+                                        fontFamily = Fuentes.mulishBold,)
+                                    Text(
+                                        "${e?.precio}€",
+                                        color = MaterialTheme.colorScheme.inverseSurface,
+                                        fontSize = 16.sp,
+                                        fontFamily = Fuentes.mulishBold,
+                                        textAlign = TextAlign.End,
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(end = 28.dp)
+                                    )
+                                }
                                 Spacer(modifier = Modifier.padding(5.dp))
 
                                 Row {
