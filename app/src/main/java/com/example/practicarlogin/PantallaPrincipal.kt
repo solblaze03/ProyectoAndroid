@@ -1,7 +1,6 @@
 package com.example.practicarlogin
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,28 +8,22 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemColors
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -42,20 +35,23 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.practicarlogin.PantallasNavegaciones.buildPC
-import com.example.practicarlogin.PantallasNavegaciones.home
-import com.example.practicarlogin.PantallasNavegaciones.profile
-import com.example.practicarlogin.VM.LoginViewModel
+
+import com.example.practicarlogin.principal_screen_navigation.profile
+import com.example.practicarlogin.`view-model`.LoginViewModel
 import com.example.practicarlogin.navigation.NavigationActions
-import com.example.practicarlogin.navigation.ScreenBuild
 import com.example.practicarlogin.navigation.myAppLevelDestination
 import com.example.practicarlogin.navigation.myappRoute
 import com.example.practicarlogin.navigation.navWrapperBuild
 import com.example.practicarlogin.navigation.topLevel
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.practicarlogin.principal_screen_navigation.Cart
+import com.example.practicarlogin.`view-model`.ComponentViewModel
+import com.example.practicarlogin.navigation.NavigationHome
+import com.example.practicarlogin.navigation.NavigationSearch
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+
+private val componentViewModel = ComponentViewModel();
 
 @Composable
 fun pantallaInicial(loginViewModel: LoginViewModel) {
@@ -106,15 +102,23 @@ fun MyAppContent(
                 startDestination = myappRoute.build
             ) {
                 composable(myappRoute.home) {
-                    home()
-                }
+                    NavigationHome(componentViewModel)
 
+                }
+                composable(myappRoute.search) {
+                    NavigationSearch()
+                }
                 composable(myappRoute.build) {
                     navWrapperBuild()
+                }
+
+                composable(myappRoute.carrito) {
+                    Cart()
                 }
                 composable(myappRoute.account) {
                     profile()
                 }
+
             }
 
 
@@ -187,7 +191,6 @@ fun cargarUI(
 @Composable
 fun imagen(imagen: String): ImageVector {
     var imagenSelec: ImageVector = Icons.Default.Add
-    Log.i("imagen", "$imagen")
     when (imagen) {
         "Home", "Inici", "Inicio" -> imagenSelec =
             ImageVector.vectorResource(R.drawable.homeout)
@@ -196,6 +199,9 @@ fun imagen(imagen: String): ImageVector {
             ImageVector.vectorResource(R.drawable.buildout)
 
         "Profile", "Perfil" -> imagenSelec = Icons.Default.AccountCircle
+
+        "Cart", "Carrito" -> imagenSelec = ImageVector.vectorResource(R.drawable.cartoutlined)
+        "Search", "Buscar" -> imagenSelec = Icons.Outlined.Search
     }
     return imagenSelec
 }
@@ -209,6 +215,9 @@ fun imagenSeleccionada(imagen: String): ImageVector {
             ImageVector.vectorResource(R.drawable.buildin)
 
         "Profile", "Perfil" -> imagenSelec = Icons.Default.AccountCircle
+
+        "Cart", "Carrito" -> imagenSelec = ImageVector.vectorResource(R.drawable.cartfilled)
+        "Search", "Buscar" -> imagenSelec = Icons.Filled.Search
     }
     return imagenSelec
 }

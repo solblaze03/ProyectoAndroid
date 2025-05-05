@@ -4,6 +4,8 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.jetbrainsKotlinSerialization)
     id("com.google.gms.google-services")
+    alias(libs.plugins.crashlytics)
+
 
 }
 
@@ -43,6 +45,7 @@ android {
 }
 
 dependencies {
+
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
@@ -71,5 +74,6 @@ dependencies {
     implementation(libs.firebase.firestore)
     implementation(platform(libs.firebase.bom))
     implementation(libs.kotlinx.coroutines.android)
-
+    implementation(libs.firebase.crashlytics)
+    implementation(libs.firebase.auth)
 }

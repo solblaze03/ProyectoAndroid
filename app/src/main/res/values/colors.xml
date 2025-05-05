@@ -14,4 +14,63 @@
     <color name="azulIntel">#0066cc</color>
     <color name="rojo">#bb0617</color>
     <color name="verde">#79bd28</color>
+
+    <color name="brand_amd">#ED1C24</color>
+    <color name="brand_intel">#0071C5</color>
+    <color name="brand_asus">#000080</color>
+    <color name="brand_msi">#FF0000</color>
+    <color name="brand_gigabyte">#FF6600</color>
+    <color name="brand_evga">#A0A0A0</color>
+    <color name="brand_asrock">#006600</color>
+    <color name="brand_biostar">#FFAA00</color>
+    <color name="brand_zotac">#FFCC00</color>
+    <color name="brand_sapphire">#0033CC</color>
+    <color name="brand_powercolor">#8B0000</color>
+    <color name="brand_xfx">#444444</color>
+    <color name="brand_palit">#FFD700</color>
+    <color name="brand_inno3d">#FF9933</color>
+
+    <color name="brand_corsair">#FDD835</color>
+    <color name="brand_gskill">#FF1744</color>
+    <color name="brand_kingston">#D32F2F</color>
+    <color name="brand_hyperx">#E53935</color>
+    <color name="brand_crucial">#00ACC1</color>
+    <color name="brand_teamgroup">#4DB6AC</color>
+    <color name="brand_adata">#7B1FA2</color>
+    <color name="brand_patriot">#1E88E5</color>
+    <color name="brand_geil">#FF5252</color>
+
+    <color name="brand_samsung">#1428A0</color>
+    <color name="brand_wd">#005195</color>
+    <color name="brand_seagate">#00C853</color>
+    <color name="brand_toshiba">#C62828</color>
+    <color name="brand_sandisk">#E53935</color>
+    <color name="brand_intel_storage">#0071C5</color>
+    <color name="brand_skhynix">#FFA000</color>
+    <color name="brand_pny">#212121</color>
+
+    <color name="brand_cooler_master">#6A1B9A</color>
+    <color name="brand_nzxt">#5E35B1</color>
+    <color name="brand_bequiet">#FF6F00</color>
+    <color name="brand_thermaltake">#FF3D00</color>
+    <color name="brand_antec">#FFC107</color>
+    <color name="brand_fractal_design">#37474F</color>
+    <color name="brand_lianli">#212121</color>
+    <color name="brand_silverstone">#90A4AE</color>
+    <color name="brand_seasonic">#0288D1</color>
+    <color name="brand_deepcool">#00B8D4</color>
+    <color name="brand_noctua">#8D6E63</color>
+    <color name="brand_arctic">#03A9F4</color>
+    <color name="brand_ekwb">#FF9800</color>
+
+    <color name="brand_logitech">#00B0FF</color>
+    <color name="brand_razer">#44D62C</color>
+    <color name="brand_steelseries">#FF6F00</color>
+
+    <color name="brand_asusrog">#C2185B</color>
+    <color name="brand_redragon">#C62828</color>
+    <color name="brand_trust">#9E9E9E</color>
+    <color name="brand_cougar">#FF9800</color>
+
+
 </resources>

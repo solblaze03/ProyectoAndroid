@@ -1,24 +1,13 @@
 package com.example.practicarlogin.navigation
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Build
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.graphics.vector.VectorPainter
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.vectorResource
-import com.example.practicarlogin.prefs.prefs
+import com.example.practicarlogin.shared.prefs
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import com.example.practicarlogin.R
 import com.example.practicarlogin.language.StringsEnglish
 import com.example.practicarlogin.language.StringsSpanish
 import com.example.practicarlogin.language.StringsValenciano
 import com.example.practicarlogin.language.languages
 import com.example.practicarlogin.languageSelect
-import org.intellij.lang.annotations.Language
 
 data class myAppLevelDestination(val route: String, val iconTextId: String)
 
@@ -51,8 +40,18 @@ val topLevel = listOf(
         iconTextId = idioma().home
     ),
     myAppLevelDestination(
+        route = myappRoute.search,
+        iconTextId = "Search"
+    ),
+    myAppLevelDestination(
         route = myappRoute.build,
         iconTextId = idioma().build
+    ),
+
+
+    myAppLevelDestination(
+        route = myappRoute.carrito,
+        iconTextId = "Carrito"
     ),
     myAppLevelDestination(
         route = myappRoute.account,
@@ -69,6 +68,7 @@ class NavigationActions (private val navController: NavController){
             }
 
             launchSingleTop = true
+            restoreState = true
         }
     }
 }
@@ -77,4 +77,6 @@ object myappRoute{
     const val build = "build"
     const val account = "Settings"
     const val home = "home"
+    const val search = "search"
+    const val carrito = "carrito"
 }

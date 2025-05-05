@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:name=".prefs.prefs"
+        android:name=".shared.prefs"
         android:theme="@style/Theme.PracticarLogin"
         tools:targetApi="31">
         <activity

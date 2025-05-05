@@ -1,7 +1,7 @@
 package com.example.practicarlogin.language
 
 import com.example.practicarlogin.languageSelect
-import com.example.practicarlogin.prefs.prefs
+import com.example.practicarlogin.shared.prefs
 
 class LenguajeSeleccionado {
 

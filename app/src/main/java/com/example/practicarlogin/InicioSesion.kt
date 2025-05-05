@@ -21,17 +21,16 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -40,15 +39,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.practicarlogin.VM.LoginViewModel
+import com.example.practicarlogin.`view-model`.LoginState
+import com.example.practicarlogin.`view-model`.LoginViewModel
 import com.example.practicarlogin.fuentes.Fuentes
 import com.example.practicarlogin.language.StringsEnglish
 import com.example.practicarlogin.language.StringsSpanish
 import com.example.practicarlogin.language.StringsValenciano
 import com.example.practicarlogin.language.languages
-import com.example.practicarlogin.prefs.prefs
-import com.example.practicarlogin.ui.theme.backgroundLight
-import kotlin.math.sin
+import com.example.practicarlogin.shared.prefs
+import com.google.firebase.auth.FirebaseAuth
 
 
 lateinit var languageSelect: languages
@@ -58,11 +57,18 @@ private val valenciano = StringsValenciano
 
 
 @Composable
-fun Login(viewModel: LoginViewModel, function: () -> Unit) {
+fun Login(
+    viewModel: LoginViewModel,
+    principal: () -> Unit,
+    auth: FirebaseAuth,
+    registrar: () -> Unit
+) {
 
     val context = LocalContext.current
     val user: String by viewModel.user.observeAsState(initial = "")
     val password: String by viewModel.password.observeAsState(initial = "")
+    val verificar by viewModel.verificado.observeAsState(false)
+    val loginState by viewModel.loginState.observeAsState()
 
 
     Column(
@@ -71,7 +77,7 @@ fun Login(viewModel: LoginViewModel, function: () -> Unit) {
             .background(color = MaterialTheme.colorScheme.background)
             .padding(start = 20.dp, end = 20.dp)
 
-        ) {
+    ) {
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
@@ -85,19 +91,19 @@ fun Login(viewModel: LoginViewModel, function: () -> Unit) {
                 languageSelect = seleccionIdioma[0]
             }
             cambioIdioma()
-            cargarImagenLogo()
+            cargarImagenLogo(languageSelect.inicioSesion)
             Spacer(modifier = Modifier.padding(11.dp))
             cargarTextfieldUser(user) { viewModel.inicioSesion(it, password) }
             Spacer(modifier = Modifier.padding(11.dp))
-            cargarTextPassword(password) { viewModel.inicioSesion(user, it) }
+            cargarTextPassword(password,{ viewModel.inicioSesion(user, it) },loginState,"Email o contraseña incorrectas.",true)
             Spacer(modifier = Modifier.padding(1.dp))
             checkBox()
             Spacer(modifier = Modifier.padding(8.dp))
-            Boton({ viewModel.verificar(user, password, context) { function() } })
+            Boton({ viewModel.verificar(user, password, context) { principal() } }, verificar)
             Spacer(modifier = Modifier.padding(8.dp))
             oIniciar()
             Spacer(modifier = Modifier.padding(8.dp))
-            continuarGoogle()
+            continuarGoogle(registrar)
 
 
         }
@@ -119,28 +125,33 @@ fun cambioIdioma() {
         val context = LocalContext.current
 
 
-        val color = colorResource(R.color.blue)
+        val color = colorResource(R.color.azulIntel)
+
+        iconoBandera(
+            painterResource(R.drawable.valencia),
+            { prefs.prefs.guardarIdioma(2); (context as Activity).recreate() })
+
+
+
         Text(
-            "Valenciano",
-            color = color,
-            modifier = Modifier.clickable { prefs.prefs.guardarIdioma(2); (context as Activity).recreate() })
-        Text(" / ",
-            color = MaterialTheme.colorScheme.inverseSurface)
+            " / ",
+            color = MaterialTheme.colorScheme.inverseSurface
+        )
+        iconoBandera(
+            painterResource(R.drawable.espana),
+            { prefs.prefs.guardarIdioma(0); (context as Activity).recreate() })
         Text(
-            "Español",
-            color = color,
-            modifier = Modifier.clickable { prefs.prefs.guardarIdioma(0);(context as Activity).recreate() })
-        Text(" / ",
-            color = MaterialTheme.colorScheme.inverseSurface)
-        Text(
-            "Inglés ",
-            color = color,
-            modifier = Modifier.clickable { prefs.prefs.guardarIdioma(1);(context as Activity).recreate() })
+            " / ",
+            color = MaterialTheme.colorScheme.inverseSurface
+        )
+        iconoBandera(
+            painterResource(R.drawable.britanica),
+            { prefs.prefs.guardarIdioma(1); (context as Activity).recreate() })
     }
 }
 
 @Composable
-fun cargarImagenLogo() {
+fun cargarImagenLogo(text: String) {
 
     Image(
         painter = painterResource(R.drawable.logo),
@@ -153,11 +164,23 @@ fun cargarImagenLogo() {
 
 
     Text(
-        languageSelect.inicioSesion,
+        text,
         fontSize = 34.sp,
         fontFamily = Fuentes.mulishBold,
         color = MaterialTheme.colorScheme.inverseSurface
     )
+}
+
+@Composable
+fun iconoBandera(imagen: Painter, accion: () -> Unit) {
+    Image(
+        painter = imagen,
+        contentDescription = "",
+        modifier = Modifier
+            .width(35.dp)
+            .height(25.dp)
+            .clickable { accion() })
+
 }
 
 @Composable
@@ -197,7 +220,7 @@ fun cargarTextfieldUser(user: String, cambioTextField: (String) -> Unit) {
 }
 
 @Composable
-fun cargarTextPassword(password: String, cambioTextField: (String) -> Unit) {
+fun cargarTextPassword(password: String, cambioTextField: (String) -> Unit, loginState: LoginState?,errorMessage : String,olvPass: Boolean) {
 
 
     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
@@ -207,13 +230,15 @@ fun cargarTextPassword(password: String, cambioTextField: (String) -> Unit) {
                 .padding(start = 5.dp),
             color = MaterialTheme.colorScheme.inverseSurface
         )
-        Text(
-            text = languageSelect.olvPassword,
-            modifier = Modifier.padding(end = 8.dp),
-            fontSize = 13.5.sp,
-            fontFamily = Fuentes.mulishSemiBold,
-            color = colorResource(R.color.blue),
-        )
+        if(olvPass) {
+            Text(
+                text = languageSelect.olvPassword,
+                modifier = Modifier.padding(end = 8.dp),
+                fontSize = 13.5.sp,
+                fontFamily = Fuentes.mulishSemiBold,
+                color = colorResource(R.color.blue),
+            )
+        }
     }
 
     OutlinedTextField(
@@ -239,6 +264,26 @@ fun cargarTextPassword(password: String, cambioTextField: (String) -> Unit) {
         },
         visualTransformation = PasswordVisualTransformation()
     )
+    when (loginState ?: LoginState.Idle) {
+        is LoginState.Idle -> {
+
+        }
+
+        is LoginState.Success -> {
+            //Cambia ventana desde el viewmodel
+        }
+
+        is LoginState.Error -> {
+            Text(
+                errorMessage,
+                color = Color.Red,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 5.dp),
+                fontSize = 14.sp
+            )
+        }
+    }
 }
 
 @Composable
@@ -247,30 +292,30 @@ fun checkBox() {
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
-
         Checkbox(
             checked = true,
             onCheckedChange = {},
             colors = CheckboxDefaults.colors(checkedColor = colorResource(R.color.blue))
         )
-        Text(
+
+    Text(
             text = languageSelect.inicioAut,
             fontSize = 14.sp,
             fontFamily = Fuentes.mulishRegular,
             color = Color.Gray
-
         )
     }
 }
 
 @Composable
-fun Boton(Verificar: () -> Unit) {
+fun Boton(Verificar: () -> Unit, verificar: Boolean?) {
     Button(
         onClick = { Verificar() },
         shape = RoundedCornerShape(30.dp),
         modifier = Modifier
             .fillMaxWidth()
             .height(60.dp),
+        enabled = verificar ?: false,
         colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.blue))
     ) {
         Text(
@@ -295,7 +340,7 @@ fun oIniciar() {
 }
 
 @Composable
-fun continuarGoogle() {
+fun continuarGoogle(registrar: () -> Unit) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Button(
             onClick = {},
@@ -334,9 +379,10 @@ fun continuarGoogle() {
             fontFamily = Fuentes.mulishBold,
             color = colorResource(R.color.blue),
             fontSize = 18.sp,
-            textDecoration = TextDecoration.Underline,
+            textDecoration = TextDecoration.Underline
+            ,modifier = Modifier.clickable{ registrar()}
 
-            )
+        )
     }
 }
 

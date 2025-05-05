@@ -6,3 +6,5 @@ import kotlinx.serialization.Serializable
 object Login
 @Serializable
 object pantallaInicial
+@Serializable
+object Registrar

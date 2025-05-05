@@ -6,15 +6,14 @@ import androidx.compose.foundation.background
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import com.example.practicarlogin.PantallasNavegaciones.buildPC
-import com.example.practicarlogin.VM.ComponentViewModel
-import com.example.practicarlogin.pantallasBuild.detalleProducto
-import com.example.practicarlogin.pantallasBuild.productos
+import com.example.practicarlogin.principal_screen_navigation.buildPC
+import com.example.practicarlogin.`view-model`.ComponentViewModel
+import com.example.practicarlogin.build_screen.detalleProducto
+import com.example.practicarlogin.build_screen.productos
 
 private val viewModel: ComponentViewModel = ComponentViewModel()
 

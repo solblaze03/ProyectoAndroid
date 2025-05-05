@@ -28,7 +28,8 @@ data class Spanish(
     override val hilos: String,
     override val vermas: String,
     override val agregar: String,
-    override val buscar: String, override val reloj: String, override val litografia: String
+    override val buscar: String, override val reloj: String, override val litografia: String,
+    override val registrar: String
 ) : languages
 
 val StringsSpanish = Spanish(
@@ -65,5 +66,6 @@ val StringsSpanish = Spanish(
     agregar = "Agregar",
     buscar = "Buscar",
     reloj = "Reloj",
-    litografia = "Litografía"
+    litografia = "Litografía",
+    registrar = "Registrarse"
 )

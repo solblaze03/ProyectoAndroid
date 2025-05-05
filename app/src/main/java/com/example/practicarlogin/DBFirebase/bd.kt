@@ -1,11 +1,7 @@
 package com.example.practicarlogin.DBFirebase
 
 import android.util.Log
-import android.widget.Toast
-import androidx.compose.ui.platform.LocalContext
-import com.example.practicarlogin.piezas.Board
-import com.example.practicarlogin.piezas.CPU
-import com.example.practicarlogin.piezas.ListaPiezas
+import com.example.practicarlogin.models.ListaPiezas
 import com.google.firebase.firestore.FirebaseFirestore
 
 
