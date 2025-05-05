@@ -34,4 +34,6 @@ interface languages {
     val reloj: String
     val litografia: String
 
+    val registrar: String
+
 }

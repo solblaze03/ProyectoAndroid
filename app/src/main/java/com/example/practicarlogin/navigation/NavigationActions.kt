@@ -51,8 +51,18 @@ val topLevel = listOf(
         iconTextId = idioma().home
     ),
     myAppLevelDestination(
+        route = myappRoute.search,
+        iconTextId = "Search"
+    ),
+    myAppLevelDestination(
         route = myappRoute.build,
         iconTextId = idioma().build
+    ),
+
+
+    myAppLevelDestination(
+        route = myappRoute.carrito,
+        iconTextId = "Carrito"
     ),
     myAppLevelDestination(
         route = myappRoute.account,
@@ -69,6 +79,7 @@ class NavigationActions (private val navController: NavController){
             }
 
             launchSingleTop = true
+            restoreState = true
         }
     }
 }
@@ -77,4 +88,6 @@ object myappRoute{
     const val build = "build"
     const val account = "Settings"
     const val home = "home"
+    const val search = "search"
+    const val carrito = "carrito"
 }

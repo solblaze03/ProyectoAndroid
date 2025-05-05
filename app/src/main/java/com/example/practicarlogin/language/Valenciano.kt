@@ -28,7 +28,8 @@ data class Valenciano(
     override val hilos: String,
     override val vermas: String,
     override val agregar: String,
-    override val buscar: String, override val reloj: String, override val litografia: String
+    override val buscar: String, override val reloj: String, override val litografia: String,
+    override val registrar: String
 ) : languages
 
 val StringsValenciano = Valenciano(
@@ -36,7 +37,7 @@ val StringsValenciano = Valenciano(
     inicioSesion = "Iniciar Sessió",
     nameUser = "Nom d'usuari",
     promptUser = "Introduïx el teu nom d'usuari",
-    password = "contrasenya",
+    password = "Contrasenya",
     olvPassword = "Heu oblidat la contrasenya?",
     inPass = "Introduïx la teua contrasenya",
     inicioAut = "Inici automàtic",
@@ -61,5 +62,6 @@ val StringsValenciano = Valenciano(
     agregar = "Agregar",
     buscar = "Buscar Component",
     reloj = "Rellotge",
-    litografia = "Litografía"
+    litografia = "Litografía",
+    registrar = "Registrar-se"
 )
